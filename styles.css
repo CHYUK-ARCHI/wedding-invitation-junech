@@ -1,0 +1,147 @@
+:root {
+  --background: #ece9e2;
+  --paper: #f7f3ea;
+  --surface: #d7ccac;
+  --ink: #4f4d48;
+  --muted: #6a665f;
+  --line: #b9b29f;
+  --accent: #7d8460;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--background);
+  color: var(--ink);
+  font-family: "Manrope", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.7;
+}
+
+.invitation {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #f0ede6 0%, #e6e1d7 100%);
+}
+
+.section-line {
+  border-top: 1px solid rgba(79, 77, 72, 0.15);
+  padding: 42px 0;
+}
+
+.section-line:last-child { border-bottom: 1px solid rgba(79, 77, 72, 0.15); }
+.center-content { padding-left: 0; padding-right: 0; }
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: "Manrope", "Noto Sans KR", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #45423e;
+}
+
+h2 { font-size: clamp(1.8rem, 4.5vw, 2.2rem); margin-bottom: 14px; text-align: center; }
+
+.cover { text-align: center; border-top: none; padding: 0 0 36px; }
+.cover-kicker { margin: 24px 0 0; letter-spacing: 0.22em; font-size: 0.72rem; color: #7c776d; }
+.cover-title { font-size: clamp(2.6rem, 11vw, 4.2rem); margin: 10px 0 4px; color: #3d3a35; }
+.cover-title span { color: var(--accent); }
+.cover-subtitle { margin: 0 0 16px; letter-spacing: 0.1em; font-size: 0.76rem; color: #7c776d; }
+
+.photo-placeholder {
+  border: 1px solid rgba(79, 77, 72, 0.2);
+  color: #6f6a60;
+  background: #ddd7c8;
+  display: grid;
+  place-items: center;
+}
+
+
+.photo-frame {
+  margin: 0;
+  overflow: hidden;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cover-photo {
+  width: 100%;
+  min-height: 72vh;
+  height: min(920px, 92vh);
+  background: linear-gradient(180deg, #d6d0c3, #c6bea8);
+}
+
+.invitation-note { text-align: center; }
+.invitation-note p, .schedule p, .location p, .help, #form-status { padding: 0 12px; color: var(--muted); }
+
+.story-list { display: grid; gap: 24px; }
+.story-item { display: grid; grid-template-columns: 1fr; background: rgba(215, 204, 172, 0.28); }
+.story-photo { width: 100%; aspect-ratio: 4 / 3; background: #cfc5aa; }
+.story-text { padding: 14px 12px 0; }
+.story-text h3 { font-size: 1.65rem; margin-bottom: 8px; }
+.story-text p { margin: 0; color: var(--muted); }
+
+.couple { display: grid; gap: 26px; }
+.couple article { text-align: center; }
+.profile-photo { width: 100%; max-width: 320px; margin: 0 auto 14px; aspect-ratio: 4 / 5; background: #c7beab; }
+.couple h3 { font-size: 1.85rem; }
+.couple p { margin: 6px 0 10px; color: var(--muted); }
+.couple a { color: #5e6647; text-underline-offset: 3px; }
+
+.schedule, .location, .accounts, .rsvp { text-align: center; }
+.schedule .date { font-size: 1.06rem; color: #5b5852; }
+
+.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.gallery-grid .photo-frame { aspect-ratio: 3 / 4; background: #cfc8b7; }
+.map-placeholder { margin-top: 12px; width: 100%; aspect-ratio: 16 / 9; background: #c7c0b0; }
+.help { margin-top: 0; }
+
+.account-list { display: grid; gap: 10px; padding: 0 12px; }
+.account-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  border: 1px solid rgba(79, 77, 72, 0.2); padding: 11px 12px; text-align: left;
+  background: rgba(247, 243, 234, 0.92);
+}
+
+.account-item p { margin: 2px 0 0; color: var(--muted); font-size: 0.92rem; }
+
+#rsvp-form { display: grid; gap: 8px; width: 100%; margin: 0; padding: 0 12px; }
+input, textarea, button { font: inherit; }
+input, textarea {
+  width: 100%;
+  border: 1px solid rgba(79, 77, 72, 0.2);
+  background: #f8f5ed;
+  color: var(--ink);
+  padding: 12px;
+}
+input::placeholder, textarea::placeholder { color: #989184; }
+button {
+  border: none;
+  background: var(--accent);
+  color: #f9f7f0;
+  padding: 12px;
+  cursor: pointer;
+}
+
+#form-status { min-height: 1.25rem; }
+
+@media (min-width: 680px) {
+  .story-item { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+  .story-item.reverse .story-photo { order: 2; }
+  .story-item.reverse .story-text { order: 1; }
+  .story-text { padding: 0 24px; }
+  .couple { grid-template-columns: repeat(2, 1fr); }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .cover-photo { height: min(1000px, 95vh); }
+  .invitation-note p, .schedule p, .location p, .help, #form-status, .account-list, #rsvp-form {
+    padding-left: 24px; padding-right: 24px;
+  }
+}
