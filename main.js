@@ -1,8 +1,8 @@
 "use strict";
 const APP_CONFIG = {
     transfer: [
-        { role: "신랑측", bank: "국민", account: "000000-00-000000", holder: "권찬혁" },
         { role: "신부측", bank: "신한", account: "000-000-000000", holder: "김주은" },
+        { role: "신랑측", bank: "국민", account: "000000-00-000000", holder: "권찬혁" },
     ],
 };
 const accountList = document.getElementById("account-list");
