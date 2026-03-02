@@ -1,18 +1,15 @@
 "use strict";
 const APP_CONFIG = {
-    api: {
-        baseUrl: "https://api.example.com",
-        rsvpEndpoint: "/api/v1/invitations/rsvp",
-    },
     transfer: [
-        { role: "신랑측", bank: "국민", account: "000000-00-000000", holder: "김준" },
-        { role: "신부측", bank: "신한", account: "000-000-000000", holder: "최채" },
+        { role: "신랑측", bank: "국민", account: "000000-00-000000", holder: "권찬혁" },
+        { role: "신부측", bank: "신한", account: "000-000-000000", holder: "김주은" },
     ],
 };
 const accountList = document.getElementById("account-list");
 const statusNode = document.getElementById("form-status");
-const rsvpForm = document.getElementById("rsvp-form");
-if (!accountList || !statusNode || !rsvpForm) {
+const guestbookForm = document.getElementById("guestbook-form");
+const guestbookList = document.getElementById("guestbook-list");
+if (!accountList || !statusNode || !guestbookForm || !guestbookList) {
     throw new Error("필수 DOM 노드를 찾지 못했습니다.");
 }
 const renderAccounts = () => {
@@ -28,46 +25,96 @@ const renderAccounts = () => {
     `)
         .join("");
 };
-const sendRsvp = async (payload) => {
-    const { baseUrl, rsvpEndpoint } = APP_CONFIG.api;
-    const response = await fetch(`${baseUrl}${rsvpEndpoint}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-    });
-    if (!response.ok) {
-        throw new Error("참석 정보 전송에 실패했습니다.");
+const galleryCards = Array.from(document.querySelectorAll(".gallery-card"));
+const storageKey = (id) => `gallery:${id}`;
+const readGalleryState = (id) => {
+    const raw = localStorage.getItem(storageKey(id));
+    if (!raw)
+        return { likes: 0, comments: [] };
+    try {
+        return JSON.parse(raw);
     }
+    catch {
+        return { likes: 0, comments: [] };
+    }
+};
+const writeGalleryState = (id, state) => {
+    localStorage.setItem(storageKey(id), JSON.stringify(state));
+};
+const renderGalleryCard = (card) => {
+    const id = card.dataset.photoId;
+    if (!id)
+        return;
+    const state = readGalleryState(id);
+    const likeCount = card.querySelector(".like-count");
+    const commentList = card.querySelector(".comment-list");
+    if (likeCount)
+        likeCount.textContent = String(state.likes);
+    if (commentList) {
+        commentList.innerHTML = state.comments.map((comment) => `<li>${comment}</li>`).join("");
+    }
+};
+const renderAllGallery = () => {
+    galleryCards.forEach(renderGalleryCard);
+};
+const addGuestbookEntry = (name, message) => {
+    const item = document.createElement("li");
+    item.innerHTML = `<strong>${name}</strong><p>${message}</p>`;
+    guestbookList.prepend(item);
 };
 document.addEventListener("click", async (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement))
         return;
     const copyValue = target.dataset.copy;
-    if (!copyValue)
+    if (copyValue) {
+        await navigator.clipboard.writeText(copyValue);
+        statusNode.textContent = "계좌번호가 복사되었습니다.";
         return;
-    await navigator.clipboard.writeText(copyValue);
-    statusNode.textContent = "계좌번호가 복사되었습니다.";
+    }
+    const likeButton = target.closest(".like-btn");
+    if (!likeButton)
+        return;
+    const card = likeButton.closest(".gallery-card");
+    const id = card?.dataset.photoId;
+    if (!id)
+        return;
+    const state = readGalleryState(id);
+    state.likes += 1;
+    writeGalleryState(id, state);
+    renderGalleryCard(card);
 });
-rsvpForm.addEventListener("submit", async (event) => {
+document.addEventListener("submit", (event) => {
+    const target = event.target;
+    if (target === guestbookForm) {
+        event.preventDefault();
+        const formData = new FormData(guestbookForm);
+        const name = String(formData.get("name") ?? "").trim();
+        const message = String(formData.get("message") ?? "").trim();
+        if (!name || !message)
+            return;
+        addGuestbookEntry(name, message);
+        statusNode.textContent = "방명록이 등록되었습니다. 감사합니다!";
+        guestbookForm.reset();
+        return;
+    }
+    const commentForm = target.closest(".comment-form");
+    if (!commentForm)
+        return;
     event.preventDefault();
-    statusNode.textContent = "전송 중...";
-    const formData = new FormData(rsvpForm);
-    const payload = {
-        name: formData.get("name") ?? "",
-        guests: formData.get("guests") ?? "1",
-        phone: formData.get("phone") ?? "",
-        memo: formData.get("memo") ?? "",
-    };
-    try {
-        await sendRsvp(payload);
-        statusNode.textContent = "참석 정보가 전달되었습니다. 감사합니다!";
-        rsvpForm.reset();
-    }
-    catch {
-        statusNode.textContent = "테스트 모드입니다. API 값을 설정하면 실제 전송됩니다.";
-    }
+    const card = commentForm.closest(".gallery-card");
+    const id = card?.dataset.photoId;
+    if (!id)
+        return;
+    const formData = new FormData(commentForm);
+    const comment = String(formData.get("comment") ?? "").trim();
+    if (!comment)
+        return;
+    const state = readGalleryState(id);
+    state.comments.unshift(comment);
+    writeGalleryState(id, state);
+    commentForm.reset();
+    renderGalleryCard(card);
 });
 renderAccounts();
+renderAllGallery();
