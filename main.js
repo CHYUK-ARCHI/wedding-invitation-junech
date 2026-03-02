@@ -9,6 +9,25 @@ const accountList = document.getElementById("account-list");
 const statusNode = document.getElementById("form-status");
 const guestbookForm = document.getElementById("guestbook-form");
 const guestbookList = document.getElementById("guestbook-list");
+const root = document.documentElement;
+const themeToggle = document.getElementById("theme-toggle");
+const THEME_KEY = "invitation-theme";
+const applyTheme = (theme) => {
+    root.dataset.theme = theme;
+    localStorage.setItem(THEME_KEY, theme);
+    if (themeToggle) {
+        themeToggle.textContent = theme === "dark" ? "☀️ 라이트 모드" : "🌙 다크 모드";
+    }
+};
+const initializeTheme = () => {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved === "light" || saved === "dark") {
+        applyTheme(saved);
+        return;
+    }
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    applyTheme(prefersDark ? "dark" : "light");
+};
 if (!accountList || !statusNode || !guestbookForm || !guestbookList) {
     throw new Error("필수 DOM 노드를 찾지 못했습니다.");
 }
@@ -66,6 +85,11 @@ document.addEventListener("click", async (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement))
         return;
+    if (target.id === "theme-toggle") {
+        const next = root.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(next);
+        return;
+    }
     const copyValue = target.dataset.copy;
     if (copyValue) {
         await navigator.clipboard.writeText(copyValue);
@@ -116,5 +140,6 @@ document.addEventListener("submit", (event) => {
     commentForm.reset();
     renderGalleryCard(card);
 });
+initializeTheme();
 renderAccounts();
 renderAllGallery();

@@ -22,6 +22,30 @@ const statusNode = document.getElementById("form-status") as HTMLParagraphElemen
 const guestbookForm = document.getElementById("guestbook-form") as HTMLFormElement | null;
 const guestbookList = document.getElementById("guestbook-list") as HTMLUListElement | null;
 
+
+const root = document.documentElement;
+const themeToggle = document.getElementById("theme-toggle") as HTMLButtonElement | null;
+const THEME_KEY = "invitation-theme";
+
+const applyTheme = (theme: "light" | "dark"): void => {
+  root.dataset.theme = theme;
+  localStorage.setItem(THEME_KEY, theme);
+  if (themeToggle) {
+    themeToggle.textContent = theme === "dark" ? "☀️ 라이트 모드" : "🌙 다크 모드";
+  }
+};
+
+const initializeTheme = (): void => {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === "light" || saved === "dark") {
+    applyTheme(saved);
+    return;
+  }
+
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(prefersDark ? "dark" : "light");
+};
+
 if (!accountList || !statusNode || !guestbookForm || !guestbookList) {
   throw new Error("필수 DOM 노드를 찾지 못했습니다.");
 }
@@ -89,6 +113,12 @@ document.addEventListener("click", async (event: MouseEvent) => {
   const target = event.target;
   if (!(target instanceof HTMLElement)) return;
 
+  if (target.id === "theme-toggle") {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(next);
+    return;
+  }
+
   const copyValue = target.dataset.copy;
   if (copyValue) {
     await navigator.clipboard.writeText(copyValue);
@@ -145,5 +175,6 @@ document.addEventListener("submit", (event: Event) => {
   renderGalleryCard(card);
 });
 
+initializeTheme();
 renderAccounts();
 renderAllGallery();
