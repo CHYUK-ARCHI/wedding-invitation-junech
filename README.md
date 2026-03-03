@@ -54,3 +54,21 @@ tsc
 3. **이미지 최적화**: WebP/AVIF + `srcset`/`sizes` 적용
 4. **성능/접근성 강화**: Lighthouse 기준 성능/접근성 점수 개선
 5. **배포 자동화**: GitHub Actions로 main push 시 자동 배포
+
+
+## 요청하신 5장 사진 배치 기준
+현재 페이지는 아래 파일명을 기준으로 이미지가 연결되어 있습니다.
+- `assets/photo-1.svg`
+- `assets/photo-2.svg`
+- `assets/photo-3.svg`
+- `assets/photo-4.svg`
+- `assets/photo-5.svg`
+
+사용 방법:
+1. 위 5개 파일을 동일한 이름의 실제 사진 파일(`.jpg` 또는 `.png`)로 교체
+2. 확장자를 바꿨다면 `index.html`의 `src` 확장자도 함께 수정
+
+권장 배치:
+- `photo-3`: 메인 사진
+- `photo-1`, `photo-4`: 신부/신랑 프로필
+- `photo-2`, `photo-5`: 스토리/갤러리
