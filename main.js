@@ -479,11 +479,13 @@ const initKakaoMap = () => {
                 infoWindow.open(map, marker);
             };
 
-            // 장소 검색으로 정확한 위치 찾기
+            // 장소 ID로 정확한 위치 검색
             const ps = new kakao.maps.services.Places();
             ps.keywordSearch('이라운지 서울대점', (data, status) => {
                 if (status === kakao.maps.services.Status.OK && data.length > 0) {
-                    initMap(parseFloat(data[0].y), parseFloat(data[0].x));
+                    // place ID 1408612060 우선, 없으면 첫 번째 결과 사용
+                    const target = data.find(p => p.id === '1408612060') || data[0];
+                    initMap(parseFloat(target.y), parseFloat(target.x));
                 } else {
                     initMap(fallbackLat, fallbackLng);
                 }
