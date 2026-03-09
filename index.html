@@ -3,128 +3,226 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>June & Ch | Wedding Invitation</title>
+    <meta name="theme-color" content="#faf5ee" />
+    <meta name="description" content="권찬혁 ❤️ 김주은 결혼식에 초대합니다. 2026년 6월 28일 일요일 오전 11시, 서울대학교 이라운지" />
+    <title>Kim &amp; Kwon | 2026.06.28</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+
+    <!-- ── LIGHTBOX ── -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="사진 크게 보기">
+      <button type="button" class="lightbox-close" id="lightbox-close" aria-label="닫기">✕</button>
+      <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="이전 사진">‹</button>
+      <img id="lightbox-img" src="" alt="사진 전체 보기" />
+      <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="다음 사진">›</button>
+      <span class="lightbox-counter" id="lightbox-counter"></span>
+    </div>
+
+    <!-- ── TOAST ── -->
+    <div id="toast" role="status" aria-live="polite"></div>
+
     <main class="invitation">
-      <section class="cover section-line">
-        <p class="cover-kicker">JUNE 20, 2026</p>
-        <h1 class="cover-title">June <span>&</span> Ch</h1>
-        <p class="cover-subtitle">WE INVITE YOU TO OUR WEDDING DAY</p>
-        <div class="cover-photo photo-placeholder">MAIN PHOTO</div>
+
+      <!-- ── COVER ── -->
+      <section class="cover">
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="다크 모드 전환">🌙 다크 모드</button>
+        <p class="cover-kicker">2026 · 06 · 28 &nbsp;SUN &nbsp;11:00 AM</p>
+        <h1 class="cover-title">Jueun <span>&amp;</span> Chanhyuk</h1>
+        <p class="cover-subtitle">SEOUL NATIONAL UNIVERSITY · E-LOUNGE</p>
+
+        <!-- D-DAY COUNTDOWN -->
+        <div class="countdown-wrap">
+          <p class="countdown-label">Wedding Countdown</p>
+          <div class="countdown-grid" id="countdown">
+            <div class="countdown-unit"><span class="countdown-num" id="cd-days">--</span><span class="countdown-sub">DAYS</span></div>
+            <div class="countdown-unit"><span class="countdown-num" id="cd-hours">--</span><span class="countdown-sub">HOURS</span></div>
+            <div class="countdown-unit"><span class="countdown-num" id="cd-mins">--</span><span class="countdown-sub">MINS</span></div>
+            <div class="countdown-unit"><span class="countdown-num" id="cd-secs">--</span><span class="countdown-sub">SECS</span></div>
+          </div>
+        </div>
+
+        <figure class="cover-photo photo-frame">
+          <img src="assets/IMG_0826.jpeg" alt="권찬혁 김주은 메인 사진" decoding="async" />
+        </figure>
       </section>
 
-      <section class="invitation-note section-line center-content">
+      <!-- ── INVITATION NOTE ── -->
+      <section class="invitation-note section-line section-fade">
         <h2>초대합니다</h2>
         <p>
-          따뜻한 봄날에 처음 만난 저희가<br />
-          서로의 계절이 되어, 평생을 함께하고자 합니다.<br />
-          소중한 걸음으로 오셔서
-          저희의 시작을 축복해 주시면 감사하겠습니다.
+          서로에게 따뜻한 위로와 기쁨이 되어온 두 사람이<br />
+          이제 평생을 함께 걸어가려 합니다.<br />
+          저희의 시작이 되는 날, 소중한 걸음으로 오셔서<br />
+          축복해 주시면 감사하겠습니다.
         </p>
+        <p class="ornament">· · ·</p>
       </section>
 
-      <section class="story section-line">
-        <div class="center-content">
-          <h2>Our Story</h2>
-        </div>
+      <!-- ── OUR STORY ── -->
+      <section class="story section-line section-fade">
+        <div style="text-align:center"><h2>Our Story</h2></div>
         <div class="story-list">
           <article class="story-item">
-            <div class="photo-placeholder story-photo">STORY IMAGE 1</div>
+            <figure class="story-photo photo-frame">
+              <img src="assets/IMG_0876.jpeg" alt="우리 이야기 사진 1" loading="lazy" decoding="async" />
+            </figure>
             <div class="story-text">
               <h3>처음 만난 날</h3>
-              <p>
-                우리의 이야기를 자유롭게 작성할 수 있는 공간입니다.
-                이 부분에 첫 만남, 기억에 남는 순간, 서로의 마음을 확인한 이야기를 넣어주세요.
-              </p>
+              <p>처음 눈이 마주친 날부터 지금까지, 사소한 일상들이 특별한 추억으로 쌓였습니다.</p>
             </div>
           </article>
           <article class="story-item reverse">
-            <div class="photo-placeholder story-photo">STORY IMAGE 2</div>
+            <figure class="story-photo photo-frame">
+              <img src="assets/IMG_0912.jpeg" alt="우리 이야기 사진 2" loading="lazy" decoding="async" />
+            </figure>
             <div class="story-text">
-              <h3>함께한 시간</h3>
-              <p>
-                각 스토리 블록마다 개인 이미지를 하나씩 넣을 수 있도록 구성했습니다.
-                여행, 일상, 프로포즈 등 원하는 순서로 자유롭게 확장해 사용할 수 있습니다.
-              </p>
+              <h3>함께할 내일</h3>
+              <p>서로의 하루를 가장 먼저 묻고 싶은 사람으로, 매일의 평범함을 함께 채워가겠습니다.</p>
             </div>
           </article>
         </div>
       </section>
 
-      <section class="couple section-line center-content">
+      <!-- ── COUPLE ── -->
+      <section class="couple section-line section-fade">
         <article>
-          <div class="photo-placeholder profile-photo">GROOM</div>
-          <h3>김준</h3>
-          <p>김아버지 · 이어머니의 장남</p>
-          <a href="tel:010-0000-0000">신랑에게 연락하기</a>
+          <figure class="profile-photo photo-frame">
+            <img src="assets/IMG_0918.jpeg" alt="김주은 사진" loading="lazy" decoding="async" />
+          </figure>
+          <h3>김주은</h3>
+          <p>김영수 · 박은영의 장녀</p>
         </article>
         <article>
-          <div class="photo-placeholder profile-photo">BRIDE</div>
-          <h3>최채</h3>
-          <p>최아버지 · 박어머니의 장녀</p>
-          <a href="tel:010-0000-0000">신부에게 연락하기</a>
+          <figure class="profile-photo photo-frame">
+            <img src="assets/IMG_0925.jpeg" alt="권찬혁 사진" loading="lazy" decoding="async" />
+          </figure>
+          <h3>권찬혁</h3>
+          <p>권오현 · 김현숙의 차남</p>
         </article>
       </section>
 
-      <section class="schedule section-line center-content">
+      <!-- ── WEDDING DAY ── -->
+      <section class="schedule section-line section-fade">
         <h2>Wedding Day</h2>
-        <p class="date">2026년 6월 20일 토요일 오후 12시 30분</p>
-        <p>더채플 앳 논현 6층 라포레홀</p>
+        <p class="date">2026년 6월 28일 일요일 오전 11시</p>
+        <p class="venue">서울대학교 이라운지</p>
       </section>
 
-      <section class="gallery section-line">
-        <div class="center-content">
-          <h2>Gallery</h2>
-        </div>
-        <div class="gallery-grid">
-          <div class="photo-placeholder">PHOTO 1</div>
-          <div class="photo-placeholder">PHOTO 2</div>
-          <div class="photo-placeholder">PHOTO 3</div>
-          <div class="photo-placeholder">PHOTO 4</div>
-          <div class="photo-placeholder">PHOTO 5</div>
-          <div class="photo-placeholder">PHOTO 6</div>
-          <div class="photo-placeholder">PHOTO 7</div>
-          <div class="photo-placeholder">PHOTO 8</div>
-          <div class="photo-placeholder">PHOTO 9</div>
-          <div class="photo-placeholder">PHOTO 10</div>
-          <div class="photo-placeholder">PHOTO 11</div>
-          <div class="photo-placeholder">PHOTO 12</div>
+      <!-- ── GALLERY ── -->
+      <section class="gallery section-line section-fade">
+        <div style="text-align:center"><h2>Gallery</h2></div>
+        <div class="gallery-grid" id="gallery-grid">
+          <article class="gallery-card" data-photo-id="1" data-src="assets/IMG_0963.jpeg">
+            <figure class="photo-frame">
+              <img src="assets/IMG_0963.jpeg" alt="갤러리 1" loading="lazy" decoding="async" />
+              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
+            </figure>
+          </article>
+          <article class="gallery-card" data-photo-id="2" data-src="assets/IMG_0966.jpeg">
+            <figure class="photo-frame">
+              <img src="assets/IMG_0966.jpeg" alt="갤러리 2" loading="lazy" decoding="async" />
+              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
+            </figure>
+          </article>
+          <article class="gallery-card" data-photo-id="3" data-src="assets/IMG_0981.jpeg">
+            <figure class="photo-frame">
+              <img src="assets/IMG_0981.jpeg" alt="갤러리 3" loading="lazy" decoding="async" />
+              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
+            </figure>
+          </article>
+          <article class="gallery-card" data-photo-id="4" data-src="assets/IMG_0982.jpeg">
+            <figure class="photo-frame">
+              <img src="assets/IMG_0982.jpeg" alt="갤러리 4" loading="lazy" decoding="async" />
+              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
+            </figure>
+          </article>
+          <article class="gallery-card" data-photo-id="5" data-src="assets/IMG_0983.jpeg">
+            <figure class="photo-frame">
+              <img src="assets/IMG_0983.jpeg" alt="갤러리 5" loading="lazy" decoding="async" />
+              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
+            </figure>
+          </article>
+          <article class="gallery-card" data-photo-id="6" data-src="assets/IMG_1007.jpeg">
+            <figure class="photo-frame">
+              <img src="assets/IMG_1007.jpeg" alt="갤러리 6" loading="lazy" decoding="async" />
+              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
+            </figure>
+          </article>
         </div>
       </section>
 
-      <section class="location section-line center-content">
+      <!-- ── LOCATION ── -->
+      <section class="location section-line section-fade">
         <h2>오시는 길</h2>
-        <p>서울 강남구 논현로 549</p>
-        <div class="photo-placeholder map-placeholder">MAP</div>
+        <p class="address">서울 관악구 관악로 1 서울대학교 이라운지</p>
+        <div class="map-iframe-wrap">
+          <iframe
+            title="서울대학교 이라운지 카카오맵"
+            src="https://map.kakao.com/link/map/서울대학교이라운지,37.4589,126.9525"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="map-links">
+          <a href="https://map.kakao.com/link/map/서울대학교이라운지,37.4589,126.9525" target="_blank" rel="noreferrer">카카오맵</a>
+          <a href="https://map.naver.com/v5/search/서울대학교%20이라운지" target="_blank" rel="noreferrer">네이버지도</a>
+        </div>
+
+        <!-- 교통 안내 -->
+        <div class="transport-grid">
+          <div class="transport-item">
+            <span class="transport-icon">🚇</span>
+            <strong>지하철</strong>
+            <p>2호선 낙성대역 4번 출구<br />셔틀버스 또는 마을버스 이용</p>
+          </div>
+          <div class="transport-item">
+            <span class="transport-icon">🚌</span>
+            <strong>버스</strong>
+            <p>관악02 · 5511 · 5513번<br />서울대학교 정문 하차</p>
+          </div>
+          <div class="transport-item">
+            <span class="transport-icon">🚗</span>
+            <strong>자가용</strong>
+            <p>서울 관악구 관악로 1<br />내비게이션: 서울대학교 이라운지</p>
+          </div>
+          <div class="transport-item">
+            <span class="transport-icon">🅿️</span>
+            <strong>주차</strong>
+            <p>교내 주차 가능<br />입장권 지참 시 2시간 무료</p>
+          </div>
+        </div>
       </section>
 
-      <section class="accounts section-line center-content">
+      <!-- ── ACCOUNTS ── -->
+      <section class="accounts section-line section-fade">
         <h2>마음 전하실 곳</h2>
         <p class="help">버튼을 누르면 계좌번호가 복사됩니다.</p>
         <div id="account-list" class="account-list"></div>
       </section>
 
-      <section class="rsvp section-line center-content">
-        <h2>RSVP</h2>
-        <form id="rsvp-form">
-          <input name="name" placeholder="성함" required />
-          <input name="guests" type="number" min="1" max="10" value="1" required />
-          <input name="phone" placeholder="연락처" required />
-          <textarea name="memo" rows="3" placeholder="전달사항"></textarea>
-          <button type="submit">참석 의사 전달</button>
+      <!-- ── GUESTBOOK ── -->
+      <section class="guestbook section-line section-fade">
+        <h2>방명록</h2>
+        <form id="guestbook-form">
+          <input name="name" placeholder="이름" required autocomplete="name" />
+          <textarea name="message" rows="3" placeholder="축하 메시지를 남겨주세요" required></textarea>
+          <button type="submit" id="guestbook-submit">메시지 남기기</button>
         </form>
         <p id="form-status" aria-live="polite"></p>
+        <ul id="guestbook-list" class="guestbook-list"></ul>
       </section>
+
     </main>
 
+    <!-- config.js: 방명록 GitHub 연동 설정 (선택) -->
+    <script src="config.js" onerror="console.info('config.js 없음 – localStorage 모드로 실행합니다.')"></script>
     <script type="module" src="main.js"></script>
   </body>
 </html>

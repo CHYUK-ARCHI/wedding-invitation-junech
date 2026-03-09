@@ -1,0 +1,8 @@
+# 토큰이 포함된 설정 파일 – git에서 제외
+config.js
+
+# macOS
+.DS_Store
+
+# Node
+node_modules/

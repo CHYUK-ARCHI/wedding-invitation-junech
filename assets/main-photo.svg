@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bdd7ea"/>
+      <stop offset="100%" stop-color="#efe6cf"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1600" fill="url(#sky)"/>
+  <rect y="930" width="1200" height="670" fill="#cbb686"/>
+  <text x="70" y="110" font-size="42" fill="#4f4d48" font-family="sans-serif">메인 사진 파일을 assets/main-photo.svg 대신 교체해주세요.</text>
+</svg>

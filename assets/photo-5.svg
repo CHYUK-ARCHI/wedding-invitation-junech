@@ -1,0 +1,6 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1440' viewBox='0 0 1080 1440'>
+  <rect width='1080' height='1440' fill='#efe2cf'/>
+  <rect x='40' y='40' width='1000' height='1360' fill='#f8f3ea' stroke='#d7b898' stroke-width='4'/>
+  <text x='540' y='690' text-anchor='middle' font-size='54' fill='#7f6757' font-family='sans-serif'>PHOTO 5</text>
+  <text x='540' y='760' text-anchor='middle' font-size='30' fill='#7f6757' font-family='sans-serif'>assets/photo-5.jpg 로 교체</text>
+</svg>
