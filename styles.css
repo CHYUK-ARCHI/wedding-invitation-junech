@@ -452,7 +452,7 @@ button:active {
 /* ============================================================
    Gallery Section – Slider
    ============================================================ */
-.gallery-slider-wrap { max-width: 680px; margin: 0 auto; width: 100%; overflow-x: clip; }
+.gallery-slider-wrap { max-width: 680px; margin: 0 auto; width: 100%; }
 
 .gallery-main {
   position: relative;
@@ -531,7 +531,7 @@ button:active {
   gap: 6px;
   margin-top: 10px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding: 3px 3px 6px;
   scrollbar-width: thin;
 }
 
