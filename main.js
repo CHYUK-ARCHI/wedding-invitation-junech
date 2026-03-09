@@ -111,6 +111,7 @@ const updateSlider = (idx) => {
     document.querySelectorAll(".gallery-thumb").forEach((thumb, i) => {
         thumb.classList.toggle("active", i === sliderIndex);
     });
+    updateGalleryLikeUI?.();
 };
 const initGallerySlider = () => {
     const prevBtn = document.getElementById("gs-prev");
@@ -141,8 +142,47 @@ const initGallerySlider = () => {
 // ─── Lightbox ────────────────────────────────────────────────────────────────
 let galleryPhotos = GALLERY_IMAGES;
 let currentPhotoIndex = 0;
+// 갤러리 좋아요
+const LS_GALLERY_LIKES = "wedding-gallery-likes";
+const getGalleryLikes = () => {
+    try { return JSON.parse(localStorage.getItem(LS_GALLERY_LIKES) || "{}"); }
+    catch { return {}; }
+};
+const updateGalleryLikeUI = () => {
+    const likes = getGalleryLikes();
+    const btn = document.getElementById("gallery-like-btn");
+    const count = document.getElementById("gallery-like-count");
+    if (!btn || !count) return;
+    const key = `img-${sliderIndex}`;
+    const liked = !!likes[key];
+    btn.textContent = liked ? "♥" : "♡";
+    btn.classList.toggle("liked-active", liked);
+    count.textContent = Object.values(likes).filter((v, i) => {
+        const k = `img-${i}`;
+        return likes[k];
+    }).length.toString();
+    // 현재 사진 좋아요 수 표시
+    const total = Object.keys(likes).filter(k => likes[k]).length;
+    count.textContent = String(total);
+};
 const initGallery = () => {
     initGallerySlider();
+    // 메인 사진 클릭 → 라이트박스
+    const mainFig = document.getElementById("gallery-main-fig");
+    mainFig?.addEventListener("click", () => openLightbox(sliderIndex));
+    // 좋아요 버튼
+    const likeBtn = document.getElementById("gallery-like-btn");
+    likeBtn?.addEventListener("click", () => {
+        const likes = getGalleryLikes();
+        const key = `img-${sliderIndex}`;
+        likes[key] = !likes[key];
+        localStorage.setItem(LS_GALLERY_LIKES, JSON.stringify(likes));
+        void likeBtn.offsetWidth;
+        likeBtn.classList.remove("liked");
+        if (likes[key]) likeBtn.classList.add("liked");
+        updateGalleryLikeUI();
+    });
+    updateGalleryLikeUI();
 };
 const openLightbox = (idx) => {
     currentPhotoIndex = idx;

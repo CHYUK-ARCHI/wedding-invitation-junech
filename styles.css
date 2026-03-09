@@ -88,14 +88,22 @@ body {
    ============================================================ */
 .invitation {
   width: 100%;
-  max-width: 680px;
-  margin: 0 auto;
   background: linear-gradient(180deg, var(--paper) 0%, var(--background) 60%);
+}
+
+body {
+  background: var(--paper);
 }
 
 .section-line {
   border-top: 1px solid var(--line);
   padding: 52px 20px;
+}
+
+.section-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* 이미지 EXIF 방향 자동 보정 */
@@ -505,6 +513,19 @@ button:active {
   pointer-events: none;
 }
 
+.gallery-like-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+.gallery-like-count {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.like-btn.liked-active { color: var(--rose-dark); }
+
 .gallery-thumbs {
   display: flex;
   gap: 6px;
@@ -883,9 +904,7 @@ button:active {
    Responsive: Desktop (860px+)
    ============================================================ */
 @media (min-width: 860px) {
-  .invitation { max-width: 860px; }
-
-  .section-line { padding: 64px 60px; }
+  .section-line { padding: 64px 8%; }
 
   /* 갤러리 더 넓게 */
   .gallery-slider-wrap { max-width: 100%; }
