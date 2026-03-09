@@ -483,11 +483,17 @@ const initKakaoMap = () => {
         });
     };
 
-    // SDK가 아직 로드 중이면 잠시 대기 후 재시도
+    // SDK 로드 완료될 때까지 100ms 간격으로 대기
     if (window.kakao && window.kakao.maps) {
         tryInit();
     } else {
-        window.addEventListener('load', tryInit);
+        const poll = setInterval(() => {
+            if (window.kakao && window.kakao.maps) {
+                clearInterval(poll);
+                tryInit();
+            }
+        }, 100);
+        setTimeout(() => clearInterval(poll), 10000);
     }
 };
 
