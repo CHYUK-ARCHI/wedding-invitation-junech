@@ -458,22 +458,36 @@ const initKakaoMap = () => {
             const mapThumbLink = document.querySelector('.map-thumb-link');
             if (mapThumbLink) mapThumbLink.style.display = 'none';
 
-            const lat = WD?.wedding?.lat || 37.4589;
-            const lng = WD?.wedding?.lng || 126.9525;
-            const options = {
-                center: new kakao.maps.LatLng(lat, lng),
-                level: 3,
-                draggable: true,
+            const venueName = WD?.wedding?.venueName || '서울대학교 이라운지';
+            const fallbackLat = WD?.wedding?.lat || 37.4589;
+            const fallbackLng = WD?.wedding?.lng || 126.9525;
+
+            const initMap = (lat, lng) => {
+                const options = {
+                    center: new kakao.maps.LatLng(lat, lng),
+                    level: 3,
+                    draggable: true,
+                };
+                const map = new kakao.maps.Map(mapContainer, options);
+                const marker = new kakao.maps.Marker({
+                    position: new kakao.maps.LatLng(lat, lng),
+                });
+                marker.setMap(map);
+                const infoWindow = new kakao.maps.InfoWindow({
+                    content: `<div style="padding:6px 10px;font-size:13px;font-weight:600;">${venueName}</div>`,
+                });
+                infoWindow.open(map, marker);
             };
-            const map = new kakao.maps.Map(mapContainer, options);
-            const marker = new kakao.maps.Marker({
-                position: new kakao.maps.LatLng(lat, lng),
+
+            // 장소 검색으로 정확한 위치 찾기
+            const ps = new kakao.maps.services.Places();
+            ps.keywordSearch('이라운지 서울대점', (data, status) => {
+                if (status === kakao.maps.services.Status.OK && data.length > 0) {
+                    initMap(parseFloat(data[0].y), parseFloat(data[0].x));
+                } else {
+                    initMap(fallbackLat, fallbackLng);
+                }
             });
-            marker.setMap(map);
-            const infoWindow = new kakao.maps.InfoWindow({
-                content: `<div style="padding:6px 10px;font-size:13px;font-weight:600;">${WD?.wedding?.venueName || '서울대학교 이라운지'}</div>`,
-            });
-            infoWindow.open(map, marker);
         });
     };
 
