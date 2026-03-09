@@ -210,11 +210,10 @@ button:active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
+  justify-content: flex-start;
+  padding: 60px 20px 80px;
   text-align: center;
   border-top: none;
-  overflow: hidden;
 }
 
 .cover::before {
@@ -381,7 +380,7 @@ button:active {
 .story-photo { aspect-ratio: 4 / 3; }
 
 .story-text { padding: 18px 16px; }
-.story-text h3 { font-size: 1.5rem; margin-bottom: 8px; }
+.story-text h3 { font-size: 1.5rem; margin-bottom: 8px; text-align: center; }
 .story-text p { margin: 0; color: var(--muted); line-height: 1.7; }
 .story-date { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 4px; }
 
