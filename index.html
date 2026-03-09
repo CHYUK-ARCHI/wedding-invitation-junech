@@ -62,36 +62,6 @@
         <p class="ornament">· · ·</p>
       </section>
 
-      <!-- ── OUR STORY ── -->
-      <section class="story section-line section-fade">
-        <div style="text-align:center"><h2>Our Story</h2></div>
-        <div class="story-pair">
-          <article class="story-card">
-            <figure class="story-photo photo-frame">
-              <picture>
-                <source srcset="assets/IMG_0826.webp" type="image/webp" />
-                <img src="assets/IMG_0826.jpeg" alt="김주은 어릴 때" loading="lazy" decoding="async" />
-              </picture>
-            </figure>
-            <div class="story-text">
-              <h3>June</h3>
-              <p class="story-date">신부의 어린 시절</p>
-            </div>
-          </article>
-          <article class="story-card">
-            <figure class="story-photo photo-frame">
-              <picture>
-                <source srcset="assets/IMG_0912.webp" type="image/webp" />
-                <img src="assets/IMG_0912.jpeg" alt="권찬혁 어릴 때" loading="lazy" decoding="async" />
-              </picture>
-            </figure>
-            <div class="story-text">
-              <h3>Chanhyuk</h3>
-              <p class="story-date">신랑의 어린 시절</p>
-            </div>
-          </article>
-        </div>
-      </section>
 
       <!-- ── COUPLE ── -->
       <section class="couple section-line section-fade">
@@ -153,23 +123,34 @@
       <section class="location section-line section-fade">
         <h2>오시는 길</h2>
         <p class="address">서울 관악구 관악로 1 서울대학교 이라운지</p>
-        <div class="map-iframe-wrap">
-          <iframe
-            title="서울대학교 이라운지 카카오맵"
-            src="https://map.kakao.com/link/map/서울대학교이라운지,37.4589,126.9525"
-            allowfullscreen
+
+        <!-- 약도 이미지 (클릭 시 카카오맵 앱 연결) -->
+        <a class="map-thumb-link"
+           href="kakaomap://search?q=서울대학교%20이라운지"
+           onclick="if(!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){this.href='https://map.kakao.com/link/search/서울대학교 이라운지';}"
+           target="_blank" rel="noreferrer" aria-label="지도 앱으로 보기">
+          <img
+            class="map-thumb"
+            src="https://maps.googleapis.com/maps/api/staticmap?center=37.4589,126.9525&zoom=15&size=640x320&scale=2&markers=color:red%7C37.4589,126.9525&style=feature:poi|visibility:simplified&language=ko"
+            onerror="this.src='https://via.placeholder.com/640x320/f4ece0/7a6055?text=서울대학교+이라운지'"
+            alt="서울대학교 이라운지 약도"
             loading="lazy"
-          ></iframe>
-        </div>
+          />
+          <span class="map-thumb-overlay">🗺 지도 앱으로 보기</span>
+        </a>
+
         <div class="map-btn-wrap">
-          <a class="map-btn kakao" href="https://map.kakao.com/link/map/서울대학교이라운지,37.4589,126.9525" target="_blank" rel="noreferrer">
-            카카오맵
+          <a class="map-btn kakao"
+             href="kakaomap://search?q=서울대학교%20이라운지"
+             onclick="if(!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){this.href='https://map.kakao.com/link/search/서울대학교 이라운지';}"
+             target="_blank" rel="noreferrer">
+            🟡 카카오맵
           </a>
-          <a class="map-btn naver" href="https://map.naver.com/v5/search/서울대학교%20이라운지" target="_blank" rel="noreferrer">
-            네이버지도
-          </a>
-          <a class="map-btn tmap" href="tmap://route?goalname=서울대학교이라운지&goalx=126.9525&goaly=37.4589" target="_blank" rel="noreferrer">
-            T맵 길찾기
+          <a class="map-btn naver"
+             href="nmap://search?query=서울대학교%20이라운지&appname=com.wedding.invitation"
+             onclick="if(!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){this.href='https://map.naver.com/v5/search/서울대학교%20이라운지';}"
+             target="_blank" rel="noreferrer">
+            🟢 네이버지도
           </a>
         </div>
 

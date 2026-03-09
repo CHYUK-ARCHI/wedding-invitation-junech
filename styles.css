@@ -114,11 +114,9 @@ h1, h2, h3 {
 h2 {
   text-align: center;
   font-size: clamp(1.7rem, 4.5vw, 2.1rem);
-  margin-bottom: 20px;
-  position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
+  margin: 0 auto 20px;
+  display: block;
+  width: 100%;
 }
 
 h2::after {
@@ -632,20 +630,38 @@ button:active {
 .location { text-align: center; }
 .location .address { color: var(--muted); margin: 0 0 16px; font-size: 0.9rem; }
 
-.map-iframe-wrap {
+/* 약도 이미지 링크 */
+.map-thumb-link {
+  display: block;
+  position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--line);
-  margin-top: 12px;
+  margin: 14px 0;
+  text-decoration: none;
 }
-
-.map-iframe-wrap iframe {
+.map-thumb {
   width: 100%;
-  height: 100%;
-  border: none;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  display: block;
 }
+.map-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.18);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.map-thumb-link:hover .map-thumb-overlay { opacity: 1; }
 
 .map-btn-wrap {
   display: flex;
