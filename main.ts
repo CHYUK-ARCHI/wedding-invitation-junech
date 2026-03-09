@@ -1,12 +1,14 @@
-/* global WEDDING_CONFIG */
+/* global WEDDING_CONFIG, WEDDING_DATA */
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 interface TransferAccount {
+  side?: string;
   role: string;
+  name?: string;
   bank: string;
   account: string;
-  holder: string;
+  holder?: string;
 }
 
 interface GuestbookEntry {
@@ -21,13 +23,34 @@ interface WeddingConfig {
   token?: string;
 }
 
+interface WeddingDataType {
+  bride?: { name: string; nameEn: string; parents?: { father: { name: string; relation: string }; mother: { name: string; relation: string } } };
+  groom?: { name: string; nameEn: string; parents?: { father: { name: string; relation: string }; mother: { name: string; relation: string } } };
+  wedding?: { date: string; time: string; venueName: string; venueAddress: string; lat: number; lng: number };
+  accounts?: TransferAccount[];
+  kakaopay?: { bride: string; groom: string };
+  kakaoMapKey?: string;
+  gallery?: string[];
+}
+
 declare const WEDDING_CONFIG: WeddingConfig | undefined;
+declare const WEDDING_DATA: WeddingDataType | undefined;
 
 // ─── Config ──────────────────────────────────────────────────────────────────
 
+const WD: WeddingDataType | null = (typeof WEDDING_DATA !== 'undefined') ? WEDDING_DATA : null;
+
 const APP_CONFIG = {
-  weddingDate: new Date("2026-06-28T11:00:00+09:00"),
-  transfer: [
+  weddingDate: (() => {
+    if (WD?.wedding?.date && WD?.wedding?.time) {
+      const dateStr = WD.wedding.date.replace(/년\s*/g, '-').replace(/월\s*/g, '-').replace(/일.*/, '').trim();
+      const timeStr = WD.wedding.time.replace('오전 ', '').replace('시', ':00');
+      const d = new Date(`${dateStr}T${timeStr}:00+09:00`);
+      if (!isNaN(d.getTime())) return d;
+    }
+    return new Date("2026-06-28T11:00:00+09:00");
+  })(),
+  transfer: WD?.accounts || [
     { role: "신부측", bank: "신한", account: "000-000-000000", holder: "김주은" },
     { role: "신랑측", bank: "국민", account: "000000-00-000000", holder: "권찬혁" },
   ] as TransferAccount[],
@@ -50,7 +73,6 @@ const GUESTBOOK_LABEL = "방명록";
 // ─── DOM Refs ─────────────────────────────────────────────────────────────────
 
 const root = document.documentElement;
-const accountList = document.getElementById("account-list") as HTMLDivElement;
 const guestbookForm = document.getElementById("guestbook-form") as HTMLFormElement;
 const guestbookList = document.getElementById("guestbook-list") as HTMLUListElement;
 const formStatus = document.getElementById("form-status") as HTMLParagraphElement;
@@ -118,24 +140,46 @@ setInterval(updateCountdown, 1000);
 // ─── Accounts ────────────────────────────────────────────────────────────────
 
 const renderAccounts = (): void => {
-  accountList.innerHTML = APP_CONFIG.transfer
-    .map(
-      ({ role, bank, account, holder }) => `
-      <article class="account-item">
-        <div>
-          <strong>${role}</strong>
-          <p>${bank} ${account} (${holder})</p>
+  const accounts = WD?.accounts || APP_CONFIG.transfer;
+
+  (['bride', 'groom'] as const).forEach(side => {
+    const box = document.getElementById(`account-${side}`);
+    if (!box) return;
+    const items = accounts.filter(a => a.side === side);
+    box.innerHTML = items.map(a => `
+      <div class="account-item">
+        <div class="account-info">
+          <span class="account-role">${a.role}</span>
+          <span class="account-name">${a.name || ''}</span>
+          <span class="account-bank">${a.bank}</span>
+          <span class="account-number">${a.account}</span>
         </div>
-        <button type="button" class="copy-btn" data-copy="${bank} ${account}">복사</button>
-      </article>
-    `,
-    )
-    .join("");
+        <button class="copy-btn" data-copy="${a.account}" aria-label="계좌번호 복사">복사</button>
+      </div>
+    `).join('');
+  });
+
+  // 카카오페이 링크
+  const bridePay = document.getElementById('kakaopay-bride') as HTMLAnchorElement | null;
+  const groomPay = document.getElementById('kakaopay-groom') as HTMLAnchorElement | null;
+  if (bridePay && WD?.kakaopay?.bride) bridePay.href = WD.kakaopay.bride;
+  if (groomPay && WD?.kakaopay?.groom) groomPay.href = WD.kakaopay.groom;
 };
+
+// 탭 전환
+document.querySelectorAll<HTMLButtonElement>('.account-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.account-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const side = tab.dataset.side;
+    document.querySelectorAll('.account-scroll-box').forEach(box => box.classList.add('hidden'));
+    document.getElementById(`account-${side}`)?.classList.remove('hidden');
+  });
+});
 
 // ─── Gallery Slider ───────────────────────────────────────────────────────────
 
-const GALLERY_IMAGES: string[] = [
+const GALLERY_IMAGES: string[] = WD?.gallery || [
   "assets/IMG_0963.webp",
   "assets/IMG_0966.webp",
   "assets/IMG_0981.webp",
@@ -427,6 +471,44 @@ guestbookForm.addEventListener("submit", async (e) => {
   }
 });
 
+// ─── Kakao Map ───────────────────────────────────────────────────────────────
+
+const initKakaoMap = (): void => {
+  const key = WD?.kakaoMapKey;
+  const mapContainer = document.getElementById('kakao-map-container');
+  if (!key || !mapContainer) return;
+
+  // SDK 동적 로드
+  const script = document.createElement('script');
+  script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${key}&autoload=false`;
+  script.onload = () => {
+    (window as any).kakao.maps.load(() => {
+      mapContainer.style.display = 'block';
+      // 정적 지도 숨기기
+      const mapThumbLink = document.querySelector<HTMLElement>('.map-thumb-link');
+      if (mapThumbLink) mapThumbLink.style.display = 'none';
+
+      const lat = WD?.wedding?.lat ?? 37.4589;
+      const lng = WD?.wedding?.lng ?? 126.9525;
+      const options = {
+        center: new (window as any).kakao.maps.LatLng(lat, lng),
+        level: 3,
+        draggable: true,
+      };
+      const map = new (window as any).kakao.maps.Map(mapContainer, options);
+      const marker = new (window as any).kakao.maps.Marker({
+        position: new (window as any).kakao.maps.LatLng(lat, lng),
+      });
+      marker.setMap(map);
+      const infoWindow = new (window as any).kakao.maps.InfoWindow({
+        content: `<div style="padding:6px 10px;font-size:13px;font-weight:600;">${WD?.wedding?.venueName ?? '서울대학교 이라운지'}</div>`,
+      });
+      infoWindow.open(map, marker);
+    });
+  };
+  document.head.appendChild(script);
+};
+
 // ─── Scroll Reveal ───────────────────────────────────────────────────────────
 
 const initScrollReveal = (): void => {
@@ -455,6 +537,7 @@ const initScrollReveal = (): void => {
 
 initializeTheme();
 renderAccounts();
+initKakaoMap();
 initGallery();
 initScrollReveal();
 loadGuestbook();

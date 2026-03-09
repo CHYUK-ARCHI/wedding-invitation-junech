@@ -13,6 +13,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="wedding-data.js"></script>
+    <script id="kakao-map-script"></script>
   </head>
   <body>
 
@@ -128,6 +130,8 @@
         <h2>오시는 길</h2>
         <p class="address">서울 관악구 관악로 1 서울대학교 이라운지</p>
 
+        <div id="kakao-map-container" class="kakao-map-container" style="display:none"></div>
+
         <!-- 약도 이미지 (클릭 시 카카오맵 앱 연결) -->
         <a class="map-thumb-link"
            href="kakaomap://search?q=서울%20관악구%20서울대학교%20관악캠퍼스%20이라운지"
@@ -186,20 +190,25 @@
       <!-- ── ACCOUNTS ── -->
       <section class="accounts section-line section-fade">
         <h2>마음 전하실 곳</h2>
-        <p class="help">버튼을 누르면 계좌번호가 복사됩니다.</p>
-        <div id="account-list" class="account-list"></div>
+
+        <div class="account-tabs">
+          <button class="account-tab active" data-side="bride">신부측</button>
+          <button class="account-tab" data-side="groom">신랑측</button>
+        </div>
+
+        <div class="account-scroll-box" id="account-bride">
+          <!-- JS로 렌더링 -->
+        </div>
+        <div class="account-scroll-box hidden" id="account-groom">
+          <!-- JS로 렌더링 -->
+        </div>
 
         <div class="kakaopay-wrap">
           <p class="kakaopay-label">카카오페이로 마음 전하기</p>
           <div class="kakaopay-links">
-            <a href="https://qr.kakaopay.com/Ej8JEk7oY" class="kakaopay-btn" target="_blank" rel="noreferrer">
-              신부 카카오페이
-            </a>
-            <a href="https://qr.kakaopay.com/Ej8JEk7oY" class="kakaopay-btn" target="_blank" rel="noreferrer">
-              신랑 카카오페이
-            </a>
+            <a id="kakaopay-bride" href="#" class="kakaopay-btn" target="_blank" rel="noreferrer">💛 신부 카카오페이</a>
+            <a id="kakaopay-groom" href="#" class="kakaopay-btn" target="_blank" rel="noreferrer">💛 신랑 카카오페이</a>
           </div>
-          <p class="kakaopay-note">※ 링크는 실제 카카오페이 송금 링크로 교체 필요</p>
         </div>
       </section>
 
@@ -219,6 +228,6 @@
 
     <!-- config.js: 방명록 GitHub 연동 설정 (선택) -->
     <script src="config.js" onerror="console.info('config.js 없음 – localStorage 모드로 실행합니다.')"></script>
-    <script type="module" src="main.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>
