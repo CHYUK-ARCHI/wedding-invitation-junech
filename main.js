@@ -445,43 +445,44 @@ guestbookForm.addEventListener("submit", async (e) => {
 });
 // ─── Kakao Map ───────────────────────────────────────────────────────────────
 const initKakaoMap = () => {
-    const key = WD?.kakaoMapKey;
     const mapContainer = document.getElementById('kakao-map-container');
-    if (!key || !mapContainer) return;
+    if (!mapContainer) return;
 
-    // SDK 동적 로드
-    const script = document.createElement('script');
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${key}&autoload=false`;
-    script.onerror = () => {
-        // SDK 로드 실패 시 정적 지도 유지
-        console.warn('Kakao Maps SDK 로드 실패 – 도메인 등록 여부 확인 필요');
-    };
-    script.onload = () => {
-        window.kakao.maps.load(() => {
+    const tryInit = () => {
+        if (!window.kakao || !window.kakao.maps) {
+            console.warn('Kakao Maps SDK 미로드 – 도메인 등록 여부 확인 필요');
+            return;
+        }
+        kakao.maps.load(() => {
             mapContainer.style.display = 'block';
-            // 정적 지도 숨기기
             const mapThumbLink = document.querySelector('.map-thumb-link');
             if (mapThumbLink) mapThumbLink.style.display = 'none';
 
             const lat = WD?.wedding?.lat || 37.4589;
             const lng = WD?.wedding?.lng || 126.9525;
             const options = {
-                center: new window.kakao.maps.LatLng(lat, lng),
+                center: new kakao.maps.LatLng(lat, lng),
                 level: 3,
                 draggable: true,
             };
-            const map = new window.kakao.maps.Map(mapContainer, options);
-            const marker = new window.kakao.maps.Marker({
-                position: new window.kakao.maps.LatLng(lat, lng),
+            const map = new kakao.maps.Map(mapContainer, options);
+            const marker = new kakao.maps.Marker({
+                position: new kakao.maps.LatLng(lat, lng),
             });
             marker.setMap(map);
-            const infoWindow = new window.kakao.maps.InfoWindow({
+            const infoWindow = new kakao.maps.InfoWindow({
                 content: `<div style="padding:6px 10px;font-size:13px;font-weight:600;">${WD?.wedding?.venueName || '서울대학교 이라운지'}</div>`,
             });
             infoWindow.open(map, marker);
         });
     };
-    document.head.appendChild(script);
+
+    // SDK가 아직 로드 중이면 잠시 대기 후 재시도
+    if (window.kakao && window.kakao.maps) {
+        tryInit();
+    } else {
+        window.addEventListener('load', tryInit);
+    }
 };
 
 // ─── Scroll Reveal ───────────────────────────────────────────────────────────
