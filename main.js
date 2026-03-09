@@ -474,7 +474,7 @@ const initKakaoMap = () => {
                 });
                 marker.setMap(map);
                 const infoWindow = new kakao.maps.InfoWindow({
-                    content: `<div style="padding:6px 10px;font-size:13px;font-weight:600;">${venueName}</div>`,
+                    content: `<div style="padding:6px 10px;font-size:13px;font-weight:600;color:#000;">${venueName}</div>`,
                 });
                 infoWindow.open(map, marker);
             };
