@@ -514,8 +514,25 @@ const initScrollReveal = () => {
     }, { threshold: 0.12 });
     targets.forEach((el) => observer.observe(el));
 };
+// ─── Texts ───────────────────────────────────────────────────────────────────
+const renderTexts = () => {
+    const T = WD?.texts;
+    if (!T) return;
+    const set = (id, html) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = html;
+    };
+    set('txt-invitation-note', T.invitationNote || '');
+    set('txt-bride-desc', T.brideDesc || '');
+    set('txt-groom-desc', T.groomDesc || '');
+    set('txt-subway', T.subway || '');
+    set('txt-car', T.car || '');
+    set('txt-parking', T.parking || '');
+    set('txt-atm', T.atm || '');
+};
 // ─── Init ────────────────────────────────────────────────────────────────────
 initializeTheme();
+renderTexts();
 renderAccounts();
 initKakaoMap();
 initGallery();
