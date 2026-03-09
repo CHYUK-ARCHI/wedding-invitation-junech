@@ -54,7 +54,7 @@ const WEDDING_DATA = {
   },
 
   // ── 카카오맵 JavaScript API 키 (https://developers.kakao.com 에서 발급) ──
-  kakaoMapKey: "",  // 비워두면 정적 지도 이미지로 표시
+  kakaoMapKey: "c00b4b806976cdd0faf033f948a1756f",
 
   // ── 갤러리 이미지 (assets/ 폴더 기준) ──
   gallery: [
