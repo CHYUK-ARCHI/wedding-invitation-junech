@@ -98,6 +98,9 @@ body {
   padding: 52px 20px;
 }
 
+/* 이미지 EXIF 방향 자동 보정 */
+img { image-orientation: from-image; }
+
 /* ============================================================
    Typography
    ============================================================ */
@@ -202,6 +205,8 @@ button:active {
    ============================================================ */
 .cover {
   position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   min-height: 100svh;
   background-image: url('assets/IMG_0876.webp');
   background-size: cover;
@@ -856,6 +861,30 @@ button:active {
   .story-pair { gap: 20px; }
   .story-text { padding: 0 20px; }
   .couple { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============================================================
+   Responsive: Desktop (860px+)
+   ============================================================ */
+@media (min-width: 860px) {
+  .invitation { max-width: 860px; }
+
+  .section-line { padding: 64px 60px; }
+
+  /* 갤러리 더 넓게 */
+  .gallery-slider-wrap { max-width: 100%; }
+
+  /* 스토리 카드 더 넓게 */
+  .story-pair { max-width: 100%; gap: 28px; }
+
+  /* 커플 섹션 3열 공간 활용 */
+  .couple { max-width: 600px; margin: 0 auto; }
+
+  /* 교통 안내 4열 */
+  .transport-grid { grid-template-columns: repeat(4, 1fr); }
+
+  /* 계좌/방명록 중앙 정렬 더 넓게 */
+  .account-list { max-width: 600px; margin: 0 auto; }
 }
 
 /* ============================================================
