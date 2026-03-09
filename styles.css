@@ -255,13 +255,23 @@ button:active {
   padding: 0 8px;
 }
 
-.cover-subtitle {
-  margin: 6px 0 16px;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+.cover-names-kr {
+  margin: 4px 0 2px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  font-family: "Noto Sans KR", sans-serif;
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.3s forwards;
+}
+
+.cover-subtitle {
+  margin: 4px 0 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease 0.35s forwards;
 }
 
 /* ============================================================
@@ -367,20 +377,26 @@ button:active {
 /* ============================================================
    Story Section
    ============================================================ */
-.story-list { display: grid; gap: 20px; }
-
-.story-item {
+.story-pair {
   display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.story-card {
   background: color-mix(in srgb, var(--surface) 50%, transparent);
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--line);
+  text-align: center;
 }
 
-.story-photo { aspect-ratio: 4 / 3; }
+.story-photo { aspect-ratio: 3 / 4; }
 
-.story-text { padding: 18px 16px; }
-.story-text h3 { font-size: 1.5rem; margin-bottom: 8px; text-align: center; }
+.story-text { padding: 14px 12px; }
+.story-text h3 { font-size: 1.3rem; margin-bottom: 4px; text-align: center; }
 .story-text p { margin: 0; color: var(--muted); line-height: 1.7; }
 .story-date { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 4px; }
 
@@ -837,9 +853,7 @@ button:active {
    Responsive: Tablet+
    ============================================================ */
 @media (min-width: 560px) {
-  .story-item { grid-template-columns: 1fr 1fr; align-items: center; }
-  .story-item.reverse .story-photo { order: 2; }
-  .story-item.reverse .story-text { order: 1; }
+  .story-pair { gap: 20px; }
   .story-text { padding: 0 20px; }
   .couple { grid-template-columns: repeat(2, 1fr); }
 }
