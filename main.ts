@@ -50,7 +50,6 @@ const GUESTBOOK_LABEL = "방명록";
 // ─── DOM Refs ─────────────────────────────────────────────────────────────────
 
 const root = document.documentElement;
-const themeToggle = document.getElementById("theme-toggle") as HTMLButtonElement;
 const accountList = document.getElementById("account-list") as HTMLDivElement;
 const guestbookForm = document.getElementById("guestbook-form") as HTMLFormElement;
 const guestbookList = document.getElementById("guestbook-list") as HTMLUListElement;
@@ -75,28 +74,15 @@ const showToast = (msg: string): void => {
   toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2500);
 };
 
-// ─── Theme ───────────────────────────────────────────────────────────────────
-
-const THEME_KEY = "invitation-theme";
-
-const applyTheme = (theme: "light" | "dark"): void => {
-  root.dataset.theme = theme;
-  localStorage.setItem(THEME_KEY, theme);
-  if (themeToggle) {
-    themeToggle.textContent = theme === "dark" ? "☀️ 라이트 모드" : "🌙 다크 모드";
-  }
-};
+// ─── Theme (시스템 설정 자동 적용) ───────────────────────────────────────────
 
 const initializeTheme = (): void => {
-  const saved = localStorage.getItem(THEME_KEY);
-  if (saved === "light" || saved === "dark") { applyTheme(saved); return; }
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  applyTheme(prefersDark ? "dark" : "light");
+  root.dataset.theme = prefersDark ? "dark" : "light";
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
+    root.dataset.theme = e.matches ? "dark" : "light";
+  });
 };
-
-themeToggle?.addEventListener("click", () => {
-  applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
-});
 
 // ─── Countdown ───────────────────────────────────────────────────────────────
 
