@@ -479,16 +479,19 @@ const initKakaoMap = () => {
                 infoWindow.open(map, marker);
             };
 
-            // 장소 ID로 정확한 위치 검색
+            // SNU 캠퍼스 반경 1km 내에서 장소 검색
             const ps = new kakao.maps.services.Places();
             ps.keywordSearch('이라운지 서울대점', (data, status) => {
                 if (status === kakao.maps.services.Status.OK && data.length > 0) {
-                    // place ID 1408612060 우선, 없으면 첫 번째 결과 사용
-                    const target = data.find(p => p.id === '1408612060') || data[0];
+                    const target = data.find(p => String(p.id) === '1408612060') || data[0];
                     initMap(parseFloat(target.y), parseFloat(target.x));
                 } else {
                     initMap(fallbackLat, fallbackLng);
                 }
+            }, {
+                location: new kakao.maps.LatLng(37.4589, 126.9525),
+                radius: 1000,
+                sort: kakao.maps.services.SortBy.DISTANCE,
             });
         });
     };
