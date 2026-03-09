@@ -47,10 +47,6 @@
             <div class="countdown-unit"><span class="countdown-num" id="cd-secs">--</span><span class="countdown-sub">SECS</span></div>
           </div>
         </div>
-
-        <figure class="cover-photo photo-frame">
-          <img src="assets/IMG_0876.jpeg" alt="권찬혁 김주은 메인 사진" decoding="async" />
-        </figure>
       </section>
 
       <!-- ── INVITATION NOTE ── -->
@@ -71,18 +67,52 @@
         <div class="story-list">
           <article class="story-item">
             <figure class="story-photo photo-frame">
-              <img src="assets/IMG_0876.jpeg" alt="우리 이야기 사진 1" loading="lazy" decoding="async" />
+              <picture>
+                <source srcset="assets/IMG_0876.webp" type="image/webp" />
+                <img src="assets/IMG_0876.jpeg" alt="처음 만난 날" loading="lazy" decoding="async" />
+              </picture>
             </figure>
             <div class="story-text">
+              <p class="story-date">2021 · SPRING</p>
               <h3>처음 만난 날</h3>
               <p>처음 눈이 마주친 날부터 지금까지, 사소한 일상들이 특별한 추억으로 쌓였습니다.</p>
             </div>
           </article>
           <article class="story-item reverse">
             <figure class="story-photo photo-frame">
-              <img src="assets/IMG_0925.jpeg" alt="우리 이야기 사진 2" loading="lazy" decoding="async" />
+              <picture>
+                <source srcset="assets/IMG_0963.webp" type="image/webp" />
+                <img src="assets/IMG_0963.jpeg" alt="함께한 시간" loading="lazy" decoding="async" />
+              </picture>
             </figure>
             <div class="story-text">
+              <p class="story-date">2022 · SUMMER</p>
+              <h3>함께한 시간</h3>
+              <p>평범한 하루도 둘이 함께라면 충분히 빛났습니다.</p>
+            </div>
+          </article>
+          <article class="story-item">
+            <figure class="story-photo photo-frame">
+              <picture>
+                <source srcset="assets/IMG_0981.webp" type="image/webp" />
+                <img src="assets/IMG_0981.jpeg" alt="프로포즈" loading="lazy" decoding="async" />
+              </picture>
+            </figure>
+            <div class="story-text">
+              <p class="story-date">2025 · WINTER</p>
+              <h3>프로포즈</h3>
+              <p>평생 옆에 있어달라는 한마디가 새로운 시작이 되었습니다.</p>
+            </div>
+          </article>
+          <article class="story-item reverse">
+            <figure class="story-photo photo-frame">
+              <picture>
+                <source srcset="assets/IMG_0925.webp" type="image/webp" />
+                <img src="assets/IMG_0925.jpeg" alt="함께할 내일" loading="lazy" decoding="async" />
+              </picture>
+            </figure>
+            <div class="story-text">
+              <p class="story-date">2026 · JUNE</p>
               <h3>함께할 내일</h3>
               <p>서로의 하루를 가장 먼저 묻고 싶은 사람으로, 매일의 평범함을 함께 채워가겠습니다.</p>
             </div>
@@ -94,14 +124,20 @@
       <section class="couple section-line section-fade">
         <article>
           <figure class="profile-photo photo-frame">
-            <img src="assets/IMG_0826.jpeg" alt="김주은 사진" loading="lazy" decoding="async" />
+            <picture>
+              <source srcset="assets/IMG_0826.webp" type="image/webp" />
+              <img src="assets/IMG_0826.jpeg" alt="김주은 사진" loading="lazy" decoding="async" />
+            </picture>
           </figure>
           <h3>김주은</h3>
           <p>김영수 · 박은영의 장녀</p>
         </article>
         <article>
           <figure class="profile-photo photo-frame">
-            <img src="assets/IMG_0912.jpeg" alt="권찬혁 사진" loading="lazy" decoding="async" />
+            <picture>
+              <source srcset="assets/IMG_0912.webp" type="image/webp" />
+              <img src="assets/IMG_0912.jpeg" alt="권찬혁 사진" loading="lazy" decoding="async" />
+            </picture>
           </figure>
           <h3>권찬혁</h3>
           <p>권오현 · 김현숙의 차남</p>
@@ -118,43 +154,25 @@
       <!-- ── GALLERY ── -->
       <section class="gallery section-line section-fade">
         <div style="text-align:center"><h2>Gallery</h2></div>
-        <div class="gallery-grid" id="gallery-grid">
-          <article class="gallery-card" data-photo-id="1" data-src="assets/IMG_0963.jpeg">
-            <figure class="photo-frame">
-              <img src="assets/IMG_0963.jpeg" alt="갤러리 1" loading="lazy" decoding="async" />
-              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
+        <div class="gallery-slider-wrap">
+          <!-- 메인 큰 사진 -->
+          <div class="gallery-main" id="gallery-main">
+            <button class="gs-prev" id="gs-prev" aria-label="이전">&#8249;</button>
+            <figure class="gallery-main-fig">
+              <img id="gs-main-img" src="assets/IMG_0963.webp" alt="갤러리" />
             </figure>
-          </article>
-          <article class="gallery-card" data-photo-id="2" data-src="assets/IMG_0966.jpeg">
-            <figure class="photo-frame">
-              <img src="assets/IMG_0966.jpeg" alt="갤러리 2" loading="lazy" decoding="async" />
-              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
-            </figure>
-          </article>
-          <article class="gallery-card" data-photo-id="3" data-src="assets/IMG_0981.jpeg">
-            <figure class="photo-frame">
-              <img src="assets/IMG_0981.jpeg" alt="갤러리 3" loading="lazy" decoding="async" />
-              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
-            </figure>
-          </article>
-          <article class="gallery-card" data-photo-id="4" data-src="assets/IMG_0982.jpeg">
-            <figure class="photo-frame">
-              <img src="assets/IMG_0982.jpeg" alt="갤러리 4" loading="lazy" decoding="async" />
-              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
-            </figure>
-          </article>
-          <article class="gallery-card" data-photo-id="5" data-src="assets/IMG_0983.jpeg">
-            <figure class="photo-frame">
-              <img src="assets/IMG_0983.jpeg" alt="갤러리 5" loading="lazy" decoding="async" />
-              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
-            </figure>
-          </article>
-          <article class="gallery-card" data-photo-id="6" data-src="assets/IMG_1007.jpeg">
-            <figure class="photo-frame">
-              <img src="assets/IMG_1007.jpeg" alt="갤러리 6" loading="lazy" decoding="async" />
-              <div class="gallery-card-overlay"><span class="gallery-expand-icon">⊕</span></div>
-            </figure>
-          </article>
+            <button class="gs-next" id="gs-next" aria-label="다음">&#8250;</button>
+            <span class="gs-counter" id="gs-counter">1 / 6</span>
+          </div>
+          <!-- 썸네일 스트립 -->
+          <div class="gallery-thumbs" id="gallery-thumbs">
+            <div class="gallery-thumb active" data-idx="0"><img src="assets/IMG_0963.webp" alt="1" /></div>
+            <div class="gallery-thumb" data-idx="1"><img src="assets/IMG_0966.webp" alt="2" /></div>
+            <div class="gallery-thumb" data-idx="2"><img src="assets/IMG_0981.webp" alt="3" /></div>
+            <div class="gallery-thumb" data-idx="3"><img src="assets/IMG_0982.webp" alt="4" /></div>
+            <div class="gallery-thumb" data-idx="4"><img src="assets/IMG_0983.webp" alt="5" /></div>
+            <div class="gallery-thumb" data-idx="5"><img src="assets/IMG_1007.webp" alt="6" /></div>
+          </div>
         </div>
       </section>
 
@@ -170,9 +188,16 @@
             loading="lazy"
           ></iframe>
         </div>
-        <div class="map-links">
-          <a href="https://map.kakao.com/link/map/서울대학교이라운지,37.4589,126.9525" target="_blank" rel="noreferrer">카카오맵</a>
-          <a href="https://map.naver.com/v5/search/서울대학교%20이라운지" target="_blank" rel="noreferrer">네이버지도</a>
+        <div class="map-btn-wrap">
+          <a class="map-btn kakao" href="https://map.kakao.com/link/map/서울대학교이라운지,37.4589,126.9525" target="_blank" rel="noreferrer">
+            카카오맵
+          </a>
+          <a class="map-btn naver" href="https://map.naver.com/v5/search/서울대학교%20이라운지" target="_blank" rel="noreferrer">
+            네이버지도
+          </a>
+          <a class="map-btn tmap" href="tmap://route?goalname=서울대학교이라운지&goalx=126.9525&goaly=37.4589" target="_blank" rel="noreferrer">
+            T맵 길찾기
+          </a>
         </div>
 
         <!-- 교통 안내 -->
@@ -205,6 +230,19 @@
         <h2>마음 전하실 곳</h2>
         <p class="help">버튼을 누르면 계좌번호가 복사됩니다.</p>
         <div id="account-list" class="account-list"></div>
+
+        <div class="kakaopay-wrap">
+          <p class="kakaopay-label">카카오페이로 마음 전하기</p>
+          <div class="kakaopay-links">
+            <a href="https://qr.kakaopay.com/Ej8JEk7oY" class="kakaopay-btn" target="_blank" rel="noreferrer">
+              신부 카카오페이
+            </a>
+            <a href="https://qr.kakaopay.com/Ej8JEk7oY" class="kakaopay-btn" target="_blank" rel="noreferrer">
+              신랑 카카오페이
+            </a>
+          </div>
+          <p class="kakaopay-note">※ 링크는 실제 카카오페이 송금 링크로 교체 필요</p>
+        </div>
       </section>
 
       <!-- ── GUESTBOOK ── -->

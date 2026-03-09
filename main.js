@@ -104,22 +104,59 @@ const renderAccounts = () => {
     `)
         .join("");
 };
+// ─── Gallery Slider ───────────────────────────────────────────────────────────
+const GALLERY_IMAGES = [
+    "assets/IMG_0963.webp",
+    "assets/IMG_0966.webp",
+    "assets/IMG_0981.webp",
+    "assets/IMG_0982.webp",
+    "assets/IMG_0983.webp",
+    "assets/IMG_1007.webp",
+];
+let sliderIndex = 0;
+const updateSlider = (idx) => {
+    sliderIndex = (idx + GALLERY_IMAGES.length) % GALLERY_IMAGES.length;
+    const mainImg = document.getElementById("gs-main-img");
+    const counter = document.getElementById("gs-counter");
+    if (mainImg)
+        mainImg.src = GALLERY_IMAGES[sliderIndex];
+    if (counter)
+        counter.textContent = `${sliderIndex + 1} / ${GALLERY_IMAGES.length}`;
+    document.querySelectorAll(".gallery-thumb").forEach((thumb, i) => {
+        thumb.classList.toggle("active", i === sliderIndex);
+    });
+};
+const initGallerySlider = () => {
+    const prevBtn = document.getElementById("gs-prev");
+    const nextBtn = document.getElementById("gs-next");
+    prevBtn?.addEventListener("click", () => updateSlider(sliderIndex - 1));
+    nextBtn?.addEventListener("click", () => updateSlider(sliderIndex + 1));
+    document.querySelectorAll(".gallery-thumb").forEach((thumb) => {
+        thumb.addEventListener("click", () => {
+            const idx = parseInt(thumb.dataset.idx ?? "0", 10);
+            updateSlider(idx);
+        });
+    });
+    // 터치 스와이프
+    const mainEl = document.getElementById("gallery-main");
+    if (mainEl) {
+        let touchStartX = 0;
+        mainEl.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].clientX;
+        }, { passive: true });
+        mainEl.addEventListener("touchend", (e) => {
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(dx) > 40) {
+                updateSlider(sliderIndex + (dx < 0 ? 1 : -1));
+            }
+        }, { passive: true });
+    }
+};
 // ─── Lightbox ────────────────────────────────────────────────────────────────
-let galleryPhotos = [];
+let galleryPhotos = GALLERY_IMAGES;
 let currentPhotoIndex = 0;
 const initGallery = () => {
-    const cards = Array.from(document.querySelectorAll(".gallery-card"));
-    galleryPhotos = cards.map((c) => c.dataset.src ?? "");
-    cards.forEach((card, idx) => {
-        card.addEventListener("click", () => openLightbox(idx));
-        card.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ")
-                openLightbox(idx);
-        });
-        card.setAttribute("tabindex", "0");
-        card.setAttribute("role", "button");
-        card.setAttribute("aria-label", `갤러리 사진 ${idx + 1} 크게 보기`);
-    });
+    initGallerySlider();
 };
 const openLightbox = (idx) => {
     currentPhotoIndex = idx;
@@ -150,20 +187,26 @@ lightbox.addEventListener("click", (e) => {
         closeLightbox();
 });
 document.addEventListener("keydown", (e) => {
-    if (!lightbox.classList.contains("open"))
+    if (lightbox.classList.contains("open")) {
+        if (e.key === "Escape") {
+            closeLightbox();
+            return;
+        }
+        if (e.key === "ArrowLeft") {
+            currentPhotoIndex = (currentPhotoIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
+            showLightboxPhoto();
+        }
+        if (e.key === "ArrowRight") {
+            currentPhotoIndex = (currentPhotoIndex + 1) % galleryPhotos.length;
+            showLightboxPhoto();
+        }
         return;
-    if (e.key === "Escape") {
-        closeLightbox();
-        return;
     }
-    if (e.key === "ArrowLeft") {
-        currentPhotoIndex = (currentPhotoIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
-        showLightboxPhoto();
-    }
-    if (e.key === "ArrowRight") {
-        currentPhotoIndex = (currentPhotoIndex + 1) % galleryPhotos.length;
-        showLightboxPhoto();
-    }
+    // 갤러리 슬라이더 키보드 지원
+    if (e.key === "ArrowLeft")
+        updateSlider(sliderIndex - 1);
+    if (e.key === "ArrowRight")
+        updateSlider(sliderIndex + 1);
 });
 // ─── Account Copy ────────────────────────────────────────────────────────────
 document.addEventListener("click", async (e) => {

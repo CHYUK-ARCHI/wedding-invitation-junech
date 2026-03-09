@@ -201,16 +201,37 @@ button:active {
    Cover Section
    ============================================================ */
 .cover {
+  position: relative;
+  min-height: 100svh;
+  background-image: url('assets/IMG_0876.webp');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
   text-align: center;
   border-top: none;
-  padding: 56px 20px 0;
-  position: relative;
   overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 10, 5, 0.38);
+}
+
+/* 텍스트는 오버레이 위에 */
+.cover > * {
+  position: relative;
+  z-index: 1;
 }
 
 .cover-kicker {
   margin: 0;
-  color: var(--gold);
+  color: rgba(255, 215, 150, 0.92);
   letter-spacing: 0.22em;
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -223,6 +244,7 @@ button:active {
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.1;
+  color: #fff;
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.2s forwards;
 }
@@ -235,20 +257,11 @@ button:active {
 
 .cover-subtitle {
   margin: 6px 0 16px;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.3s forwards;
-}
-
-.cover-photo {
-  width: 100%;
-  margin: 0;
-  min-height: 72vh;
-  height: min(900px, 90vh);
-  opacity: 0;
-  animation: fadeIn 1.0s ease 0.5s forwards;
 }
 
 /* ============================================================
@@ -262,7 +275,7 @@ button:active {
 
 .countdown-label {
   font-family: "DM Serif Display", "Gowun Batang", serif;
-  color: var(--rose);
+  color: rgba(255, 180, 180, 0.95);
   font-size: 0.78rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -277,7 +290,8 @@ button:active {
 
 .countdown-unit {
   text-align: center;
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   padding: 10px 14px;
   min-width: 62px;
@@ -286,14 +300,14 @@ button:active {
 .countdown-num {
   font-family: "DM Serif Display", "Gowun Batang", serif;
   font-size: clamp(1.6rem, 6vw, 2.2rem);
-  color: var(--ink);
+  color: #fff;
   line-height: 1;
   display: block;
 }
 
 .countdown-sub {
   font-size: 0.68rem;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.08em;
   margin-top: 4px;
   display: block;
@@ -368,6 +382,7 @@ button:active {
 .story-text { padding: 18px 16px; }
 .story-text h3 { font-size: 1.5rem; margin-bottom: 8px; }
 .story-text p { margin: 0; color: var(--muted); line-height: 1.7; }
+.story-date { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 4px; }
 
 /* ============================================================
    Couple Section
@@ -408,54 +423,101 @@ button:active {
 }
 
 /* ============================================================
-   Gallery Section
+   Gallery Section – Slider
    ============================================================ */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 6px;
-}
+.gallery-slider-wrap { max-width: 680px; margin: 0 auto; }
 
-.gallery-card {
-  border: 1px solid var(--line);
-  background: var(--paper);
+.gallery-main {
+  position: relative;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: var(--radius);
-  transition: transform var(--transition), box-shadow var(--transition);
-  cursor: pointer;
+  border-radius: 12px;
 }
 
-.gallery-card:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+.gallery-main-fig {
+  width: 100%;
+  height: 100%;
+  margin: 0;
 }
 
-.gallery-card .photo-frame { aspect-ratio: 3 / 4; }
-
-.gallery-card:hover .photo-frame img {
-  transform: scale(1.04);
+.gallery-main-fig img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(var(--image-brightness)) saturate(var(--image-saturation));
 }
 
-.gallery-card-overlay {
+.gs-prev, .gs-next {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity var(--transition);
-  display: flex;
-  align-items: flex-end;
-  padding: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  border: none;
+  font-size: 2rem;
+  padding: 8px 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  min-height: auto;
+  line-height: 1;
+  transition: background var(--transition);
+}
+
+.gs-prev:hover, .gs-next:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-50%);
+  box-shadow: none;
+}
+
+.gs-prev { left: 8px; }
+.gs-next { right: 8px; }
+
+.gs-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  color: #fff;
+  font-size: 0.8rem;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 8px;
+  border-radius: 20px;
   pointer-events: none;
 }
 
-.gallery-card figure { position: relative; }
-.gallery-card:hover .gallery-card-overlay { opacity: 1; }
+.gallery-thumbs {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
 
-.gallery-expand-icon {
-  color: #fff;
-  font-size: 1.1rem;
-  opacity: 0.9;
+.gallery-thumb {
+  flex: 0 0 80px;
+  height: 60px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.2s;
+}
+
+.gallery-thumb.active,
+.gallery-thumb:hover {
+  opacity: 1;
+  outline: 2px solid var(--rose);
+  outline-offset: 1px;
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(var(--image-brightness)) saturate(var(--image-saturation));
 }
 
 /* ============================================================
@@ -564,7 +626,7 @@ button:active {
   border: none;
 }
 
-.map-links {
+.map-btn-wrap {
   display: flex;
   justify-content: center;
   gap: 8px;
@@ -572,24 +634,52 @@ button:active {
   margin-top: 14px;
 }
 
-.map-links a {
+.map-btn {
   text-decoration: none;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  padding: 9px 16px;
-  color: var(--ink);
+  padding: 10px 18px;
   border-radius: 999px;
   font-size: 0.88rem;
-  transition: background var(--transition), border-color var(--transition), transform var(--transition);
-  display: flex;
+  font-weight: 500;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  border: 1px solid transparent;
 }
 
-.map-links a:hover {
+.map-btn.kakao {
+  background: #FEE500;
+  color: #3C1E1E;
+}
+
+.map-btn.kakao:hover {
+  background: #f0d800;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.map-btn.naver {
+  background: #03C75A;
+  color: #fff;
+}
+
+.map-btn.naver:hover {
+  background: #02b050;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.map-btn.tmap {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.map-btn.tmap:hover {
   background: var(--surface);
   border-color: var(--accent);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 /* ============================================================
@@ -628,6 +718,29 @@ button:active {
 .account-item .copy-btn:hover { background: var(--accent); color: #fff; }
 
 .help { color: var(--muted); font-size: 0.85rem; margin-bottom: 14px; }
+
+/* ============================================================
+   KakaoPay Section
+   ============================================================ */
+.kakaopay-wrap { margin-top: 24px; text-align: center; }
+.kakaopay-label { font-size: 0.95rem; color: var(--muted); margin-bottom: 12px; }
+.kakaopay-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.kakaopay-btn {
+  background: #FEE500;
+  color: #3C1E1E;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.kakaopay-btn:hover {
+  background: #f0d800;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.kakaopay-note { font-size: 0.75rem; color: var(--muted); margin-top: 10px; }
 
 /* ============================================================
    Guestbook
@@ -729,17 +842,12 @@ button:active {
   .story-item.reverse .story-text { order: 1; }
   .story-text { padding: 0 20px; }
   .couple { grid-template-columns: repeat(2, 1fr); }
-  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* ============================================================
    Responsive: Mobile
    ============================================================ */
 @media (max-width: 559px) {
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .invitation-note p,
   .story-text p,
   .schedule p,
@@ -834,7 +942,7 @@ button:active {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .cover-kicker, .cover-title, .cover-subtitle, .cover-photo,
+  .cover-kicker, .cover-title, .cover-subtitle,
   .countdown-wrap { opacity: 1; animation: none; }
   .like-btn.liked { animation: none; }
   .section-fade { opacity: 1; transform: none; }
