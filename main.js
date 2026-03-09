@@ -452,6 +452,10 @@ const initKakaoMap = () => {
     // SDK 동적 로드
     const script = document.createElement('script');
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${key}&autoload=false`;
+    script.onerror = () => {
+        // SDK 로드 실패 시 정적 지도 유지
+        console.warn('Kakao Maps SDK 로드 실패 – 도메인 등록 여부 확인 필요');
+    };
     script.onload = () => {
         window.kakao.maps.load(() => {
             mapContainer.style.display = 'block';
