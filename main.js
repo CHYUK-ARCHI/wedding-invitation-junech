@@ -2,14 +2,14 @@
 /* global WEDDING_CONFIG, WEDDING_DATA */
 // ─── Config ──────────────────────────────────────────────────────────────────
 const WD = (typeof WEDDING_DATA !== 'undefined') ? WEDDING_DATA : null;
-
 const APP_CONFIG = {
     weddingDate: (() => {
         if (WD?.wedding?.date && WD?.wedding?.time) {
             const dateStr = WD.wedding.date.replace(/년\s*/g, '-').replace(/월\s*/g, '-').replace(/일.*/, '').trim();
             const timeStr = WD.wedding.time.replace('오전 ', '').replace('시', ':00');
             const d = new Date(`${dateStr}T${timeStr}:00+09:00`);
-            if (!isNaN(d.getTime())) return d;
+            if (!isNaN(d.getTime()))
+                return d;
         }
         return new Date("2026-06-28T11:00:00+09:00");
     })(),
@@ -88,16 +88,16 @@ setInterval(updateCountdown, 1000);
 // ─── Accounts ────────────────────────────────────────────────────────────────
 const renderAccounts = () => {
     const accounts = WD?.accounts || APP_CONFIG.transfer;
-
     ['bride', 'groom'].forEach(side => {
         const box = document.getElementById(`account-${side}`);
-        if (!box) return;
+        if (!box)
+            return;
         const items = accounts.filter(a => a.side === side);
         box.innerHTML = items.map(a => `
       <div class="account-item">
         <div class="account-info">
           <span class="account-role">${a.role}</span>
-          <span class="account-name">${a.name}</span>
+          <span class="account-name">${a.name || ''}</span>
           <span class="account-bank">${a.bank}</span>
           <span class="account-number">${a.account}</span>
         </div>
@@ -105,14 +105,14 @@ const renderAccounts = () => {
       </div>
     `).join('');
     });
-
     // 카카오페이 링크
     const bridePay = document.getElementById('kakaopay-bride');
     const groomPay = document.getElementById('kakaopay-groom');
-    if (bridePay && WD?.kakaopay?.bride) bridePay.href = WD.kakaopay.bride;
-    if (groomPay && WD?.kakaopay?.groom) groomPay.href = WD.kakaopay.groom;
+    if (bridePay && WD?.kakaopay?.bride)
+        bridePay.href = WD.kakaopay.bride;
+    if (groomPay && WD?.kakaopay?.groom)
+        groomPay.href = WD.kakaopay.groom;
 };
-
 // 탭 전환
 document.querySelectorAll('.account-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -144,7 +144,6 @@ const updateSlider = (idx) => {
     document.querySelectorAll(".gallery-thumb").forEach((thumb, i) => {
         thumb.classList.toggle("active", i === sliderIndex);
     });
-    updateGalleryLikeUI?.();
 };
 const initGallerySlider = () => {
     const prevBtn = document.getElementById("gs-prev");
@@ -175,47 +174,8 @@ const initGallerySlider = () => {
 // ─── Lightbox ────────────────────────────────────────────────────────────────
 let galleryPhotos = GALLERY_IMAGES;
 let currentPhotoIndex = 0;
-// 갤러리 좋아요
-const LS_GALLERY_LIKES = "wedding-gallery-likes";
-const getGalleryLikes = () => {
-    try { return JSON.parse(localStorage.getItem(LS_GALLERY_LIKES) || "{}"); }
-    catch { return {}; }
-};
-const updateGalleryLikeUI = () => {
-    const likes = getGalleryLikes();
-    const btn = document.getElementById("gallery-like-btn");
-    const count = document.getElementById("gallery-like-count");
-    if (!btn || !count) return;
-    const key = `img-${sliderIndex}`;
-    const liked = !!likes[key];
-    btn.textContent = liked ? "♥" : "♡";
-    btn.classList.toggle("liked-active", liked);
-    count.textContent = Object.values(likes).filter((v, i) => {
-        const k = `img-${i}`;
-        return likes[k];
-    }).length.toString();
-    // 현재 사진 좋아요 수 표시
-    const total = Object.keys(likes).filter(k => likes[k]).length;
-    count.textContent = String(total);
-};
 const initGallery = () => {
     initGallerySlider();
-    // 메인 사진 클릭 → 라이트박스
-    const mainFig = document.getElementById("gallery-main-fig");
-    mainFig?.addEventListener("click", () => openLightbox(sliderIndex));
-    // 좋아요 버튼
-    const likeBtn = document.getElementById("gallery-like-btn");
-    likeBtn?.addEventListener("click", () => {
-        const likes = getGalleryLikes();
-        const key = `img-${sliderIndex}`;
-        likes[key] = !likes[key];
-        localStorage.setItem(LS_GALLERY_LIKES, JSON.stringify(likes));
-        void likeBtn.offsetWidth;
-        likeBtn.classList.remove("liked");
-        if (likes[key]) likeBtn.classList.add("liked");
-        updateGalleryLikeUI();
-    });
-    updateGalleryLikeUI();
 };
 const openLightbox = (idx) => {
     currentPhotoIndex = idx;
@@ -370,8 +330,8 @@ const renderEntry = (entry) => {
     const dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}.${String(date.getDate()).padStart(2, "0")}`;
     const entryId = String(entry.id);
     li.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
-      <div style="flex:1;min-width:0;">
+    <div class="guestbook-entry">
+      <div class="guestbook-entry-body">
         <strong>${escapeHtml(entry.name)}</strong>
         <p>${escapeHtml(entry.message)}</p>
         <time datetime="${entry.createdAt}">${dateStr}</time>
@@ -447,8 +407,8 @@ guestbookForm.addEventListener("submit", async (e) => {
 const initKakaoMap = () => {
     const key = WD?.kakaoMapKey;
     const mapContainer = document.getElementById('kakao-map-container');
-    if (!key || !mapContainer) return;
-
+    if (!key || !mapContainer)
+        return;
     // SDK 동적 로드
     const script = document.createElement('script');
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${key}&autoload=false`;
@@ -457,10 +417,10 @@ const initKakaoMap = () => {
             mapContainer.style.display = 'block';
             // 정적 지도 숨기기
             const mapThumbLink = document.querySelector('.map-thumb-link');
-            if (mapThumbLink) mapThumbLink.style.display = 'none';
-
-            const lat = WD?.wedding?.lat || 37.4589;
-            const lng = WD?.wedding?.lng || 126.9525;
+            if (mapThumbLink)
+                mapThumbLink.style.display = 'none';
+            const lat = WD?.wedding?.lat ?? 37.4589;
+            const lng = WD?.wedding?.lng ?? 126.9525;
             const options = {
                 center: new window.kakao.maps.LatLng(lat, lng),
                 level: 3,
@@ -472,14 +432,13 @@ const initKakaoMap = () => {
             });
             marker.setMap(map);
             const infoWindow = new window.kakao.maps.InfoWindow({
-                content: `<div style="padding:6px 10px;font-size:13px;font-weight:600;">${WD?.wedding?.venueName || '서울대학교 이라운지'}</div>`,
+                content: `<div style="padding:6px 10px;font-size:13px;font-weight:600;">${WD?.wedding?.venueName ?? '서울대학교 이라운지'}</div>`,
             });
             infoWindow.open(map, marker);
         });
     };
     document.head.appendChild(script);
 };
-
 // ─── Scroll Reveal ───────────────────────────────────────────────────────────
 const initScrollReveal = () => {
     const targets = document.querySelectorAll(".section-fade");

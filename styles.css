@@ -3,45 +3,48 @@
    ============================================================ */
 :root {
   color-scheme: light;
-  /* Cream palette */
-  --background: #faf5ee;
-  --paper: #f4ece0;
-  --surface: #ede3d5;
-  /* Sage palette */
-  --sage: #8a9e8c;
-  --sage-dark: #6b7f6d;
-  /* Rose palette */
-  --rose: #c9a0a0;
-  --rose-dark: #b08080;
-  /* Ink & text */
-  --ink: #3d2e24;
-  --muted: #7a6055;
-  --line: #d8c8b4;
-  /* Accent mapped to rose/sage */
-  --accent: #c9a0a0;
-  --accent-soft: #f0e2e2;
-  --gold: #a08060;
-  --image-brightness: 1.04;
-  --image-saturation: 1.1;
-  --radius: 16px;
-  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --background: #fbf7f2;
+  --paper: #f7f1e8;
+  --surface: #efe5d8;
+  --surface-strong: #e4d4c0;
+  --sage: #879787;
+  --sage-dark: #637363;
+  --rose: #bc8f85;
+  --rose-dark: #9f7067;
+  --ink: #342821;
+  --muted: #7e675c;
+  --line: rgba(111, 81, 65, 0.15);
+  --accent: #b9897f;
+  --accent-soft: rgba(185, 137, 127, 0.12);
+  --gold: #a47a57;
+  --shadow-soft: 0 18px 48px rgba(73, 46, 33, 0.08);
+  --shadow-card: 0 10px 30px rgba(73, 46, 33, 0.07);
+  --image-brightness: 1.03;
+  --image-saturation: 1.06;
+  --radius: 22px;
+  --radius-sm: 14px;
+  --section-max: 920px;
+  --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --background: #1a1a1a;
-  --paper: #252525;
-  --surface: #2e2e2e;
+  --background: #171311;
+  --paper: #211b18;
+  --surface: #2b2420;
+  --surface-strong: #362c27;
   --sage: #8a9e8c;
   --sage-dark: #6b7f6d;
   --rose: #c9a0a0;
   --rose-dark: #b08080;
-  --ink: #f0e8e0;
-  --muted: #b8a898;
-  --line: #3a3a3a;
+  --ink: #f3ebe3;
+  --muted: #b9aa9c;
+  --line: rgba(255, 244, 232, 0.11);
   --accent: #c9a0a0;
-  --accent-soft: #3a2828;
+  --accent-soft: rgba(201, 160, 160, 0.16);
   --gold: #c0a070;
+  --shadow-soft: 0 16px 44px rgba(0, 0, 0, 0.32);
+  --shadow-card: 0 10px 28px rgba(0, 0, 0, 0.24);
   --image-brightness: 1.02;
   --image-saturation: 1.12;
 }
@@ -74,7 +77,9 @@
 html, body { margin: 0; padding: 0; }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at top, rgba(236, 220, 202, 0.55), transparent 38%),
+    linear-gradient(180deg, #fcfaf7 0%, var(--background) 44%, #f9f4ee 100%);
   color: var(--ink);
   font-family: "Noto Sans KR", sans-serif;
   line-height: 1.8;
@@ -88,16 +93,14 @@ body {
    ============================================================ */
 .invitation {
   width: 100%;
-  background: linear-gradient(180deg, var(--paper) 0%, var(--background) 60%);
-}
-
-body {
-  background: var(--paper);
+  background: transparent;
 }
 
 .section-line {
-  border-top: 1px solid var(--line);
-  padding: 52px 20px;
+  position: relative;
+  max-width: var(--section-max);
+  margin: 0 auto;
+  padding: 72px 24px;
 }
 
 .section-inner {
@@ -122,19 +125,21 @@ h1, h2, h3 {
 h2 {
   text-align: center;
   font-size: clamp(1.7rem, 4.5vw, 2.1rem);
-  margin: 0 auto 20px;
+  margin: 0 auto 18px;
   display: block;
   width: 100%;
+  letter-spacing: 0.02em;
 }
 
 h2::after {
   content: '';
   display: block;
-  width: 30px;
-  height: 2px;
+  width: 38px;
+  height: 1px;
   background: var(--accent);
-  margin: 8px auto 0;
+  margin: 12px auto 0;
   border-radius: 2px;
+  opacity: 0.75;
 }
 
 /* ============================================================
@@ -148,10 +153,10 @@ input, textarea, button {
 input, textarea {
   width: 100%;
   border: 1px solid var(--line);
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.55);
   color: var(--ink);
   padding: 12px 14px;
-  border-radius: 10px;
+  border-radius: 14px;
   transition: border-color var(--transition), box-shadow var(--transition);
   outline: none;
 }
@@ -165,9 +170,9 @@ button {
   border: none;
   background: var(--accent);
   color: #fffdf9;
-  padding: 11px 20px;
+  padding: 12px 20px;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 999px;
   font-weight: 500;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
 }
@@ -211,27 +216,39 @@ button:active {
    ============================================================ */
 .cover {
   position: relative;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+  width: 100%;
+  margin-left: 0;
   min-height: 100svh;
   background-image: url('assets/IMG_0876.webp');
   background-size: cover;
-  background-position: center;
+  background-position: center 38%;
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 60px 20px 80px;
+  justify-content: center;
+  padding: 84px 24px 72px;
   text-align: center;
   border-top: none;
+  overflow: hidden;
 }
 
 .cover::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(20, 10, 5, 0.38);
+  background:
+    linear-gradient(180deg, rgba(25, 16, 11, 0.18) 0%, rgba(25, 16, 11, 0.42) 55%, rgba(25, 16, 11, 0.56) 100%),
+    radial-gradient(circle at top, rgba(255, 227, 201, 0.2), transparent 36%);
+}
+
+.cover::after {
+  content: "";
+  position: absolute;
+  inset: auto 24px 24px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 235, 214, 0.85), transparent);
+  z-index: 1;
 }
 
 /* 텍스트는 오버레이 위에 */
@@ -242,22 +259,24 @@ button:active {
 
 .cover-kicker {
   margin: 0;
-  color: rgba(255, 215, 150, 0.92);
-  letter-spacing: 0.22em;
-  font-size: 0.72rem;
+  color: rgba(255, 228, 191, 0.95);
+  letter-spacing: 0.28em;
+  font-size: 0.75rem;
   text-transform: uppercase;
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.1s forwards;
 }
 
 .cover-title {
-  font-size: clamp(2.8rem, 11vw, 4.4rem);
+  font-size: clamp(3.2rem, 13vw, 5rem);
   font-weight: 400;
   letter-spacing: 0.02em;
-  line-height: 1.1;
+  line-height: 1.04;
   color: #fff;
+  margin-top: 12px;
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.2s forwards;
+  text-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
 }
 
 .cover-title span {
@@ -267,20 +286,20 @@ button:active {
 }
 
 .cover-names-kr {
-  margin: 4px 0 2px;
-  color: rgba(255, 255, 255, 0.75);
+  margin: 10px 0 4px;
+  color: rgba(255, 245, 233, 0.84);
   font-size: 1rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
   font-family: "Noto Sans KR", sans-serif;
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.3s forwards;
 }
 
 .cover-subtitle {
-  margin: 4px 0 16px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
+  margin: 4px 0 0;
+  color: rgba(255, 239, 224, 0.78);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.35s forwards;
 }
@@ -289,7 +308,14 @@ button:active {
    Countdown
    ============================================================ */
 .countdown-wrap {
-  padding: 20px 16px 28px;
+  width: min(100%, 520px);
+  margin-top: 24px;
+  padding: 24px 18px 22px;
+  border: 1px solid rgba(255, 243, 229, 0.2);
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255, 248, 241, 0.12), rgba(255, 248, 241, 0.06));
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 44px rgba(19, 12, 8, 0.16);
   opacity: 0;
   animation: fadeInUp 0.8s ease 0.4s forwards;
 }
@@ -304,18 +330,18 @@ button:active {
 }
 
 .countdown-grid {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
 
 .countdown-unit {
   text-align: center;
   background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 10px 14px;
-  min-width: 62px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  padding: 12px 8px;
+  min-width: 0;
 }
 
 .countdown-num {
@@ -366,11 +392,15 @@ button:active {
    ============================================================ */
 .invitation-note {
   text-align: center;
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 6px);
+  box-shadow: var(--shadow-soft);
 }
 
 .invitation-note p {
   color: var(--muted);
-  max-width: 320px;
+  max-width: 360px;
   margin: 0 auto;
   line-height: 2;
 }
@@ -418,8 +448,13 @@ button:active {
   display: grid;
   gap: 28px;
   text-align: center;
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 6px);
+  box-shadow: var(--shadow-card);
 }
 
+.couple article { padding: 28px 22px; }
 .couple article h3 { font-size: 1.4rem; margin-bottom: 4px; }
 .couple article p { color: var(--muted); margin: 0; font-size: 0.9rem; }
 
@@ -428,15 +463,22 @@ button:active {
   max-width: 280px;
   margin: 0 auto 14px;
   aspect-ratio: 4 / 5;
-  border-radius: var(--radius);
+  border-radius: calc(var(--radius) + 2px);
   overflow: hidden;
   border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
 }
 
 /* ============================================================
    Schedule Section
    ============================================================ */
-.schedule { text-align: center; }
+.schedule {
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.34));
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 6px);
+  box-shadow: var(--shadow-card);
+}
 .schedule .date {
   font-family: "DM Serif Display", "Gowun Batang", serif;
   font-size: clamp(1.1rem, 3.5vw, 1.25rem);
@@ -452,13 +494,21 @@ button:active {
 /* ============================================================
    Gallery Section – Slider
    ============================================================ */
+.gallery {
+  background: rgba(255, 255, 255, 0.44);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 6px);
+  box-shadow: var(--shadow-card);
+}
+
 .gallery-slider-wrap { max-width: 680px; margin: 0 auto; }
 
 .gallery-main {
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: calc(var(--radius) - 2px);
+  box-shadow: var(--shadow-card);
 }
 
 .gallery-main-fig {
@@ -486,7 +536,7 @@ button:active {
   font-size: 2rem;
   padding: 8px 14px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 999px;
   min-height: auto;
   line-height: 1;
   transition: background var(--transition);
@@ -518,7 +568,7 @@ button:active {
   align-items: center;
   gap: 6px;
   justify-content: flex-end;
-  margin-top: 6px;
+  margin-top: 10px;
 }
 .gallery-like-count {
   font-size: 0.85rem;
@@ -529,16 +579,16 @@ button:active {
 .gallery-thumbs {
   display: flex;
   gap: 6px;
-  margin-top: 10px;
+  margin-top: 14px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding: 2px 2px 6px;
   scrollbar-width: thin;
 }
 
 .gallery-thumb {
-  flex: 0 0 80px;
-  height: 60px;
-  border-radius: 6px;
+  flex: 0 0 84px;
+  height: 62px;
+  border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
   opacity: 0.55;
@@ -648,7 +698,13 @@ button:active {
 /* ============================================================
    Location / Map
    ============================================================ */
-.location { text-align: center; }
+.location {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 6px);
+  box-shadow: var(--shadow-card);
+}
 .location .address { color: var(--muted); margin: 0 0 16px; font-size: 0.9rem; }
 
 /* 약도 이미지 링크 */
@@ -656,7 +712,7 @@ button:active {
   display: block;
   position: relative;
   width: 100%;
-  border-radius: var(--radius);
+  border-radius: calc(var(--radius) - 2px);
   overflow: hidden;
   border: 1px solid var(--line);
   margin: 14px 0;
@@ -679,8 +735,9 @@ button:active {
   font-size: 0.9rem;
   font-weight: 500;
   letter-spacing: 0.05em;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.2s;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.32);
 }
 .map-thumb-link:hover .map-thumb-overlay { opacity: 1; }
 
@@ -743,7 +800,13 @@ button:active {
 /* ============================================================
    Accounts
    ============================================================ */
-.accounts { text-align: center; }
+.accounts {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 6px);
+  box-shadow: var(--shadow-card);
+}
 
 .account-list { display: grid; gap: 10px; }
 
@@ -755,7 +818,7 @@ button:active {
   border: 1px solid var(--line);
   padding: 14px 16px;
   text-align: left;
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.62);
   border-radius: var(--radius);
   transition: border-color var(--transition);
 }
@@ -788,10 +851,10 @@ button:active {
 }
 
 .account-tab {
-  padding: 8px 28px;
+  padding: 10px 28px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.6);
   color: var(--muted);
   font-size: 0.9rem;
   cursor: pointer;
@@ -886,7 +949,13 @@ button:active {
 /* ============================================================
    Guestbook
    ============================================================ */
-.guestbook { text-align: center; }
+.guestbook {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 6px);
+  box-shadow: var(--shadow-card);
+}
 
 #guestbook-form {
   display: grid;
@@ -909,11 +978,23 @@ button:active {
 
 #guestbook-list li {
   text-align: left;
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.66);
   border: 1px solid var(--line);
   padding: 14px 16px;
   border-radius: 12px;
   transition: border-color var(--transition);
+}
+
+.guestbook-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.guestbook-entry-body {
+  flex: 1;
+  min-width: 0;
 }
 
 #guestbook-list li:hover { border-color: var(--accent); }
@@ -946,7 +1027,9 @@ button:active {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
-  white-space: nowrap;
+  white-space: normal;
+  width: min(calc(100vw - 32px), 360px);
+  text-align: center;
   z-index: 2000;
   box-shadow: 0 6px 24px rgba(0,0,0,0.25);
 }
@@ -1012,6 +1095,89 @@ button:active {
   /* 모바일에서 parallax 비활성화 (iOS 호환성) */
   .cover { background-attachment: scroll; }
 
+  .section-line {
+    padding: 52px 16px;
+  }
+
+  .cover {
+    padding: 72px 18px 56px;
+    min-height: auto;
+  }
+
+  .cover-title {
+    font-size: clamp(2.7rem, 15vw, 3.8rem);
+  }
+
+  .cover-kicker,
+  .cover-subtitle {
+    letter-spacing: 0.18em;
+  }
+
+  .countdown-wrap {
+    padding: 18px 12px;
+    border-radius: 24px;
+  }
+
+  .countdown-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .countdown-unit {
+    padding: 12px 6px;
+  }
+
+  .gs-prev,
+  .gs-next {
+    font-size: 1.6rem;
+    padding: 6px 11px;
+  }
+
+  .gallery-thumbs {
+    gap: 8px;
+  }
+
+  .gallery-thumb {
+    flex-basis: 72px;
+    height: 56px;
+  }
+
+  .map-btn-wrap,
+  .account-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .map-btn,
+  .account-tab {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .account-item,
+  .guestbook-entry {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .account-item .copy-btn,
+  .guestbook-entry .like-btn {
+    align-self: flex-end;
+  }
+
+  .account-scroll-box {
+    max-height: none;
+    overflow: visible;
+  }
+
+  #guestbook-form button {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  #toast {
+    bottom: 18px;
+  }
+
   .invitation-note p,
   .story-text p,
   .schedule p,
@@ -1031,7 +1197,7 @@ button:active {
 }
 
 .transport-item {
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.62);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 14px 16px;
@@ -1062,6 +1228,17 @@ button:active {
   color: var(--muted);
   font-size: 0.82rem;
   line-height: 1.6;
+}
+
+@media (max-width: 479px) {
+  .transport-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .map-btn-wrap,
+  .account-tabs {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================================
