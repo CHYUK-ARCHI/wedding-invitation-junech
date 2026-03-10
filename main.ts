@@ -395,8 +395,8 @@ const renderEntry = (entry: GuestbookEntry): HTMLLIElement => {
   const dateStr = `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}.${String(date.getDate()).padStart(2, "0")}`;
   const entryId = String(entry.id);
   li.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
-      <div style="flex:1;min-width:0;">
+    <div class="guestbook-entry">
+      <div class="guestbook-entry-body">
         <strong>${escapeHtml(entry.name)}</strong>
         <p>${escapeHtml(entry.message)}</p>
         <time datetime="${entry.createdAt}">${dateStr}</time>
