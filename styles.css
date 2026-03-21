@@ -13,8 +13,8 @@
   --ink:       #111111;
   --muted:     #3A3A3A;
   --subtle:    #666666;
-  --gold:      #8B7D6B;
-  --gold-l:    #A8988A;
+  --gold:      #C9A84C;
+  --gold-l:    #E2C87A;
   --grid-line: rgba(28,43,58,0.07);
   --sans:  'PretendardVariable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   --serif: 'Gowun Batang', serif;
@@ -47,8 +47,8 @@ html[data-fs="large"]  { --scale: 1.25; }
   --ink:       #F0EDE6;
   --muted:     #C8D8E8;
   --subtle:    #8AAAC4;
-  --gold:      #C8B89A;
-  --gold-l:    #9A8A7A;
+  --gold:      #D4AF55;
+  --gold-l:    #EDD07A;
   --grid-line: rgba(238,242,247,0.07);
 }
 @media (prefers-color-scheme: dark) {
@@ -61,8 +61,8 @@ html[data-fs="large"]  { --scale: 1.25; }
     --ink:       #F0EDE6;
     --muted:     #C8D8E8;
     --subtle:    #8AAAC4;
-    --gold:      #C8B89A;
-    --gold-l:    #9A8A7A;
+    --gold:      #D4AF55;
+    --gold-l:    #EDD07A;
     --grid-line: rgba(238,242,247,0.07);
   }
 }
@@ -215,9 +215,10 @@ img { display: block; image-orientation: from-image; }
 .cover-coord {
   font-family: var(--sans);
   font-size: var(--fs-label);
-  letter-spacing: 0.06em;
-  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.9);
   margin-bottom: 6px;
+  font-weight: 500;
   opacity: 0;
   animation: fadeUp 0.8s var(--ease) 0.2s forwards;
 }
@@ -263,9 +264,10 @@ img { display: block; image-orientation: from-image; }
 .cover-meta-line { flex: 1; height: 1px; background: rgba(255,255,255,0.2); }
 .cover-meta-text {
   font-size: var(--fs-label);
-  letter-spacing: 0.15em;
-  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.85);
   white-space: nowrap;
+  font-weight: 500;
 }
 
 /* ─── COUNTDOWN ──────────────────────────────────────────── */
@@ -302,9 +304,12 @@ img { display: block; image-orientation: from-image; }
 }
 .countdown-num {
   font-family: var(--sans);
-  font-weight: 300;
+  font-weight: 400;
   font-size: var(--fs-num);
-  color: var(--gold);
+  background: linear-gradient(135deg, #E8C55A 0%, #C9973A 40%, #F0D878 70%, #C9A84C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   display: block;
   line-height: 1;
   font-feature-settings: "tnum";
@@ -326,19 +331,26 @@ img { display: block; image-orientation: from-image; }
   font-size: var(--fs-label);
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--gold);
+  background: linear-gradient(135deg, #E8C55A 0%, #C9973A 35%, #F0D878 60%, #C9A84C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 400;
+  font-weight: 500;
 }
 .section-label::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: rgba(139,125,107,0.2);
+  background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent);
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
 }
+
 
 .section-title {
   font-family: var(--serif);
@@ -435,11 +447,14 @@ img { display: block; image-orientation: from-image; }
   margin-top: 7px;
   font-size: calc(var(--fs-label) * 0.9);
   letter-spacing: 0.1em;
-  color: var(--gold);
-  border: 1px solid rgba(139,125,107,0.28);
+  background: linear-gradient(135deg, #E8C55A, #C9973A, #F0D878);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  border: 1px solid rgba(201,168,76,0.35);
   padding: 2px 7px;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 /* ─── STORY ──────────────────────────────────────────────── */
@@ -510,19 +525,20 @@ img { display: block; image-orientation: from-image; }
 }
 .schedule-date {
   font-family: var(--serif);
-  font-size: var(--fs-sched);
-  font-weight: 400;
-  color: #EEF2F7;
+  font-size: calc(var(--fs-sched) * 1.1);
+  font-weight: 700;
+  color: #FFFFFF;
   line-height: 1.55;
   margin-bottom: 14px;
   position: relative;
+  letter-spacing: 0.02em;
 }
 .schedule-venue {
-  font-size: var(--fs-label);
-  letter-spacing: 0.18em;
-  color: rgba(238,242,247,0.3);
+  font-size: var(--fs-body);
+  letter-spacing: 0.1em;
+  color: rgba(238,242,247,0.7);
   position: relative;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 /* ─── GALLERY ────────────────────────────────────────────── */
