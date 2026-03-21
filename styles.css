@@ -980,6 +980,76 @@ img { display: block; image-orientation: from-image; }
 .thumb-arrow:hover { color: var(--ink); }
 .thumb-arrow-prev { left: 0; }
 .thumb-arrow-next { right: 0; }
+
+/* ─── MEMORIES GALLERY ──────────────────────────────── */
+.memories-section {
+  padding: clamp(48px, 11vw, 80px) 0;
+}
+.memories-heading {
+  padding: 0 28px;
+  margin-bottom: 32px;
+}
+
+.season-block {
+  margin-bottom: 40px;
+}
+.season-block:last-child { margin-bottom: 0; }
+
+.season-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 28px;
+  margin-bottom: 12px;
+}
+.season-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+.season-title {
+  font-family: var(--sans);
+  font-size: var(--fs-label);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--subtle);
+  font-weight: 400;
+}
+
+/* 3열 그리드 */
+.memories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.memory-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  cursor: zoom-in;
+  background: var(--bg2);
+}
+
+.memory-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s var(--ease);
+}
+.memory-item:hover img { transform: scale(1.06); }
+
+/* 클릭 오버레이 */
+.memory-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  transition: background 0.25s;
+}
+.memory-item:hover::after {
+  background: rgba(0,0,0,0.12);
+}
 /* ─── Keyframes ──────────────────────────────────────────── */
 @keyframes fadeUp {
   from { opacity:0; transform:translateY(14px); }
