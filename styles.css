@@ -176,8 +176,8 @@ img { display: block; image-orientation: from-image; }
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: center top;
-  opacity: 0.38;
-  filter: grayscale(0.3) brightness(0.9);
+  opacity: 0.72;
+  filter: brightness(0.88);
   transform: scale(1.05);
   animation: coverZoom 14s var(--ease) forwards;
 }
@@ -185,8 +185,6 @@ img { display: block; image-orientation: from-image; }
 
 .cover-overlay {
   position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(197,165,90,0.07) 1px, transparent 1px);
-  background-size: 20px 20px;
   z-index: 1;
 }
 .cover::before {
@@ -716,8 +714,22 @@ img { display: block; image-orientation: from-image; }
   font-weight: 400;
 }
 .map-btn:hover { opacity: 0.78; }
-.map-btn.kakao { background: #FEE500; color: #3C1E1E; }
-.map-btn.naver { background: #03C75A; color: #fff; }
+.map-btn.kakao {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--grid-line);
+}
+.map-btn.naver {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--grid-line);
+}
+.map-btn.kakao:hover,
+.map-btn.naver:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  opacity: 1;
+}
 .transport-grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 1px; background: var(--grid-line);
