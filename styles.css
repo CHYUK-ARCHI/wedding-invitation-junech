@@ -149,6 +149,22 @@ img { display: block; image-orientation: from-image; }
 .fs-btn.active { color: var(--ink); font-weight: 600; }
 .fs-btn:hover  { color: var(--ink); }
 
+
+.lang-btn {
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  color: var(--subtle);
+  text-decoration: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: color 0.2s;
+  border: 1px solid rgba(90,122,154,0.25);
+  border-radius: 3px;
+}
+.lang-btn:hover { color: var(--ink); border-color: var(--gold); }
 /* ─── Reveal ─────────────────────────────────────────────── */
 .reveal {
   opacity: 0;
@@ -406,19 +422,7 @@ img { display: block; image-orientation: from-image; }
   transition: transform 0.7s var(--ease);
 }
 .couple-card:hover .couple-photo { transform: scale(1.03); }
-.couple-tag {
-  position: absolute;
-  top: 10px; left: 10px;
-  background: var(--navy);
-  color: var(--gold);
-  font-family: var(--sans);
-  font-size: calc(var(--fs-label) * 0.9);
-  letter-spacing: 0.15em;
-  padding: 3px 7px;
-  text-transform: uppercase;
-  opacity: 0.88;
-  font-weight: 400;
-}
+.couple-tag { display: none; }
 .couple-info { padding: 14px 12px 18px; background: var(--bg); }
 .couple-name {
   font-family: var(--serif);
