@@ -5,14 +5,14 @@
 
 /* ─── Tokens ─────────────────────────────────────────────── */
 :root {
-  --bg:        #EEF2F7;
+  --bg:        #F5F7FA;
   --bg2:       #E4EAF2;
-  --paper:     #F7F9FC;
+  --paper:     #FFFFFF;
   --navy:      #1C2B3A;
   --navy2:     #243447;
-  --ink:       #1C2B3A;
-  --muted:     #4A5F72;
-  --subtle:    #7A90A4;
+  --ink:       #111111;
+  --muted:     #3A3A3A;
+  --subtle:    #666666;
   --gold:      #8B7D6B;
   --gold-l:    #A8988A;
   --grid-line: rgba(28,43,58,0.07);
