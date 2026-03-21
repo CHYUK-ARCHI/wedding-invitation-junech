@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#EEF2F7" />
+    <meta name="description" content="권찬혁 · 김주은의 결혼식에 초대합니다. 2026년 6월 28일 일요일 오전 11시, 서울대학교 이라운지." />
+    <title>June × Chan · 2026.06.28</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="wedding-data.js"></script>
+  </head>
+  <body>
+
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="테마 전환">[ DARK ]</button>
+
+    <!-- Lightbox -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="사진 크게 보기">
+      <button type="button" class="lightbox-close" id="lightbox-close" aria-label="닫기">ESC</button>
+      <button type="button" class="lightbox-nav" id="lightbox-prev" aria-label="이전">‹</button>
+      <img id="lightbox-img" src="" alt="확대 사진" />
+      <button type="button" class="lightbox-nav" id="lightbox-next" aria-label="다음">›</button>
+      <span class="lightbox-counter" id="lightbox-counter"></span>
+    </div>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <main class="invitation">
+
+      <!-- ── COVER ── -->
+      <section class="cover">
+        <img class="cover-img"
+          src="assets/IMG_0876.webp"
+          alt="커버 사진"
+          decoding="async" />
+        <div class="cover-overlay"></div>
+        <div class="cover-text">
+          <p class="cover-coord">37.4589°N · 126.9525°E · 2026.06.28</p>
+          <p class="cover-label">Wedding Invitation</p>
+          <h1 class="cover-names">
+            김주은<br />권찬혁
+            <em>JUNE &times; CHAN</em>
+          </h1>
+          <div class="cover-meta">
+            <span class="cover-meta-line"></span>
+            <span class="cover-meta-text">서울대학교 이라운지 · 11:00 AM</span>
+            <span class="cover-meta-line"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── COUNTDOWN ── -->
+      <div class="countdown reveal" id="countdown-wrap">
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-days">--</span>
+          <span class="countdown-sub">Days</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-hours">--</span>
+          <span class="countdown-sub">Hours</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-mins">--</span>
+          <span class="countdown-sub">Mins</span>
+        </div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-secs">--</span>
+          <span class="countdown-sub">Secs</span>
+        </div>
+      </div>
+
+      <!-- ── NOTE ── -->
+      <section class="note reveal">
+        <div class="note-inner">
+          <p class="note-bracket">/* invitation */</p>
+          <p>
+            서로에게 따뜻한 위로와 기쁨이 되어온 두 사람이<br />
+            이제 평생을 함께 걸어가려 합니다.<br /><br />
+            저희의 시작이 되는 날, 소중한 걸음으로 오셔서<br />
+            축복해 주시면 감사하겠습니다.
+          </p>
+        </div>
+      </section>
+
+      <!-- ── COUPLE ── -->
+      <section class="section reveal">
+        <p class="section-label">The Couple</p>
+        <div class="couple-wrap" style="margin-top:20px">
+          <div class="couple-card">
+            <span class="couple-tag">BRIDE · 신부</span>
+            <img class="couple-photo"
+              src="assets/IMG_0826.jpeg"
+              alt="김주은"
+              loading="lazy" decoding="async" />
+            <div class="couple-info">
+              <div class="couple-name">김주은</div>
+              <div class="couple-role">김병순 · 이금란의 장녀</div>
+              <span class="couple-profession">AI Specialist</span>
+            </div>
+          </div>
+          <div class="couple-card">
+            <span class="couple-tag">GROOM · 신랑</span>
+            <img class="couple-photo"
+              src="assets/IMG_0912.jpeg"
+              alt="권찬혁"
+              loading="lazy" decoding="async" />
+            <div class="couple-info">
+              <div class="couple-name">권찬혁</div>
+              <div class="couple-role">권오현 · 김현숙의 차남</div>
+              <span class="couple-profession">Architect</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── STORY ── -->
+      <section class="story-section reveal">
+        <div class="story-heading">
+          <p class="section-label">Our Story</p>
+          <h2 class="section-title">함께한<br /><em>순간들</em></h2>
+        </div>
+
+        <div class="story-item">
+          <img class="story-photo"
+            src="assets/IMG_0963.webp"
+            alt="처음 만난 날"
+            loading="lazy" decoding="async" />
+          <div class="story-body">
+            <p class="story-index">— 01</p>
+            <h3>처음 만난 날</h3>
+            <p>처음 눈이 마주친 날부터 지금까지, 사소한 일상들이 특별한 추억으로 쌓였습니다.</p>
+          </div>
+        </div>
+
+        <div class="story-item">
+          <img class="story-photo"
+            src="assets/IMG_0966.webp"
+            alt="함께할 내일"
+            loading="lazy" decoding="async" />
+          <div class="story-body">
+            <p class="story-index">— 02</p>
+            <h3>함께할 내일</h3>
+            <p>서로의 하루를 가장 먼저 묻고 싶은 사람으로, 매일의 평범함을 함께 채워가겠습니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── SCHEDULE ── -->
+      <section class="schedule reveal">
+        <div class="schedule-corners"></div>
+        <p class="schedule-label">Wedding Day</p>
+        <p class="schedule-date">
+          2026년 6월 28일 일요일<br />오전 11시
+        </p>
+        <p class="schedule-venue">SEOUL NATIONAL UNIVERSITY · E-LOUNGE</p>
+      </section>
+
+      <!-- ── GALLERY ── -->
+      <section class="gallery-section reveal">
+        <div class="gallery-heading">
+          <p class="section-label">Gallery</p>
+          <h2 class="section-title">우리의<br /><em>시간들</em></h2>
+        </div>
+
+        <div class="gallery-stage" id="gallery-stage">
+          <img src="assets/IMG_0963.webp" alt="갤러리 1" class="active" />
+          <img src="assets/IMG_0966.webp" alt="갤러리 2" loading="lazy" />
+          <img src="assets/IMG_0981.webp" alt="갤러리 3" loading="lazy" />
+          <img src="assets/IMG_0982.webp" alt="갤러리 4" loading="lazy" />
+          <img src="assets/IMG_0983.webp" alt="갤러리 5" loading="lazy" />
+          <img src="assets/IMG_1007.webp" alt="갤러리 6" loading="lazy" />
+          <div class="gallery-nav-dots" id="gallery-nav"></div>
+          <div class="gallery-stage-label" id="gallery-stage-label">IMG_001</div>
+        </div>
+
+        <div class="gallery-controls">
+          <button class="gallery-arrow" id="gs-prev" aria-label="이전">← PREV</button>
+          <span class="gallery-counter" id="gs-counter">01 / 06</span>
+          <button class="gallery-arrow" id="gs-next" aria-label="다음">NEXT →</button>
+        </div>
+
+        <div class="gallery-like-row">
+          <button class="like-btn" id="gallery-like-btn" aria-label="좋아요">♡</button>
+          <span class="gallery-like-count" id="gallery-like-count">0</span>
+        </div>
+
+        <div class="gallery-thumbs" id="gallery-thumbs">
+          <div class="gallery-thumb active" data-idx="0"><img src="assets/IMG_0963.webp" alt="1" /></div>
+          <div class="gallery-thumb" data-idx="1"><img src="assets/IMG_0966.webp" alt="2" /></div>
+          <div class="gallery-thumb" data-idx="2"><img src="assets/IMG_0981.webp" alt="3" /></div>
+          <div class="gallery-thumb" data-idx="3"><img src="assets/IMG_0982.webp" alt="4" /></div>
+          <div class="gallery-thumb" data-idx="4"><img src="assets/IMG_0983.webp" alt="5" /></div>
+          <div class="gallery-thumb" data-idx="5"><img src="assets/IMG_1007.webp" alt="6" /></div>
+        </div>
+      </section>
+
+      <!-- Lightbox (global) -->
+      <div id="lightbox" role="dialog" aria-modal="true" aria-label="사진 크게 보기">
+        <button class="lightbox-close" id="lightbox-close" aria-label="닫기">ESC</button>
+        <button class="lightbox-nav" id="lightbox-prev" aria-label="이전">‹</button>
+        <img id="lightbox-img" src="" alt="확대 사진" />
+        <button class="lightbox-nav" id="lightbox-next" aria-label="다음">›</button>
+        <span class="lightbox-counter" id="lightbox-counter"></span>
+      </div>
+
+      <!-- ── LOCATION ── -->
+      <section class="location reveal">
+        <p class="section-label">오시는 길</p>
+        <h2 class="section-title" style="margin-bottom:20px">서울대학교<br /><em>이라운지</em></h2>
+        <p class="location-address">37.4589°N, 126.9525°E<br />서울특별시 관악구 관악로 1</p>
+
+        <div id="kakao-map-container" class="kakao-map-container"></div>
+
+        <a class="map-thumb-link" id="map-static-link"
+           href="https://map.kakao.com/link/search/서울대학교%20이라운지"
+           target="_blank" rel="noreferrer" aria-label="지도 앱으로 보기">
+          <img class="map-thumb"
+            src="https://maps.googleapis.com/maps/api/staticmap?center=37.4589,126.9525&zoom=15&size=640x320&scale=2&markers=color:0x1C2B3A%7C37.4589,126.9525&style=feature:all|saturation:-60&language=ko"
+            onerror="this.src='https://placehold.co/640x320/EEF2F7/1C2B3A?text=37.4589°N+126.9525°E'"
+            alt="지도" loading="lazy" />
+          <span class="map-thumb-overlay">OPEN MAP →</span>
+        </a>
+
+        <div class="map-btns">
+          <a class="map-btn kakao"
+             href="https://map.kakao.com/link/search/서울대학교%20이라운지"
+             target="_blank" rel="noreferrer">Kakao Map</a>
+          <a class="map-btn naver"
+             href="https://map.naver.com/v5/search/서울대학교%20이라운지"
+             target="_blank" rel="noreferrer">Naver Map</a>
+        </div>
+
+        <div class="transport-grid">
+          <div class="transport-item">
+            <span class="transport-icon">🚇</span>
+            <div class="transport-title">지하철</div>
+            <p class="transport-desc">
+              2호선 낙성대역 ④출구<br />관악02 → 제2공학관<br /><br />
+              서울대입구역 ③출구<br />5511 · 5513 탑승
+            </p>
+          </div>
+          <div class="transport-item">
+            <span class="transport-icon">🚗</span>
+            <div class="transport-title">자가용</div>
+            <p class="transport-desc">내비: <b>이라운지 서울대점</b><br />주차 2시간 무료<br />(주차권 발급 필수)</p>
+          </div>
+          <div class="transport-item">
+            <span class="transport-icon">🅿️</span>
+            <div class="transport-title">주차</div>
+            <p class="transport-desc">이라운지 앞<br />302동 지상<br />300동 주차 라인</p>
+          </div>
+          <div class="transport-item">
+            <span class="transport-icon">🚌</span>
+            <div class="transport-title">버스</div>
+            <p class="transport-desc">신림선 관악산역 ①출구<br />5511 · 5516 탑승</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── ACCOUNTS ── -->
+      <section class="accounts reveal">
+        <p class="section-label">마음 전하실 곳</p>
+        <h2 class="section-title" style="margin-bottom:28px">계좌 안내</h2>
+
+        <div class="account-tabs">
+          <button class="account-tab active" data-side="bride">신부측</button>
+          <button class="account-tab" data-side="groom">신랑측</button>
+        </div>
+
+        <div class="account-scroll-box" id="account-bride"></div>
+        <div class="account-scroll-box hidden" id="account-groom"></div>
+
+        <div class="kakaopay-wrap">
+          <p class="kakaopay-label">카카오페이 송금</p>
+          <div class="kakaopay-links">
+            <a id="kakaopay-bride" href="#" class="kakaopay-btn" target="_blank" rel="noreferrer">💛 신부 June</a>
+            <a id="kakaopay-groom" href="#" class="kakaopay-btn" target="_blank" rel="noreferrer">💛 신랑 Chan</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── GUESTBOOK ── -->
+      <section class="guestbook reveal">
+        <p class="section-label">방명록</p>
+        <h2 class="section-title" style="margin-bottom:36px">
+          축하 메시지를<br /><em>남겨주세요</em>
+        </h2>
+
+        <form id="guestbook-form" novalidate>
+          <div class="form-field">
+            <label class="form-label" for="gb-name">// name</label>
+            <input id="gb-name" name="name" placeholder="홍길동" required autocomplete="name" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="gb-msg">// message</label>
+            <textarea id="gb-msg" name="message" rows="3" placeholder="축하합니다 :)" required></textarea>
+          </div>
+          <button type="submit" class="guestbook-submit" id="guestbook-submit">
+            SUBMIT →
+          </button>
+        </form>
+
+        <p id="form-status" aria-live="polite"></p>
+        <ul id="guestbook-list"></ul>
+      </section>
+
+      <!-- ── FOOTER ── -->
+      <footer class="footer">
+        <span class="footer-line"></span>
+        <span class="footer-text">June × Chan · 2026.06.28</span>
+        <span class="footer-line"></span>
+      </footer>
+
+    </main>
+
+    <script src="config.js" onerror="void 0"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
