@@ -4,10 +4,10 @@ const WEDDING_DATA = {
   wedding: {
     date: "2026년 6월 28일 일요일",
     time: "오전 11시",
-    venueName: "서울대학교 이라운지",
+    venueName: "이라운지 서울대점",
     venueAddress: "서울 관악구 관악로 1",
-    lat: 37.4589,
-    lng: 126.9525,
+    lat: 37.4599,
+    lng: 126.9514,
   },
   accounts: [
     { side: "bride", role: "신부",       name: "김주은",  bank: "신한",  account: "000-000-000000" },
