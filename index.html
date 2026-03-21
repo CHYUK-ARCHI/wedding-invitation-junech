@@ -7,7 +7,7 @@
     <meta name="description" content="권찬혁 · 김주은의 결혼식에 초대합니다. 2026년 6월 28일 일요일 오전 11시, 서울대학교 이라운지." />
     <title>June × Chan · 2026.06.28</title>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <!-- Pretendard 가변 동적 서브셋 (공식 권장, 가장 빠름) -->
+    <!-- Pretendard 가변 동적 서브셋 -->
     <link rel="stylesheet" as="style" crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
       onload="this.onload=null;this.rel='stylesheet'" />
@@ -37,9 +37,17 @@
   </head>
   <body>
 
-    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="테마 전환">[ DARK ]</button>
+    <!-- 상단 컨트롤바 -->
+    <div class="top-bar">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="테마 전환">[ DARK ]</button>
+      <div class="font-size-ctrl" role="group" aria-label="글자 크기">
+        <button type="button" class="fs-btn fs-s" id="fs-small"  title="작게">가</button>
+        <button type="button" class="fs-btn fs-m active" id="fs-medium" title="보통">가</button>
+        <button type="button" class="fs-btn fs-l" id="fs-large"  title="크게">가</button>
+      </div>
+    </div>
 
-    <!-- Lightbox -->
+    <!-- Lightbox (단 1개) -->
     <div id="lightbox" role="dialog" aria-modal="true" aria-label="사진 크게 보기">
       <button type="button" class="lightbox-close" id="lightbox-close" aria-label="닫기">ESC</button>
       <button type="button" class="lightbox-nav" id="lightbox-prev" aria-label="이전">‹</button>
@@ -144,7 +152,6 @@
           <p class="section-label">Our Story</p>
           <h2 class="section-title">함께한<br /><em>순간들</em></h2>
         </div>
-
         <div class="story-item">
           <img class="story-photo"
             src="assets/IMG_0963.webp"
@@ -156,7 +163,6 @@
             <p>처음 눈이 마주친 날부터 지금까지, 사소한 일상들이 특별한 추억으로 쌓였습니다.</p>
           </div>
         </div>
-
         <div class="story-item">
           <img class="story-photo"
             src="assets/IMG_0966.webp"
@@ -174,9 +180,7 @@
       <section class="schedule reveal">
         <div class="schedule-corners"></div>
         <p class="schedule-label">Wedding Day</p>
-        <p class="schedule-date">
-          2026년 6월 28일 일요일<br />오전 11시
-        </p>
+        <p class="schedule-date">2026년 6월 28일 일요일<br />오전 11시</p>
         <p class="schedule-venue">SEOUL NATIONAL UNIVERSITY · E-LOUNGE</p>
       </section>
 
@@ -186,7 +190,6 @@
           <p class="section-label">Gallery</p>
           <h2 class="section-title">우리의<br /><em>시간들</em></h2>
         </div>
-
         <div class="gallery-stage" id="gallery-stage">
           <img src="assets/IMG_0876.webp" alt="갤러리 1" class="active" />
           <img src="assets/IMG_0963.webp" alt="갤러리 2" loading="lazy" />
@@ -198,18 +201,15 @@
           <div class="gallery-nav-dots" id="gallery-nav"></div>
           <div class="gallery-stage-label" id="gallery-stage-label">IMG_001</div>
         </div>
-
         <div class="gallery-controls">
           <button class="gallery-arrow" id="gs-prev" aria-label="이전">← PREV</button>
-          <span class="gallery-counter" id="gs-counter">01 / 06</span>
+          <span class="gallery-counter" id="gs-counter">01 / 07</span>
           <button class="gallery-arrow" id="gs-next" aria-label="다음">NEXT →</button>
         </div>
-
         <div class="gallery-like-row">
           <button class="like-btn" id="gallery-like-btn" aria-label="좋아요">♡</button>
           <span class="gallery-like-count" id="gallery-like-count">0</span>
         </div>
-
         <div class="gallery-thumbs" id="gallery-thumbs">
           <div class="gallery-thumb active" data-idx="0"><img src="assets/IMG_0876.webp" alt="1" /></div>
           <div class="gallery-thumb" data-idx="1"><img src="assets/IMG_0963.webp" alt="2" /></div>
@@ -221,50 +221,30 @@
         </div>
       </section>
 
-      <!-- Lightbox (global) -->
-      <div id="lightbox" role="dialog" aria-modal="true" aria-label="사진 크게 보기">
-        <button class="lightbox-close" id="lightbox-close" aria-label="닫기">ESC</button>
-        <button class="lightbox-nav" id="lightbox-prev" aria-label="이전">‹</button>
-        <img id="lightbox-img" src="" alt="확대 사진" />
-        <button class="lightbox-nav" id="lightbox-next" aria-label="다음">›</button>
-        <span class="lightbox-counter" id="lightbox-counter"></span>
-      </div>
-
       <!-- ── LOCATION ── -->
       <section class="location reveal">
         <p class="section-label">오시는 길</p>
         <h2 class="section-title" style="margin-bottom:20px">서울대학교<br /><em>이라운지</em></h2>
         <p class="location-address">37.4589°N, 126.9525°E<br />서울특별시 관악구 관악로 1</p>
-
         <div id="kakao-map-container" class="kakao-map-container"></div>
-
         <a class="map-thumb-link" id="map-static-link"
            href="https://map.kakao.com/link/search/서울대학교%20이라운지"
            target="_blank" rel="noreferrer" aria-label="지도 앱으로 보기">
           <img class="map-thumb"
             src="https://maps.googleapis.com/maps/api/staticmap?center=37.4589,126.9525&zoom=15&size=640x320&scale=2&markers=color:0x1C2B3A%7C37.4589,126.9525&style=feature:all|saturation:-60&language=ko"
-            onerror="this.src='https://placehold.co/640x320/EEF2F7/1C2B3A?text=37.4589°N+126.9525°E'"
+            onerror="this.src='https://placehold.co/640x320/EEF2F7/1C2B3A?text=서울대학교+이라운지'"
             alt="지도" loading="lazy" />
           <span class="map-thumb-overlay">OPEN MAP →</span>
         </a>
-
         <div class="map-btns">
-          <a class="map-btn kakao"
-             href="https://map.kakao.com/link/search/서울대학교%20이라운지"
-             target="_blank" rel="noreferrer">Kakao Map</a>
-          <a class="map-btn naver"
-             href="https://map.naver.com/v5/search/서울대학교%20이라운지"
-             target="_blank" rel="noreferrer">Naver Map</a>
+          <a class="map-btn kakao" href="https://map.kakao.com/link/search/서울대학교%20이라운지" target="_blank" rel="noreferrer">카카오맵</a>
+          <a class="map-btn naver" href="https://map.naver.com/v5/search/서울대학교%20이라운지" target="_blank" rel="noreferrer">네이버지도</a>
         </div>
-
         <div class="transport-grid">
           <div class="transport-item">
             <span class="transport-icon">🚇</span>
             <div class="transport-title">지하철</div>
-            <p class="transport-desc">
-              2호선 낙성대역 ④출구<br />관악02 → 제2공학관<br /><br />
-              서울대입구역 ③출구<br />5511 · 5513 탑승
-            </p>
+            <p class="transport-desc">2호선 낙성대역 ④출구<br />관악02 → 제2공학관<br /><br />서울대입구역 ③출구<br />5511 · 5513 탑승</p>
           </div>
           <div class="transport-item">
             <span class="transport-icon">🚗</span>
@@ -288,15 +268,12 @@
       <section class="accounts reveal">
         <p class="section-label">마음 전하실 곳</p>
         <h2 class="section-title" style="margin-bottom:28px">계좌 안내</h2>
-
         <div class="account-tabs">
           <button class="account-tab active" data-side="bride">신부측</button>
           <button class="account-tab" data-side="groom">신랑측</button>
         </div>
-
         <div class="account-scroll-box" id="account-bride"></div>
         <div class="account-scroll-box hidden" id="account-groom"></div>
-
         <div class="kakaopay-wrap">
           <p class="kakaopay-label">카카오페이 송금</p>
           <div class="kakaopay-links">
@@ -309,10 +286,7 @@
       <!-- ── GUESTBOOK ── -->
       <section class="guestbook reveal">
         <p class="section-label">방명록</p>
-        <h2 class="section-title" style="margin-bottom:36px">
-          축하 메시지를<br /><em>남겨주세요</em>
-        </h2>
-
+        <h2 class="section-title" style="margin-bottom:36px">축하 메시지를<br /><em>남겨주세요</em></h2>
         <form id="guestbook-form" novalidate>
           <div class="form-field">
             <label class="form-label" for="gb-name">// name</label>
@@ -322,11 +296,8 @@
             <label class="form-label" for="gb-msg">// message</label>
             <textarea id="gb-msg" name="message" rows="3" placeholder="축하합니다 :)" required></textarea>
           </div>
-          <button type="submit" class="guestbook-submit" id="guestbook-submit">
-            SUBMIT →
-          </button>
+          <button type="submit" class="guestbook-submit" id="guestbook-submit">SUBMIT →</button>
         </form>
-
         <p id="form-status" aria-live="polite"></p>
         <ul id="guestbook-list"></ul>
       </section>

@@ -53,6 +53,25 @@ themeBtn?.addEventListener("click", () =>
   applyTheme(root.dataset.theme === "dark" ? "light" : "dark")
 );
 
+/* ─── Font size control ──────────────────────────────────── */
+const FS_KEY = "inv-fs";
+const fsBtns = { small: document.getElementById("fs-small"), medium: document.getElementById("fs-medium"), large: document.getElementById("fs-large") };
+
+function applyFs(size) {
+  root.dataset.fs = size;
+  localStorage.setItem(FS_KEY, size);
+  Object.entries(fsBtns).forEach(([k, btn]) => { if (btn) btn.classList.toggle("active", k === size); });
+}
+
+(function initFs() {
+  const saved = localStorage.getItem(FS_KEY) || "small";
+  applyFs(saved);
+})();
+
+fsBtns.small?.addEventListener("click",  () => applyFs("small"));
+fsBtns.medium?.addEventListener("click", () => applyFs("medium"));
+fsBtns.large?.addEventListener("click",  () => applyFs("large"));
+
 /* ─── Toast ──────────────────────────────────────────────── */
 const toastEl = $("#toast");
 let toastT;
