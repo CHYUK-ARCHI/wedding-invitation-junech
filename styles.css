@@ -5,17 +5,17 @@
 
 /* ─── Tokens ─────────────────────────────────────────────── */
 :root {
-  --bg:        #F5F7FA;
-  --bg2:       #E4EAF2;
-  --paper:     #FFFFFF;
-  --navy:      #1C2B3A;
-  --navy2:     #243447;
-  --ink:       #111111;
-  --muted:     #3A3A3A;
-  --subtle:    #666666;
+  --bg:        #EDF4FB;
+  --bg2:       #DAE9F5;
+  --paper:     #F5FAFF;
+  --navy:      #1A3A5C;
+  --navy2:     #1E4570;
+  --ink:       #0F2035;
+  --muted:     #2A4A6A;
+  --subtle:    #5A7A9A;
   --gold:      #C9A84C;
   --gold-l:    #E2C87A;
-  --grid-line: rgba(28,43,58,0.07);
+  --grid-line: rgba(26,58,92,0.07);
   --sans:  'PretendardVariable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   --serif: 'Gowun Batang', serif;
   --ease:  cubic-bezier(0.22, 1, 0.36, 1);
@@ -103,7 +103,7 @@ img { display: block; image-orientation: from-image; }
   justify-content: space-between;
   padding: 10px 14px;
   z-index: 200;
-  background: rgba(238,242,247,0.82);
+  background: rgba(220,235,248,0.88);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
@@ -839,13 +839,18 @@ img { display: block; image-orientation: from-image; }
 .kakaopay-links { display: flex; gap: 6px; }
 .kakaopay-btn {
   flex: 1; text-align: center;
-  background: #FEE500; color: #3C1E1E;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(201,168,76,0.35);
   text-decoration: none; padding: 11px 8px;
   font-family: var(--sans);
   font-size: var(--fs-label); letter-spacing: 0.06em;
-  transition: opacity 0.2s; font-weight: 500;
+  transition: border-color 0.2s, color 0.2s; font-weight: 500;
 }
-.kakaopay-btn:hover { opacity: 0.82; }
+.kakaopay-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
 
 /* ─── GUESTBOOK ──────────────────────────────────────────── */
 .guestbook {
