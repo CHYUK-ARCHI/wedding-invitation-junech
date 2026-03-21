@@ -13,6 +13,7 @@ const WEDDING_DATE = (() => {
 })();
 
 const GALLERY_IMGS = WD?.gallery || [
+  "assets/IMG_0876.webp",
   "assets/IMG_0963.webp","assets/IMG_0966.webp","assets/IMG_0981.webp",
   "assets/IMG_0982.webp","assets/IMG_0983.webp","assets/IMG_1007.webp",
 ];
@@ -143,7 +144,7 @@ if (navEl) {
   });
 }
 
-const IMG_LABELS = ["IMG_001","IMG_002","IMG_003","IMG_004","IMG_005","IMG_006"];
+const IMG_LABELS = ["IMG_001","IMG_002","IMG_003","IMG_004","IMG_005","IMG_006","IMG_007"];
 
 function goSlide(idx) {
   gsIdx = (idx + GALLERY_IMGS.length) % GALLERY_IMGS.length;

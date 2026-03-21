@@ -4,8 +4,6 @@
    Palette: Blueprint Blue + Deep Navy + Gold
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans+KR:wght@300;400&display=swap');
-
 /* ─── Tokens ─────────────────────────────────────────────── */
 :root {
   --bg:        #EEF2F7;
@@ -16,15 +14,15 @@
   --ink:       #1C2B3A;
   --muted:     #4A5F72;
   --subtle:    #7A90A4;
-  --gold:      #C5A55A;
-  --gold-l:    #D4BC80;
+  --gold:      #8B7D6B;
+  --gold-l:    #A8988A;
   --grid-line: rgba(28,43,58,0.07);
-  --mono:      'DM Mono', monospace;
-  --serif:     'Cormorant Garamond', serif;
-  --sans:      'Noto Sans KR', sans-serif;
+  --mono:      'Pretendard', -apple-system, sans-serif;
+  --serif:     'Gowun Batang', serif;
+  --sans:      'Pretendard', -apple-system, sans-serif;
   --ease:      cubic-bezier(0.22, 1, 0.36, 1);
-  --fs-label:  clamp(0.58rem, 1.6vw, 0.66rem);
-  --fs-body:   clamp(0.85rem, 2.3vw, 0.92rem);
+  --fs-label:  clamp(0.62rem, 1.8vw, 0.7rem);
+  --fs-body:   clamp(0.88rem, 2.4vw, 0.95rem);
   --max-w:     480px;
 }
 
@@ -37,8 +35,8 @@
   --ink:       #EEF2F7;
   --muted:     #8AAAC4;
   --subtle:    #4A6680;
-  --gold:      #C5A55A;
-  --gold-l:    #9A7E3E;
+  --gold:      #B0A090;
+  --gold-l:    #7A6A5A;
   --grid-line: rgba(238,242,247,0.05);
 }
 
@@ -52,8 +50,8 @@
     --ink:       #EEF2F7;
     --muted:     #8AAAC4;
     --subtle:    #4A6680;
-    --gold:      #C5A55A;
-    --gold-l:    #9A7E3E;
+    --gold:      #B0A090;
+    --gold-l:    #7A6A5A;
     --grid-line: rgba(238,242,247,0.05);
   }
 }

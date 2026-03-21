@@ -23,6 +23,7 @@ const WEDDING_DATA = {
   },
   kakaoMapKey: "c00b4b806976cdd0faf033f948a1756f",
   gallery: [
+    "assets/IMG_0876.webp",
     "assets/IMG_0963.webp","assets/IMG_0966.webp","assets/IMG_0981.webp",
     "assets/IMG_0982.webp","assets/IMG_0983.webp","assets/IMG_1007.webp",
   ],
