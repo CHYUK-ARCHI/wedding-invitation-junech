@@ -239,7 +239,8 @@ img { display: block; image-orientation: from-image; }
   opacity: 0;
   animation: fadeUp 0.9s var(--ease) 0.5s forwards;
 }
-.cover-names em {
+.cover-names em,
+.cover-sub {
   font-style: normal;
   color: rgba(197,165,90,0.75);
   font-size: calc(var(--fs-label) * 1.1);
@@ -342,11 +343,12 @@ img { display: block; image-orientation: from-image; }
   font-size: var(--fs-h2);
   font-weight: 400;
   color: var(--ink);
-  line-height: 1.2;
+  line-height: 1.3;
+  white-space: nowrap;
 }
 .section-title em {
-  font-style: italic;
-  color: var(--muted);
+  font-style: normal;
+  color: var(--ink);
   font-weight: 400;
 }
 
