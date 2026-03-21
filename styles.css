@@ -22,7 +22,7 @@
   --max-w: 480px;
 
   /* 타이포그래피 스케일 — 기본값: small (어르신 배려, 단정한 기본) */
-  --scale: 0.9;
+  --scale: 1.0;
   --fs-label:  calc(0.64rem  * var(--scale));
   --fs-body:   calc(0.88rem  * var(--scale));
   --fs-h3:     calc(1.05rem  * var(--scale));
@@ -33,37 +33,37 @@
 }
 
 /* 글자 크기 단계 */
-html[data-fs="small"]  { --scale: 0.9;  }
+html[data-fs="small"]  { --scale: 0.95; }
 html[data-fs="medium"] { --scale: 1.0;  }
-html[data-fs="large"]  { --scale: 1.2;  }
+html[data-fs="large"]  { --scale: 1.25; }
 
 /* ─── Dark theme ─────────────────────────────────────────── */
 [data-theme="dark"] {
-  --bg:        #0E1822;
-  --bg2:       #0A1018;
-  --paper:     #131F2C;
-  --navy:      #EEF2F7;
-  --navy2:     #CBD8E8;
-  --ink:       #EEF2F7;
-  --muted:     #8AAAC4;
-  --subtle:    #4A6680;
-  --gold:      #B0A090;
-  --gold-l:    #7A6A5A;
-  --grid-line: rgba(238,242,247,0.05);
+  --bg:        #1A2332;
+  --bg2:       #141C28;
+  --paper:     #1E2A3A;
+  --navy:      #F0EDE6;
+  --navy2:     #D8D2C8;
+  --ink:       #F0EDE6;
+  --muted:     #C8D8E8;
+  --subtle:    #8AAAC4;
+  --gold:      #C8B89A;
+  --gold-l:    #9A8A7A;
+  --grid-line: rgba(238,242,247,0.07);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg:        #0E1822;
-    --bg2:       #0A1018;
-    --paper:     #131F2C;
-    --navy:      #EEF2F7;
-    --navy2:     #CBD8E8;
-    --ink:       #EEF2F7;
-    --muted:     #8AAAC4;
-    --subtle:    #4A6680;
-    --gold:      #B0A090;
-    --gold-l:    #7A6A5A;
-    --grid-line: rgba(238,242,247,0.05);
+    --bg:        #1A2332;
+    --bg2:       #141C28;
+    --paper:     #1E2A3A;
+    --navy:      #F0EDE6;
+    --navy2:     #D8D2C8;
+    --ink:       #F0EDE6;
+    --muted:     #C8D8E8;
+    --subtle:    #8AAAC4;
+    --gold:      #C8B89A;
+    --gold-l:    #9A8A7A;
+    --grid-line: rgba(238,242,247,0.07);
   }
 }
 
@@ -378,7 +378,7 @@ img { display: block; image-orientation: from-image; }
   font-size: var(--fs-body);
   font-weight: 400;
   color: var(--muted);
-  line-height: 2.1;
+  line-height: 2.2;
   word-break: keep-all;
 }
 
@@ -926,6 +926,11 @@ img { display: block; image-orientation: from-image; }
   white-space: nowrap; font-weight: 400;
 }
 
+
+[data-theme="dark"] body,
+:root:not([data-theme="light"]) body {
+  font-weight: 450;
+}
 /* ─── Keyframes ──────────────────────────────────────────── */
 @keyframes fadeUp {
   from { opacity:0; transform:translateY(14px); }
