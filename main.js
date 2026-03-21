@@ -13,15 +13,9 @@ const WEDDING_DATE = (() => {
 })();
 
 const GALLERY_IMGS = WD?.gallery || [
-  "assets/gallery-01.webp",
-  "assets/gallery-02.webp",
-  "assets/gallery-03.webp",
-  "assets/gallery-04.webp",
-  "assets/gallery-05.webp",
-  "assets/gallery-06.webp",
-  "assets/gallery-07.webp",
-  "assets/gallery-08.webp",
-  "assets/gallery-09.webp",
+  "assets/gallery-01.webp","assets/gallery-02.webp","assets/gallery-03.webp",
+  "assets/gallery-04.webp","assets/gallery-05.webp","assets/gallery-06.webp",
+  "assets/gallery-07.webp","assets/gallery-08.webp","assets/gallery-09.webp",
   "assets/gallery-10.webp",
 ];
 
@@ -34,52 +28,48 @@ const GH_CONFIG = (() => {
   return { repo:"", token:"", enabled:false };
 })();
 
-/* helpers */
 const $  = sel => document.querySelector(sel);
 const $$ = sel => document.querySelectorAll(sel);
 const pad = n => String(n).padStart(2,"0");
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 
-/* ─── Theme ──────────────────────────────────────────────── */
+/* ─── Theme ── */
 const root = document.documentElement;
 const themeBtn = $("#theme-toggle");
-
 function applyTheme(t) {
   root.dataset.theme = t;
   localStorage.setItem("inv-theme", t);
   if (themeBtn) themeBtn.textContent = t === "dark" ? "[ LIGHT ]" : "[ DARK ]";
 }
-
 (function initTheme() {
   const saved = localStorage.getItem("inv-theme");
   if (saved === "light" || saved === "dark") { applyTheme(saved); return; }
   applyTheme(window.matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light");
 })();
-
 themeBtn?.addEventListener("click", () =>
   applyTheme(root.dataset.theme === "dark" ? "light" : "dark")
 );
 
-/* ─── Font size control ──────────────────────────────────── */
+/* ─── Font size ── */
 const FS_KEY = "inv-fs";
-const fsBtns = { small: document.getElementById("fs-small"), medium: document.getElementById("fs-medium"), large: document.getElementById("fs-large") };
-
+const fsBtns = {
+  small:  document.getElementById("fs-small"),
+  medium: document.getElementById("fs-medium"),
+  large:  document.getElementById("fs-large")
+};
 function applyFs(size) {
   root.dataset.fs = size;
   localStorage.setItem(FS_KEY, size);
-  Object.entries(fsBtns).forEach(([k, btn]) => { if (btn) btn.classList.toggle("active", k === size); });
+  Object.entries(fsBtns).forEach(([k, btn]) => {
+    if (btn) btn.classList.toggle("active", k === size);
+  });
 }
-
-(function initFs() {
-  const saved = localStorage.getItem(FS_KEY) || "medium";
-  applyFs(saved);
-})();
-
+(function initFs() { applyFs(localStorage.getItem(FS_KEY) || "medium"); })();
 fsBtns.small?.addEventListener("click",  () => applyFs("small"));
 fsBtns.medium?.addEventListener("click", () => applyFs("medium"));
 fsBtns.large?.addEventListener("click",  () => applyFs("large"));
 
-/* ─── Toast ──────────────────────────────────────────────── */
+/* ─── Toast ── */
 const toastEl = $("#toast");
 let toastT;
 function toast(msg) {
@@ -89,13 +79,12 @@ function toast(msg) {
   toastT = setTimeout(() => toastEl.classList.remove("show"), 2600);
 }
 
-/* ─── Countdown ──────────────────────────────────────────── */
+/* ─── Countdown ── */
 function tick() {
   const diff = WEDDING_DATE - Date.now();
   if (diff <= 0) {
     ["cd-days","cd-hours","cd-mins","cd-secs"].forEach(id => {
-      const el = document.getElementById(id);
-      if(el) el.textContent = "00";
+      const el = document.getElementById(id); if(el) el.textContent = "00";
     });
     return;
   }
@@ -107,14 +96,13 @@ function tick() {
 }
 tick(); setInterval(tick, 1000);
 
-/* ─── Accounts ───────────────────────────────────────────── */
+/* ─── Accounts ── */
 function renderAccounts() {
   const accounts = WD?.accounts || [];
   ["bride","groom"].forEach(side => {
     const box = document.getElementById(`account-${side}`);
     if (!box) return;
-    const items = accounts.filter(a => a.side === side);
-    box.innerHTML = items.map(a => `
+    box.innerHTML = accounts.filter(a => a.side === side).map(a => `
       <div class="account-item">
         <div class="account-info">
           <span class="account-role">${a.role}</span>
@@ -130,7 +118,6 @@ function renderAccounts() {
   if (bp && WD?.kakaopay?.bride) bp.href = WD.kakaopay.bride;
   if (gp && WD?.kakaopay?.groom) gp.href = WD.kakaopay.groom;
 }
-
 $$(".account-tab").forEach(tab => {
   tab.addEventListener("click", () => {
     $$(".account-tab").forEach(t => t.classList.remove("active"));
@@ -139,27 +126,22 @@ $$(".account-tab").forEach(tab => {
     document.getElementById(`account-${tab.dataset.side}`)?.classList.remove("hidden");
   });
 });
-
 document.addEventListener("click", async e => {
   const btn = e.target.closest("[data-copy]");
   if (!btn) return;
-  try {
-    await navigator.clipboard.writeText(btn.dataset.copy);
-    toast("✓  COPIED");
-  } catch { toast("수동으로 복사해 주세요"); }
+  try { await navigator.clipboard.writeText(btn.dataset.copy); toast("✓  COPIED"); }
+  catch { toast("수동으로 복사해 주세요"); }
 });
 
-/* ─── Gallery ────────────────────────────────────────────── */
+/* ─── Gallery ── */
 const stageEl   = document.getElementById("gallery-stage");
 const navEl     = document.getElementById("gallery-nav");
 const counterEl = document.getElementById("gs-counter");
 const stageLbl  = document.getElementById("gallery-stage-label");
 const thumbsEl  = document.getElementById("gallery-thumbs");
-
 let gsIdx = 0;
 const stageImgs = stageEl ? Array.from(stageEl.querySelectorAll("img")) : [];
 
-// dots
 if (navEl) {
   GALLERY_IMGS.forEach((_,i) => {
     const btn = document.createElement("button");
@@ -170,14 +152,12 @@ if (navEl) {
   });
 }
 
-const IMG_LABELS = ["IMG_001","IMG_002","IMG_003","IMG_004","IMG_005","IMG_006","IMG_007"];
-
 function goSlide(idx) {
   gsIdx = (idx + GALLERY_IMGS.length) % GALLERY_IMGS.length;
   stageImgs.forEach((img,i) => img.classList.toggle("active", i===gsIdx));
   navEl?.querySelectorAll(".gallery-dot").forEach((d,i) => d.classList.toggle("active", i===gsIdx));
   if (counterEl) counterEl.textContent = `${pad(gsIdx+1)} / ${pad(GALLERY_IMGS.length)}`;
-  if (stageLbl) stageLbl.textContent = IMG_LABELS[gsIdx] || `IMG_${pad(gsIdx+1)}`;
+  if (stageLbl) stageLbl.textContent = `${pad(gsIdx+1)} / ${pad(GALLERY_IMGS.length)}`;
   thumbsEl?.querySelectorAll(".gallery-thumb").forEach((t,i) => t.classList.toggle("active", i===gsIdx));
   updateLikeUI();
 }
@@ -185,7 +165,6 @@ function goSlide(idx) {
 document.getElementById("gs-prev")?.addEventListener("click", () => goSlide(gsIdx-1));
 document.getElementById("gs-next")?.addEventListener("click", () => goSlide(gsIdx+1));
 
-// swipe
 if (stageEl) {
   let tx=0;
   stageEl.addEventListener("touchstart", e => { tx=e.changedTouches[0].clientX; }, {passive:true});
@@ -194,15 +173,12 @@ if (stageEl) {
     if (Math.abs(dx)>40) goSlide(gsIdx+(dx<0?1:-1));
   }, {passive:true});
   stageEl.addEventListener("click", e => {
-    if (!e.target.closest(".gallery-nav-dots")) openLb(gsIdx);
+    if (!e.target.closest(".gallery-nav-dots")) openGalleryLb(gsIdx);
   });
 }
-
 thumbsEl?.querySelectorAll(".gallery-thumb").forEach(th => {
   th.addEventListener("click", () => goSlide(parseInt(th.dataset.idx)));
 });
-
-// 썸네일 화살표 스크롤
 document.getElementById("thumb-prev")?.addEventListener("click", () => {
   if (thumbsEl) thumbsEl.scrollBy({ left: -150, behavior: "smooth" });
 });
@@ -210,13 +186,12 @@ document.getElementById("thumb-next")?.addEventListener("click", () => {
   if (thumbsEl) thumbsEl.scrollBy({ left: 150, behavior: "smooth" });
 });
 
-// gallery likes
 const GL_KEY = "gal-likes-v2";
 function getGalLikes() { try{return JSON.parse(localStorage.getItem(GL_KEY)||"{}");}catch{return{};} }
 function updateLikeUI() {
   const likes = getGalLikes();
-  const btn   = document.getElementById("gallery-like-btn");
-  const cnt   = document.getElementById("gallery-like-count");
+  const btn = document.getElementById("gallery-like-btn");
+  const cnt = document.getElementById("gallery-like-count");
   if (!btn||!cnt) return;
   const liked = !!likes[gsIdx];
   btn.textContent = liked ? "♥" : "♡";
@@ -233,36 +208,66 @@ document.getElementById("gallery-like-btn")?.addEventListener("click", () => {
 });
 updateLikeUI();
 
-/* ─── Lightbox ───────────────────────────────────────────── */
+/* ─── Unified Lightbox ── */
+// lb는 gallery와 memories 모두 공유 — currentSrcs로 관리
 const lb    = document.getElementById("lightbox");
 const lbImg = document.getElementById("lightbox-img");
 const lbCnt = document.getElementById("lightbox-counter");
-let lbIdx=0;
+let lbIdx = 0;
+let currentSrcs = GALLERY_IMGS; // 현재 열린 이미지 배열
 
-function openLb(idx) {
-  lbIdx=idx; showLb();
+function openLb(idx, srcs) {
+  currentSrcs = srcs || GALLERY_IMGS;
+  lbIdx = idx;
+  lbImg.src = currentSrcs[lbIdx];
+  if (lbCnt) lbCnt.textContent = `${lbIdx+1} / ${currentSrcs.length}`;
   lb.classList.add("open");
-  document.body.style.overflow="hidden";
+  document.body.style.overflow = "hidden";
 }
-function closeLb() { lb.classList.remove("open"); document.body.style.overflow=""; }
-function showLb() {
-  lbImg.src = GALLERY_IMGS[lbIdx];
-  if(lbCnt) lbCnt.textContent=`${lbIdx+1} / ${GALLERY_IMGS.length}`;
+// gallery용 alias
+function openGalleryLb(idx) { openLb(idx, GALLERY_IMGS); }
+
+function closeLb() { lb.classList.remove("open"); document.body.style.overflow = ""; }
+
+function lbGo(d) {
+  lbIdx = (lbIdx + d + currentSrcs.length) % currentSrcs.length;
+  lbImg.src = currentSrcs[lbIdx];
+  if (lbCnt) lbCnt.textContent = `${lbIdx+1} / ${currentSrcs.length}`;
 }
-function lbGo(d) { lbIdx=(lbIdx+d+GALLERY_IMGS.length)%GALLERY_IMGS.length; showLb(); }
 
 document.getElementById("lightbox-close")?.addEventListener("click", closeLb);
-document.getElementById("lightbox-prev")?.addEventListener("click", ()=>lbGo(-1));
-document.getElementById("lightbox-next")?.addEventListener("click", ()=>lbGo(1));
-lb?.addEventListener("click", e=>{ if(e.target===lb) closeLb(); });
-document.addEventListener("keydown", e=>{
-  if(!lb?.classList.contains("open")) return;
-  if(e.key==="Escape") closeLb();
-  if(e.key==="ArrowLeft") lbGo(-1);
-  if(e.key==="ArrowRight") lbGo(1);
+document.getElementById("lightbox-prev")?.addEventListener("click", () => lbGo(-1));
+document.getElementById("lightbox-next")?.addEventListener("click", () => lbGo(1));
+lb?.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+
+// 터치 스와이프
+if (lb) {
+  let lbTx = 0;
+  lb.addEventListener("touchstart", e => { lbTx = e.changedTouches[0].clientX; }, { passive:true });
+  lb.addEventListener("touchend",   e => {
+    const dx = e.changedTouches[0].clientX - lbTx;
+    if (Math.abs(dx) > 40) lbGo(dx < 0 ? 1 : -1);
+  }, { passive:true });
+}
+
+document.addEventListener("keydown", e => {
+  if (!lb?.classList.contains("open")) return;
+  if (e.key === "Escape")      closeLb();
+  if (e.key === "ArrowLeft")   lbGo(-1);
+  if (e.key === "ArrowRight")  lbGo(1);
 });
 
-/* ─── Kakao Map ──────────────────────────────────────────── */
+/* ─── Memories Gallery ── */
+(function initMemories() {
+  const items = Array.from(document.querySelectorAll(".memory-item"));
+  if (!items.length) return;
+  const SRCS = items.map(el => el.dataset.src);
+  items.forEach((item, idx) => {
+    item.addEventListener("click", () => openLb(idx, SRCS));
+  });
+})();
+
+/* ─── Kakao Map ── */
 function initKakaoMap() {
   const key = WD?.kakaoMapKey;
   const container = document.getElementById("kakao-map-container");
@@ -279,203 +284,78 @@ function initKakaoMap() {
       const marker = new kakao.maps.Marker({position:new kakao.maps.LatLng(lat,lng)});
       marker.setMap(map);
       new kakao.maps.InfoWindow({
-        content:`<div style="padding:5px 10px;font-size:13px">${WD?.wedding?.venueName||"서울대학교 이라운지"}</div>`
+        content:`<div style="padding:5px 10px;font-size:13px">${WD?.wedding?.venueName||"이라운지 서울대점"}</div>`
       }).open(map,marker);
     });
   };
   document.head.appendChild(script);
 }
 
-/* ─── Guestbook ──────────────────────────────────────────── */
-const GB_LS  = "wedding-gb-v2";
-const GB_LBL = "방명록";
-const GH_API = "https://api.github.com";
-const gbForm   = document.getElementById("guestbook-form");
-const gbList   = document.getElementById("guestbook-list");
-const gbStatus = document.getElementById("form-status");
-const gbSubmit = document.getElementById("guestbook-submit");
-
-const ghH = () => ({
-  "Accept":"application/vnd.github+json",
-  "Authorization":`Bearer ${GH_CONFIG.token}`,
-  "X-GitHub-Api-Version":"2022-11-28",
-});
-
+/* ─── Guestbook ── */
+const GB_LS="wedding-gb-v2", GB_LBL="방명록", GH_API="https://api.github.com";
+const gbForm=document.getElementById("guestbook-form");
+const gbList=document.getElementById("guestbook-list");
+const gbStatus=document.getElementById("form-status");
+const gbSubmit=document.getElementById("guestbook-submit");
+const ghH=()=>({ "Accept":"application/vnd.github+json","Authorization":`Bearer ${GH_CONFIG.token}`,"X-GitHub-Api-Version":"2022-11-28" });
 async function ghFetch() {
-  const url=`${GH_API}/repos/${GH_CONFIG.repo}/issues?labels=${encodeURIComponent(GB_LBL)}&state=open&per_page=30&sort=created&direction=desc`;
-  const res=await fetch(url,{headers:ghH()});
+  const res=await fetch(`${GH_API}/repos/${GH_CONFIG.repo}/issues?labels=${encodeURIComponent(GB_LBL)}&state=open&per_page=30&sort=created&direction=desc`,{headers:ghH()});
   if(!res.ok) throw new Error(res.status);
-  const issues=await res.json();
-  return issues.map(i=>({id:i.number,name:i.title,message:i.body||"",createdAt:i.created_at}));
+  return (await res.json()).map(i=>({id:i.number,name:i.title,message:i.body||"",createdAt:i.created_at}));
 }
-
 async function ghPost(name,message) {
-  const res=await fetch(`${GH_API}/repos/${GH_CONFIG.repo}/issues`,{
-    method:"POST",
-    headers:{...ghH(),"Content-Type":"application/json"},
-    body:JSON.stringify({title:name,body:message,labels:[GB_LBL]}),
-  });
+  const res=await fetch(`${GH_API}/repos/${GH_CONFIG.repo}/issues`,{method:"POST",headers:{...ghH(),"Content-Type":"application/json"},body:JSON.stringify({title:name,body:message,labels:[GB_LBL]})});
   if(!res.ok) throw new Error(res.status);
 }
-
 function lsEntries(){try{return JSON.parse(localStorage.getItem(GB_LS)||"[]");}catch{return[];}}
 function lsSave(e){const a=lsEntries();a.unshift(e);localStorage.setItem(GB_LS,JSON.stringify(a));}
-
 const LIKE_KEY="gb-likes-v2";
 function getEntryLikes(){try{return JSON.parse(localStorage.getItem(LIKE_KEY)||"{}");}catch{return{};}}
-
 function renderEntry(e) {
-  const li=document.createElement("li");
-  li.className="guestbook-entry";
+  const li=document.createElement("li"); li.className="guestbook-entry";
   const dt=new Date(e.createdAt);
   const ds=`${dt.getFullYear()}.${pad(dt.getMonth()+1)}.${pad(dt.getDate())}`;
-  const id=String(e.id);
-  const likes=getEntryLikes();
-  const liked=!!likes[id];
-  li.innerHTML=`
-    <div class="entry-body">
-      <div class="entry-name">${esc(e.name)}</div>
-      <div class="entry-msg">${esc(e.message)}</div>
-      <time class="entry-date" datetime="${e.createdAt}">${ds}</time>
-    </div>
-    <div class="entry-like">
-      <button class="like-btn" data-entry="${id}" aria-label="좋아요">${liked?"♥":"♡"}</button>
-    </div>`;
+  const id=String(e.id); const likes=getEntryLikes(); const liked=!!likes[id];
+  li.innerHTML=`<div class="entry-body"><div class="entry-name">${esc(e.name)}</div><div class="entry-msg">${esc(e.message)}</div><time class="entry-date" datetime="${e.createdAt}">${ds}</time></div><div class="entry-like"><button class="like-btn" data-entry="${id}" aria-label="좋아요">${liked?"♥":"♡"}</button></div>`;
   li.querySelector(".like-btn").addEventListener("click", ev=>{
-    const btn=ev.currentTarget;
-    const lk=getEntryLikes();
-    lk[id]=!lk[id];
-    localStorage.setItem(LIKE_KEY,JSON.stringify(lk));
-    btn.textContent=lk[id]?"♥":"♡";
-    btn.classList.remove("liked"); void btn.offsetWidth; if(lk[id]) btn.classList.add("liked");
+    const btn=ev.currentTarget; const lk=getEntryLikes();
+    lk[id]=!lk[id]; localStorage.setItem(LIKE_KEY,JSON.stringify(lk));
+    btn.textContent=lk[id]?"♥":"♡"; btn.classList.remove("liked"); void btn.offsetWidth; if(lk[id]) btn.classList.add("liked");
   });
   return li;
 }
-
 async function loadGuestbook() {
   gbList.innerHTML=`<li class="guestbook-loading">// loading...</li>`;
   try {
     const entries = GH_CONFIG.enabled ? await ghFetch() : lsEntries();
     gbList.innerHTML="";
-    if(!entries.length){
-      gbList.innerHTML=`<li class="guestbook-loading">// 첫 번째 메시지를 남겨주세요</li>`;
-      return;
-    }
+    if(!entries.length){ gbList.innerHTML=`<li class="guestbook-loading">// 첫 번째 메시지를 남겨주세요</li>`; return; }
     entries.forEach(e=>gbList.appendChild(renderEntry(e)));
-  } catch {
-    gbList.innerHTML=`<li class="guestbook-loading">// failed to load</li>`;
-  }
+  } catch { gbList.innerHTML=`<li class="guestbook-loading">// failed to load</li>`; }
 }
-
 gbForm?.addEventListener("submit", async e=>{
   e.preventDefault();
   const fd=new FormData(gbForm);
-  const name=String(fd.get("name")||"").trim();
-  const msg=String(fd.get("message")||"").trim();
+  const name=String(fd.get("name")||"").trim(), msg=String(fd.get("message")||"").trim();
   if(!name||!msg) return;
-  gbSubmit.disabled=true;
-  gbSubmit.textContent="LOADING...";
-  gbStatus.textContent="";
+  gbSubmit.disabled=true; gbSubmit.textContent="LOADING..."; gbStatus.textContent="";
   try {
     if(GH_CONFIG.enabled){ await ghPost(name,msg); }
     else { lsSave({id:Date.now(),name,message:msg,createdAt:new Date().toISOString()}); }
-    gbForm.reset();
-    toast("✓  REGISTERED");
-    await loadGuestbook();
-  } catch {
-    gbStatus.textContent="// ERROR — 잠시 후 다시 시도해 주세요";
-  } finally {
-    gbSubmit.disabled=false;
-    gbSubmit.textContent="SUBMIT →";
-  }
+    gbForm.reset(); toast("✓  REGISTERED"); await loadGuestbook();
+  } catch { gbStatus.textContent="// ERROR — 잠시 후 다시 시도해 주세요"; }
+  finally { gbSubmit.disabled=false; gbSubmit.textContent="SUBMIT →"; }
 });
 
-/* ─── Scroll Reveal ──────────────────────────────────────── */
+/* ─── Scroll Reveal ── */
 const obs = new IntersectionObserver(entries=>{
-  entries.forEach(en=>{
-    if(en.isIntersecting){ en.target.classList.add("in"); obs.unobserve(en.target); }
-  });
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add("in"); obs.unobserve(en.target); } });
 },{threshold:0.07, rootMargin:"0px 0px -24px 0px"});
-
 document.querySelectorAll(".reveal").forEach((el,i)=>{
-  el.style.transitionDelay=`${i*0.04}s`;
-  obs.observe(el);
+  el.style.transitionDelay=`${i*0.04}s`; obs.observe(el);
 });
 
-/* ─── Init ───────────────────────────────────────────────── */
+/* ─── Init ── */
 renderAccounts();
 initKakaoMap();
-loadGuestbook();/* ─── Memories Gallery Lightbox ─────────────────────── */
-(function initMemories() {
-  const items = Array.from(document.querySelectorAll(".memory-item"));
-  if (!items.length) return;
-
-  const SRCS = items.map(el => el.dataset.src);
-  let memIdx = 0;
-
-  // 각 아이템 클릭 → lightbox (memories 전용 배열)
-  items.forEach((item, idx) => {
-    item.addEventListener("click", () => {
-      memIdx = idx;
-      openMemLb(memIdx);
-    });
-  });
-
-  // ── memories 전용 lightbox (기존 gallery lb 재활용) ──
-  function openMemLb(idx) {
-    memIdx = idx;
-    lbImg.src = SRCS[memIdx];
-    if (lbCnt) lbCnt.textContent = `${memIdx + 1} / ${SRCS.length}`;
-    lb.classList.add("open");
-    lb.dataset.mode = "memory";
-    document.body.style.overflow = "hidden";
-  }
-
-  function memGo(d) {
-    memIdx = (memIdx + d + SRCS.length) % SRCS.length;
-    lbImg.src = SRCS[memIdx];
-    if (lbCnt) lbCnt.textContent = `${memIdx + 1} / ${SRCS.length}`;
-  }
-
-  // lb 닫힐 때 mode 초기화
-  const origClose = closeLb;
-  window._memGo = memGo;
-
-  // prev/next 버튼 — mode에 따라 분기
-  document.getElementById("lightbox-prev")?.addEventListener("click", () => {
-    if (lb.dataset.mode === "memory") memGo(-1);
-    else lbGo(-1);
-  }, true);
-  document.getElementById("lightbox-next")?.addEventListener("click", () => {
-    if (lb.dataset.mode === "memory") memGo(1);
-    else lbGo(1);
-  }, true);
-
-  // 터치 스와이프 (memories mode)
-  if (lb) {
-    let memTx = 0;
-    lb.addEventListener("touchstart", e => {
-      if (lb.dataset.mode === "memory") memTx = e.changedTouches[0].clientX;
-    }, { passive: true });
-    lb.addEventListener("touchend", e => {
-      if (lb.dataset.mode !== "memory") return;
-      const dx = e.changedTouches[0].clientX - memTx;
-      if (Math.abs(dx) > 40) memGo(dx < 0 ? 1 : -1);
-    }, { passive: true });
-  }
-
-  // 키보드
-  document.addEventListener("keydown", e => {
-    if (!lb?.classList.contains("open") || lb.dataset.mode !== "memory") return;
-    if (e.key === "ArrowLeft")  { e.stopImmediatePropagation(); memGo(-1); }
-    if (e.key === "ArrowRight") { e.stopImmediatePropagation(); memGo(1); }
-    if (e.key === "Escape")     { lb.dataset.mode = ""; closeLb(); }
-  }, true);
-
-  // closeLb 시 mode 초기화
-  document.getElementById("lightbox-close")?.addEventListener("click", () => {
-    lb.dataset.mode = "";
-  }, true);
-})();
-
-
+loadGuestbook();
