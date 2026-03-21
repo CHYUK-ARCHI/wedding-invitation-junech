@@ -202,6 +202,14 @@ thumbsEl?.querySelectorAll(".gallery-thumb").forEach(th => {
   th.addEventListener("click", () => goSlide(parseInt(th.dataset.idx)));
 });
 
+// 썸네일 화살표 스크롤
+document.getElementById("thumb-prev")?.addEventListener("click", () => {
+  if (thumbsEl) thumbsEl.scrollBy({ left: -150, behavior: "smooth" });
+});
+document.getElementById("thumb-next")?.addEventListener("click", () => {
+  if (thumbsEl) thumbsEl.scrollBy({ left: 150, behavior: "smooth" });
+});
+
 // gallery likes
 const GL_KEY = "gal-likes-v2";
 function getGalLikes() { try{return JSON.parse(localStorage.getItem(GL_KEY)||"{}");}catch{return{};} }
