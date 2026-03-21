@@ -28,7 +28,7 @@
   --fs-h3:     calc(1.05rem  * var(--scale));
   --fs-h2:     calc(1.55rem  * var(--scale));
   --fs-num:    calc(1.8rem   * var(--scale));
-  --fs-cover:  calc(3.0rem   * var(--scale));
+  --fs-cover:  calc(2.6rem   * var(--scale));
   --fs-sched:  calc(1.4rem   * var(--scale));
 }
 
@@ -236,6 +236,7 @@ img { display: block; image-orientation: from-image; }
   font-size: var(--fs-cover);
   font-weight: 400;
   line-height: 1.05;
+  white-space: nowrap;
   color: #EEF2F7;
   opacity: 0;
   animation: fadeUp 0.9s var(--ease) 0.5s forwards;

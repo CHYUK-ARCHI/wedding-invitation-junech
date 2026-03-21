@@ -3,11 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#EEF2F7" />
+    <meta name="theme-color" content="#F5F7FA" />
     <meta name="description" content="권찬혁 · 김주은의 결혼식에 초대합니다. 2026년 6월 28일 일요일 오전 11시, 서울대학교 이라운지." />
     <title>June × Chan · 2026.06.28</title>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <!-- Pretendard 가변 동적 서브셋 -->
     <link rel="stylesheet" as="style" crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
       onload="this.onload=null;this.rel='stylesheet'" />
@@ -15,7 +14,6 @@
       <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
     </noscript>
-    <!-- Gowun Batang: yangheeryu/Gowun-Batang repo → jsDelivr CDN -->
     <style>
       @font-face {
         font-family: 'Gowun Batang';
@@ -41,13 +39,13 @@
     <div class="top-bar">
       <button type="button" class="theme-toggle" id="theme-toggle" aria-label="테마 전환">[ DARK ]</button>
       <div class="font-size-ctrl" role="group" aria-label="글자 크기">
-        <button type="button" class="fs-btn fs-s" id="fs-small"  title="작게">가</button>
-        <button type="button" class="fs-btn fs-m active" id="fs-medium" title="보통">가</button>
+        <button type="button" class="fs-btn fs-s active" id="fs-small"  title="작게">가</button>
+        <button type="button" class="fs-btn fs-m" id="fs-medium" title="보통">가</button>
         <button type="button" class="fs-btn fs-l" id="fs-large"  title="크게">가</button>
       </div>
     </div>
 
-    <!-- Lightbox (단 1개) -->
+    <!-- Lightbox -->
     <div id="lightbox" role="dialog" aria-modal="true" aria-label="사진 크게 보기">
       <button type="button" class="lightbox-close" id="lightbox-close" aria-label="닫기">ESC</button>
       <button type="button" class="lightbox-nav" id="lightbox-prev" aria-label="이전">‹</button>
@@ -63,7 +61,7 @@
       <!-- ── COVER ── -->
       <section class="cover">
         <img class="cover-img"
-          src="assets/IMG_0876.webp"
+          src="assets/main.webp"
           alt="커버 사진"
           decoding="async" />
         <div class="cover-overlay"></div>
@@ -71,7 +69,7 @@
           <p class="cover-coord">37.4589°N · 126.9525°E · 2026.06.28</p>
           <p class="cover-label">Wedding Invitation</p>
           <h1 class="cover-names">
-            김주은<br />권찬혁
+            김주은 &amp; 권찬혁
             <em>JUNE &times; CHAN</em>
           </h1>
           <div class="cover-meta">
@@ -122,7 +120,7 @@
           <div class="couple-card">
             <span class="couple-tag">BRIDE · 신부</span>
             <img class="couple-photo"
-              src="assets/IMG_0826.jpeg"
+              src="assets/june-01.webp"
               alt="김주은"
               loading="lazy" decoding="async" />
             <div class="couple-info">
@@ -134,7 +132,7 @@
           <div class="couple-card">
             <span class="couple-tag">GROOM · 신랑</span>
             <img class="couple-photo"
-              src="assets/IMG_0912.jpeg"
+              src="assets/chan.webp"
               alt="권찬혁"
               loading="lazy" decoding="async" />
             <div class="couple-info">
@@ -154,7 +152,7 @@
         </div>
         <div class="story-item">
           <img class="story-photo"
-            src="assets/IMG_0963.webp"
+            src="assets/gallery-01.webp"
             alt="처음 만난 날"
             loading="lazy" decoding="async" />
           <div class="story-body">
@@ -165,7 +163,7 @@
         </div>
         <div class="story-item">
           <img class="story-photo"
-            src="assets/IMG_0966.webp"
+            src="assets/gallery-02.webp"
             alt="함께할 내일"
             loading="lazy" decoding="async" />
           <div class="story-body">
@@ -184,26 +182,29 @@
         <p class="schedule-venue">SEOUL NATIONAL UNIVERSITY · E-LOUNGE</p>
       </section>
 
-      <!-- ── GALLERY ── -->
+      <!-- ── GALLERY (9장) ── -->
       <section class="gallery-section reveal">
         <div class="gallery-heading">
           <p class="section-label">Gallery</p>
           <h2 class="section-title">우리의<br /><em>시간들</em></h2>
         </div>
         <div class="gallery-stage" id="gallery-stage">
-          <img src="assets/IMG_0876.webp" alt="갤러리 1" class="active" />
-          <img src="assets/IMG_0963.webp" alt="갤러리 2" loading="lazy" />
-          <img src="assets/IMG_0966.webp" alt="갤러리 3" loading="lazy" />
-          <img src="assets/IMG_0981.webp" alt="갤러리 4" loading="lazy" />
-          <img src="assets/IMG_0982.webp" alt="갤러리 5" loading="lazy" />
-          <img src="assets/IMG_0983.webp" alt="갤러리 6" loading="lazy" />
-          <img src="assets/IMG_1007.webp" alt="갤러리 7" loading="lazy" />
+          <img src="assets/gallery-01.webp" alt="갤러리 1" class="active" />
+          <img src="assets/gallery-02.webp" alt="갤러리 2" loading="lazy" />
+          <img src="assets/gallery-03.webp" alt="갤러리 3" loading="lazy" />
+          <img src="assets/gallery-04.webp" alt="갤러리 4" loading="lazy" />
+          <img src="assets/gallery-05.webp" alt="갤러리 5" loading="lazy" />
+          <img src="assets/gallery-06.webp" alt="갤러리 6" loading="lazy" />
+          <img src="assets/gallery-07.webp" alt="갤러리 7" loading="lazy" />
+          <img src="assets/gallery-08.webp" alt="갤러리 8" loading="lazy" />
+          <img src="assets/gallery-09.webp" alt="갤러리 9" loading="lazy" />
+          <img src="assets/gallery-10.webp" alt="갤러리 10" loading="lazy" />
           <div class="gallery-nav-dots" id="gallery-nav"></div>
-          <div class="gallery-stage-label" id="gallery-stage-label">IMG_001</div>
+          <div class="gallery-stage-label" id="gallery-stage-label">01 / 10</div>
         </div>
         <div class="gallery-controls">
           <button class="gallery-arrow" id="gs-prev" aria-label="이전">← PREV</button>
-          <span class="gallery-counter" id="gs-counter">01 / 07</span>
+          <span class="gallery-counter" id="gs-counter">01 / 10</span>
           <button class="gallery-arrow" id="gs-next" aria-label="다음">NEXT →</button>
         </div>
         <div class="gallery-like-row">
@@ -211,13 +212,16 @@
           <span class="gallery-like-count" id="gallery-like-count">0</span>
         </div>
         <div class="gallery-thumbs" id="gallery-thumbs">
-          <div class="gallery-thumb active" data-idx="0"><img src="assets/IMG_0876.webp" alt="1" /></div>
-          <div class="gallery-thumb" data-idx="1"><img src="assets/IMG_0963.webp" alt="2" /></div>
-          <div class="gallery-thumb" data-idx="2"><img src="assets/IMG_0966.webp" alt="3" /></div>
-          <div class="gallery-thumb" data-idx="3"><img src="assets/IMG_0981.webp" alt="4" /></div>
-          <div class="gallery-thumb" data-idx="4"><img src="assets/IMG_0982.webp" alt="5" /></div>
-          <div class="gallery-thumb" data-idx="5"><img src="assets/IMG_0983.webp" alt="6" /></div>
-          <div class="gallery-thumb" data-idx="6"><img src="assets/IMG_1007.webp" alt="7" /></div>
+          <div class="gallery-thumb active" data-idx="0"><img src="assets/gallery-01.webp" alt="1" /></div>
+          <div class="gallery-thumb" data-idx="1"><img src="assets/gallery-02.webp" alt="2" /></div>
+          <div class="gallery-thumb" data-idx="2"><img src="assets/gallery-03.webp" alt="3" /></div>
+          <div class="gallery-thumb" data-idx="3"><img src="assets/gallery-04.webp" alt="4" /></div>
+          <div class="gallery-thumb" data-idx="4"><img src="assets/gallery-05.webp" alt="5" /></div>
+          <div class="gallery-thumb" data-idx="5"><img src="assets/gallery-06.webp" alt="6" /></div>
+          <div class="gallery-thumb" data-idx="6"><img src="assets/gallery-07.webp" alt="7" /></div>
+          <div class="gallery-thumb" data-idx="7"><img src="assets/gallery-08.webp" alt="8" /></div>
+          <div class="gallery-thumb" data-idx="8"><img src="assets/gallery-09.webp" alt="9" /></div>
+          <div class="gallery-thumb" data-idx="9"><img src="assets/gallery-10.webp" alt="10" /></div>
         </div>
       </section>
 
@@ -231,9 +235,9 @@
            href="https://map.kakao.com/link/search/서울대학교%20이라운지"
            target="_blank" rel="noreferrer" aria-label="지도 앱으로 보기">
           <img class="map-thumb"
-            src="https://maps.googleapis.com/maps/api/staticmap?center=37.4589,126.9525&zoom=15&size=640x320&scale=2&markers=color:0x1C2B3A%7C37.4589,126.9525&style=feature:all|saturation:-60&language=ko"
+            src="assets/map-elounge.webp"
             onerror="this.src='https://placehold.co/640x320/EEF2F7/1C2B3A?text=서울대학교+이라운지'"
-            alt="지도" loading="lazy" />
+            alt="이라운지 약도" loading="lazy" />
           <span class="map-thumb-overlay">OPEN MAP →</span>
         </a>
         <div class="map-btns">
