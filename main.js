@@ -71,7 +71,7 @@ function applyFs(size) {
 }
 
 (function initFs() {
-  const saved = localStorage.getItem(FS_KEY) || "small";
+  const saved = localStorage.getItem(FS_KEY) || "medium";
   applyFs(saved);
 })();
 

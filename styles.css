@@ -22,7 +22,7 @@
   --max-w: 480px;
 
   /* 타이포그래피 스케일 — 기본값: small (어르신 배려, 단정한 기본) */
-  --scale: 1.0;
+  --scale: 1.25;
   --fs-label:  calc(0.64rem  * var(--scale));
   --fs-body:   calc(0.88rem  * var(--scale));
   --fs-h3:     calc(1.05rem  * var(--scale));
@@ -34,8 +34,8 @@
 
 /* 글자 크기 단계 */
 html[data-fs="small"]  { --scale: 0.95; }
-html[data-fs="medium"] { --scale: 1.0;  }
-html[data-fs="large"]  { --scale: 1.25; }
+html[data-fs="medium"] { --scale: 1.25; }
+html[data-fs="large"]  { --scale: 1.45; }
 
 /* ─── Dark theme ─────────────────────────────────────────── */
 [data-theme="dark"] {
@@ -143,9 +143,9 @@ img { display: block; image-orientation: from-image; }
   min-height: auto;
   transition: color 0.15s;
 }
-.fs-btn.fs-s { font-size: 0.7rem; }
-.fs-btn.fs-m { font-size: 0.9rem; }
-.fs-btn.fs-l { font-size: 1.1rem; }
+.fs-btn.fs-s { font-size: 0.68rem; }
+.fs-btn.fs-m { font-size: 0.88rem; }
+.fs-btn.fs-l { font-size: 1.08rem; }
 .fs-btn.active { color: var(--ink); font-weight: 600; }
 .fs-btn:hover  { color: var(--ink); }
 
