@@ -304,12 +304,9 @@ img { display: block; image-orientation: from-image; }
 }
 .countdown-num {
   font-family: var(--sans);
-  font-weight: 400;
+  font-weight: 300;
   font-size: var(--fs-num);
-  background: linear-gradient(135deg, #E8C55A 0%, #C9973A 40%, #F0D878 70%, #C9A84C 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--gold);
   display: block;
   line-height: 1;
   font-feature-settings: "tnum";
@@ -331,24 +328,18 @@ img { display: block; image-orientation: from-image; }
   font-size: var(--fs-label);
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #E8C55A 0%, #C9973A 35%, #F0D878 60%, #C9A84C 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--gold);
   margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 500;
+  font-weight: 400;
 }
 .section-label::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent);
-  -webkit-background-clip: unset;
-  background-clip: unset;
-  -webkit-text-fill-color: unset;
+  background: rgba(201,168,76,0.2);
 }
 
 
@@ -447,14 +438,11 @@ img { display: block; image-orientation: from-image; }
   margin-top: 7px;
   font-size: calc(var(--fs-label) * 0.9);
   letter-spacing: 0.1em;
-  background: linear-gradient(135deg, #E8C55A, #C9973A, #F0D878);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  border: 1px solid rgba(201,168,76,0.35);
+  color: var(--gold);
+  border: 1px solid rgba(139,125,107,0.28);
   padding: 2px 7px;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 /* ─── STORY ──────────────────────────────────────────────── */
