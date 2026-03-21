@@ -405,4 +405,77 @@ document.querySelectorAll(".reveal").forEach((el,i)=>{
 /* ─── Init ───────────────────────────────────────────────── */
 renderAccounts();
 initKakaoMap();
-loadGuestbook();
+loadGuestbook();/* ─── Memories Gallery Lightbox ─────────────────────── */
+(function initMemories() {
+  const items = Array.from(document.querySelectorAll(".memory-item"));
+  if (!items.length) return;
+
+  const SRCS = items.map(el => el.dataset.src);
+  let memIdx = 0;
+
+  // 각 아이템 클릭 → lightbox (memories 전용 배열)
+  items.forEach((item, idx) => {
+    item.addEventListener("click", () => {
+      memIdx = idx;
+      openMemLb(memIdx);
+    });
+  });
+
+  // ── memories 전용 lightbox (기존 gallery lb 재활용) ──
+  function openMemLb(idx) {
+    memIdx = idx;
+    lbImg.src = SRCS[memIdx];
+    if (lbCnt) lbCnt.textContent = `${memIdx + 1} / ${SRCS.length}`;
+    lb.classList.add("open");
+    lb.dataset.mode = "memory";
+    document.body.style.overflow = "hidden";
+  }
+
+  function memGo(d) {
+    memIdx = (memIdx + d + SRCS.length) % SRCS.length;
+    lbImg.src = SRCS[memIdx];
+    if (lbCnt) lbCnt.textContent = `${memIdx + 1} / ${SRCS.length}`;
+  }
+
+  // lb 닫힐 때 mode 초기화
+  const origClose = closeLb;
+  window._memGo = memGo;
+
+  // prev/next 버튼 — mode에 따라 분기
+  document.getElementById("lightbox-prev")?.addEventListener("click", () => {
+    if (lb.dataset.mode === "memory") memGo(-1);
+    else lbGo(-1);
+  }, true);
+  document.getElementById("lightbox-next")?.addEventListener("click", () => {
+    if (lb.dataset.mode === "memory") memGo(1);
+    else lbGo(1);
+  }, true);
+
+  // 터치 스와이프 (memories mode)
+  if (lb) {
+    let memTx = 0;
+    lb.addEventListener("touchstart", e => {
+      if (lb.dataset.mode === "memory") memTx = e.changedTouches[0].clientX;
+    }, { passive: true });
+    lb.addEventListener("touchend", e => {
+      if (lb.dataset.mode !== "memory") return;
+      const dx = e.changedTouches[0].clientX - memTx;
+      if (Math.abs(dx) > 40) memGo(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  }
+
+  // 키보드
+  document.addEventListener("keydown", e => {
+    if (!lb?.classList.contains("open") || lb.dataset.mode !== "memory") return;
+    if (e.key === "ArrowLeft")  { e.stopImmediatePropagation(); memGo(-1); }
+    if (e.key === "ArrowRight") { e.stopImmediatePropagation(); memGo(1); }
+    if (e.key === "Escape")     { lb.dataset.mode = ""; closeLb(); }
+  }, true);
+
+  // closeLb 시 mode 초기화
+  document.getElementById("lightbox-close")?.addEventListener("click", () => {
+    lb.dataset.mode = "";
+  }, true);
+})();
+
+
