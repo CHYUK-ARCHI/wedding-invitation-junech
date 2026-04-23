@@ -64,7 +64,7 @@ function applyFs(size) {
     if (btn) btn.classList.toggle("active", k === size);
   });
 }
-(function initFs() { applyFs(localStorage.getItem(FS_KEY) || "medium"); })();
+(function initFs() { applyFs("medium"); })();
 fsBtns.small?.addEventListener("click",  () => applyFs("small"));
 fsBtns.medium?.addEventListener("click", () => applyFs("medium"));
 fsBtns.large?.addEventListener("click",  () => applyFs("large"));
