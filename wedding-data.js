@@ -10,10 +10,10 @@ const WEDDING_DATA = {
     lng: 126.9514,
   },
   accounts: [
-    { side: "bride", role: "신부",       name: "김주은",  bank: "신한",  account: "000-000-000000" },
+    { side: "bride", role: "신부",       name: "김주은",  bank: "농협",  account: "1088-12-046488" },
     { side: "bride", role: "신부 아버지", name: "김병순",  bank: "농협",  account: "000-0000-0000-00" },
     { side: "bride", role: "신부 어머니", name: "이금란",  bank: "국민",  account: "000000-00-000000" },
-    { side: "groom", role: "신랑",       name: "권찬혁",  bank: "국민",  account: "000000-00-000000" },
+    { side: "groom", role: "신랑",       name: "권찬혁",  bank: "우리",  account: "1002-652-978849" },
     { side: "groom", role: "신랑 아버지", name: "권오현",  bank: "신한",  account: "000-000-000000" },
     { side: "groom", role: "신랑 어머니", name: "김현숙",  bank: "우리",  account: "0000-000-000000" },
   ],
