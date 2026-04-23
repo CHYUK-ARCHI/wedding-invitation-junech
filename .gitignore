@@ -1,3 +1,36 @@
+# 설정/비밀키
 config.js
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.js
+secrets.json
+
+# 의존성
 node_modules/
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# 빌드 산출물
+dist/
+build/
+.next/
+out/
+
+# 에디터
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 로그
+*.log
+npm-debug.log*
