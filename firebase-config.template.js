@@ -27,3 +27,8 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "여기에_SENDER_ID",
   appId: "여기에_APP_ID"
 };
+
+// 방명록 삭제용 관리자 키 — 본인만 아는 문자열로 설정
+// 사용법: 청첩장 URL 뒤에 ?admin=여기설정한값 을 붙이면 삭제 버튼 표시
+// 예) https://your-site.com/?admin=june0628
+const WEDDING_ADMIN_KEY = "여기에_관리자키";

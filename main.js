@@ -305,6 +305,8 @@ function initKakaoMap() {
 
 /* ─── Guestbook ── */
 const GB_LS="wedding-gb-v2";
+const ADMIN_KEY = typeof WEDDING_ADMIN_KEY !== "undefined" ? WEDDING_ADMIN_KEY : null;
+const IS_ADMIN = ADMIN_KEY && new URLSearchParams(location.search).get("admin") === ADMIN_KEY;
 const gbForm=document.getElementById("guestbook-form");
 const gbList=document.getElementById("guestbook-list");
 const gbStatus=document.getElementById("form-status");
@@ -324,17 +326,30 @@ async function gbPost(name,message){
   if(db){ await db.collection("guestbook").add({name,message,createdAt:new Date().toISOString()}); }
   else { lsSave({id:Date.now(),name,message,createdAt:new Date().toISOString()}); }
 }
+async function deleteEntry(id) {
+  if (!confirm("이 메시지를 삭제할까요?")) return;
+  if (db) {
+    await db.collection("guestbook").doc(id).delete();
+  } else {
+    const entries = lsEntries();
+    entries.splice(entries.findIndex(e => String(e.id) === String(id)), 1);
+    localStorage.setItem(GB_LS, JSON.stringify(entries));
+  }
+  await loadGuestbook();
+}
 function renderEntry(e) {
   const li=document.createElement("li"); li.className="guestbook-entry";
   const dt=new Date(e.createdAt);
   const ds=`${dt.getFullYear()}.${pad(dt.getMonth()+1)}.${pad(dt.getDate())}`;
   const id=String(e.id); const likes=getEntryLikes(); const liked=!!likes[id];
-  li.innerHTML=`<div class="entry-body"><div class="entry-name">${esc(e.name)}</div><div class="entry-msg">${esc(e.message)}</div><time class="entry-date" datetime="${e.createdAt}">${ds}</time></div><div class="entry-like"><button class="like-btn" data-entry="${id}" aria-label="좋아요">${liked?"♥":"♡"}</button></div>`;
+  const delBtn=IS_ADMIN ? `<button class="gb-del-btn" aria-label="삭제">✕</button>` : "";
+  li.innerHTML=`<div class="entry-body"><div class="entry-name">${esc(e.name)}${delBtn}</div><div class="entry-msg">${esc(e.message)}</div><time class="entry-date" datetime="${e.createdAt}">${ds}</time></div><div class="entry-like"><button class="like-btn" data-entry="${id}" aria-label="좋아요">${liked?"♥":"♡"}</button></div>`;
   li.querySelector(".like-btn").addEventListener("click", ev=>{
     const btn=ev.currentTarget; const lk=getEntryLikes();
     lk[id]=!lk[id]; localStorage.setItem(LIKE_KEY,JSON.stringify(lk));
     btn.textContent=lk[id]?"♥":"♡"; btn.classList.remove("liked"); void btn.offsetWidth; if(lk[id]) btn.classList.add("liked");
   });
+  if (IS_ADMIN) li.querySelector(".gb-del-btn").addEventListener("click", () => deleteEntry(e.id));
   return li;
 }
 async function loadGuestbook() {
