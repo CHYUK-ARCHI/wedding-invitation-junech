@@ -33,4 +33,5 @@ const WEDDING_DATA = {
     "assets/gallery-08.webp",
     "assets/gallery-10.webp",
   ],
+  adminKey: "chanhyuk",
 };

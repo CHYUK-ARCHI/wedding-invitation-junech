@@ -305,7 +305,7 @@ function initKakaoMap() {
 
 /* ─── Guestbook ── */
 const GB_LS="wedding-gb-v2";
-const ADMIN_KEY = typeof WEDDING_ADMIN_KEY !== "undefined" ? WEDDING_ADMIN_KEY : null;
+const ADMIN_KEY = WD?.adminKey || null;
 const IS_ADMIN = ADMIN_KEY && new URLSearchParams(location.search).get("admin") === ADMIN_KEY;
 const gbForm=document.getElementById("guestbook-form");
 const gbList=document.getElementById("guestbook-list");
