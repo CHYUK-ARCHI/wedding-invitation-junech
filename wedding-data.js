@@ -5,7 +5,7 @@ const WEDDING_DATA = {
     date: "2026년 6월 28일 일요일",
     time: "오전 11시",
     venueName: "이라운지 서울대점",
-    venueAddress: "서울 관악구 관악로 1",
+    venueAddress: "서울 관악구 관악로 1 서울대학교 관악캠퍼스 310동(엔지니어하우스)부속건물",
     lat: 37.4599,
     lng: 126.9514,
   },
@@ -18,8 +18,8 @@ const WEDDING_DATA = {
     { side: "groom", role: "신랑 어머니", name: "김현숙",  bank: "하나",     account: "127-211128-00108" },
   ],
   kakaopay: {
-    bride: "https://qr.kakaopay.com/BRIDE_LINK_HERE",
-    groom: "https://qr.kakaopay.com/GROOM_LINK_HERE",
+    bride: "",
+    groom: "https://link.kakaopay.com/__/z0bxAoU",
   },
   kakaoMapKey: "c00b4b806976cdd0faf033f948a1756f",
   gallery: [
