@@ -8,82 +8,61 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f5f5;
-      color: #111;
-      min-height: 100vh;
-      padding: 40px 20px;
+      background: #f5f5f5; color: #111;
+      min-height: 100vh; padding: 40px 20px;
     }
     .container { max-width: 720px; margin: 0 auto; }
     h1 { font-size: 1.4rem; font-weight: 600; margin-bottom: 6px; }
-    .subtitle { font-size: 0.85rem; color: #666; margin-bottom: 32px; }
+    .subtitle { font-size: 0.85rem; color: #666; margin-bottom: 28px; }
+
+    .status-bar {
+      background: #fff; border: 1px solid #e0e0e0; border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px; font-size: 0.85rem;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
+    .dot.connected { background: #2ecc40; }
+    .dot.local { background: #ff851b; }
 
     .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 16px;
     }
     .count { font-size: 0.9rem; color: #555; }
     .btn-danger {
-      padding: 7px 16px;
-      background: #fff;
-      color: #c00;
-      border: 1px solid #c00;
-      border-radius: 7px;
-      font-size: 0.82rem;
-      cursor: pointer;
+      padding: 7px 16px; background: #fff; color: #c00;
+      border: 1px solid #c00; border-radius: 7px;
+      font-size: 0.82rem; cursor: pointer;
     }
     .btn-danger:hover { background: #fff0f0; }
 
     .entry-list { display: flex; flex-direction: column; gap: 10px; }
     .entry-card {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 10px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
+      background: #fff; border: 1px solid #e0e0e0;
+      border-radius: 10px; padding: 16px 20px;
+      display: flex; align-items: flex-start; gap: 16px;
     }
     .entry-info { flex: 1; min-width: 0; }
     .entry-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; }
     .entry-msg {
-      font-size: 0.88rem;
-      color: #444;
-      line-height: 1.55;
-      margin-bottom: 8px;
-      white-space: pre-wrap;
-      word-break: break-word;
+      font-size: 0.88rem; color: #444; line-height: 1.55;
+      margin-bottom: 8px; white-space: pre-wrap; word-break: break-word;
     }
     .entry-date { font-size: 0.75rem; color: #aaa; }
     .del-btn {
-      flex-shrink: 0;
-      padding: 6px 12px;
-      background: #fff;
-      color: #bbb;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      cursor: pointer;
+      flex-shrink: 0; padding: 6px 12px;
+      background: #fff; color: #bbb;
+      border: 1px solid #e0e0e0; border-radius: 6px;
+      font-size: 0.8rem; cursor: pointer;
       transition: color 0.15s, border-color 0.15s;
     }
     .del-btn:hover { color: #c00; border-color: #c00; }
-
-    .empty {
-      text-align: center;
-      padding: 64px 20px;
-      color: #aaa;
-      font-size: 0.9rem;
-    }
+    .empty { text-align: center; padding: 64px 20px; color: #aaa; font-size: 0.9rem; }
     .notice {
-      background: #fffbe6;
-      border: 1px solid #ffe58f;
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-size: 0.82rem;
-      color: #7a5c00;
-      margin-bottom: 20px;
-      line-height: 1.6;
+      background: #fffbe6; border: 1px solid #ffe58f;
+      border-radius: 8px; padding: 12px 16px;
+      font-size: 0.82rem; color: #7a5c00;
+      margin-bottom: 20px; line-height: 1.6;
     }
   </style>
 </head>
@@ -92,9 +71,14 @@
     <h1>방명록 관리</h1>
     <p class="subtitle">찬혁 ♥ 주은 · 2026.06.28</p>
 
-    <div class="notice">
-      방명록은 방문자 각자의 브라우저에 저장됩니다.<br>
-      이 페이지에서는 <strong>현재 브라우저</strong>에 저장된 메시지를 확인하고 삭제할 수 있어요.
+    <div class="status-bar">
+      <div class="dot" id="status-dot"></div>
+      <span id="status-text">연결 확인 중...</span>
+    </div>
+
+    <div id="local-notice" class="notice" style="display:none">
+      firebase-config.js가 없어 로컬 브라우저 데이터를 표시합니다.<br>
+      Firebase 연결 후에는 모든 손님 메시지가 여기 표시됩니다.
     </div>
 
     <div class="top-bar">
@@ -105,21 +89,70 @@
     <div id="list" class="entry-list"></div>
   </div>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js" onerror="window._fbErr=true"></script>
   <script>
-    const GB_KEY = "wedding-gb-v2";
+    const GB_LS = "wedding-gb-v2";
     const pad = n => String(n).padStart(2, "0");
     const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 
-    function load() {
-      try { return JSON.parse(localStorage.getItem(GB_KEY) || "[]"); } catch { return []; }
+    let db = null;
+    let useFirebase = false;
+
+    function initFirebase() {
+      try {
+        const c = typeof FIREBASE_CONFIG !== "undefined" ? FIREBASE_CONFIG : null;
+        if (c?.projectId) {
+          firebase.initializeApp(c);
+          db = firebase.firestore();
+          useFirebase = true;
+          document.getElementById("status-dot").className = "dot connected";
+          document.getElementById("status-text").textContent = "Firebase 연결됨 — 모든 손님 메시지 표시";
+        } else {
+          throw new Error("no config");
+        }
+      } catch(_) {
+        document.getElementById("status-dot").className = "dot local";
+        document.getElementById("status-text").textContent = "로컬 모드 — 이 브라우저에 저장된 메시지만 표시";
+        document.getElementById("local-notice").style.display = "block";
+      }
     }
 
-    function save(entries) {
-      localStorage.setItem(GB_KEY, JSON.stringify(entries));
+    async function loadEntries() {
+      if (useFirebase) {
+        const snap = await db.collection("guestbook").orderBy("createdAt", "desc").get();
+        return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      }
+      try { return JSON.parse(localStorage.getItem(GB_LS) || "[]"); } catch { return []; }
     }
 
-    function render() {
-      const entries = load();
+    async function deleteEntry(id) {
+      if (useFirebase) {
+        await db.collection("guestbook").doc(id).delete();
+      } else {
+        const entries = JSON.parse(localStorage.getItem(GB_LS) || "[]");
+        const filtered = entries.filter((_, i) => String(i) !== String(id));
+        localStorage.setItem(GB_LS, JSON.stringify(filtered));
+      }
+      await render();
+    }
+
+    async function clearAll() {
+      if (!confirm("방명록을 전부 삭제할까요?")) return;
+      if (useFirebase) {
+        const snap = await db.collection("guestbook").get();
+        const batch = db.batch();
+        snap.docs.forEach(d => batch.delete(d.ref));
+        await batch.commit();
+      } else {
+        localStorage.removeItem(GB_LS);
+      }
+      await render();
+    }
+
+    async function render() {
+      const entries = await loadEntries();
       const list = document.getElementById("list");
       document.getElementById("count").textContent = `${entries.length}개`;
 
@@ -132,6 +165,7 @@
       entries.forEach((e, i) => {
         const dt = new Date(e.createdAt);
         const ds = `${dt.getFullYear()}.${pad(dt.getMonth()+1)}.${pad(dt.getDate())} ${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+        const entryId = useFirebase ? e.id : String(i);
 
         const card = document.createElement("div");
         card.className = "entry-card";
@@ -141,26 +175,14 @@
             <div class="entry-msg">${esc(e.message)}</div>
             <div class="entry-date">${ds}</div>
           </div>
-          <button class="del-btn" data-index="${i}">삭제</button>
+          <button class="del-btn">삭제</button>
         `;
-        card.querySelector(".del-btn").addEventListener("click", () => deleteEntry(i));
+        card.querySelector(".del-btn").addEventListener("click", () => deleteEntry(entryId));
         list.appendChild(card);
       });
     }
 
-    function deleteEntry(index) {
-      const entries = load();
-      entries.splice(index, 1);
-      save(entries);
-      render();
-    }
-
-    function clearAll() {
-      if (!confirm("방명록을 전부 삭제할까요?")) return;
-      localStorage.removeItem(GB_KEY);
-      render();
-    }
-
+    initFirebase();
     render();
   </script>
 </body>

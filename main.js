@@ -19,13 +19,12 @@ const GALLERY_IMGS = WD?.gallery || [
   "assets/gallery-10.webp",
 ];
 
-const GH_CONFIG = (() => {
+let db = null;
+(function initFirebase() {
   try {
-    const c = typeof WEDDING_CONFIG !== "undefined" ? WEDDING_CONFIG : undefined;
-    if (c?.repo && c?.token && c.token !== "YOUR_GITHUB_PERSONAL_ACCESS_TOKEN_HERE")
-      return { repo: c.repo, token: c.token, enabled: true };
+    const c = typeof FIREBASE_CONFIG !== "undefined" ? FIREBASE_CONFIG : null;
+    if (c?.projectId) { firebase.initializeApp(c); db = firebase.firestore(); }
   } catch(_) {}
-  return { repo:"", token:"", enabled:false };
 })();
 
 const $  = sel => document.querySelector(sel);
@@ -292,25 +291,26 @@ function initKakaoMap() {
 }
 
 /* ─── Guestbook ── */
-const GB_LS="wedding-gb-v2", GB_LBL="방명록", GH_API="https://api.github.com";
+const GB_LS="wedding-gb-v2";
 const gbForm=document.getElementById("guestbook-form");
 const gbList=document.getElementById("guestbook-list");
 const gbStatus=document.getElementById("form-status");
 const gbSubmit=document.getElementById("guestbook-submit");
-const ghH=()=>({ "Accept":"application/vnd.github+json","Authorization":`Bearer ${GH_CONFIG.token}`,"X-GitHub-Api-Version":"2022-11-28" });
-async function ghFetch() {
-  const res=await fetch(`${GH_API}/repos/${GH_CONFIG.repo}/issues?labels=${encodeURIComponent(GB_LBL)}&state=open&per_page=30&sort=created&direction=desc`,{headers:ghH()});
-  if(!res.ok) throw new Error(res.status);
-  return (await res.json()).map(i=>({id:i.number,name:i.title,message:i.body||"",createdAt:i.created_at}));
-}
-async function ghPost(name,message) {
-  const res=await fetch(`${GH_API}/repos/${GH_CONFIG.repo}/issues`,{method:"POST",headers:{...ghH(),"Content-Type":"application/json"},body:JSON.stringify({title:name,body:message,labels:[GB_LBL]})});
-  if(!res.ok) throw new Error(res.status);
-}
+const LIKE_KEY="gb-likes-v2";
 function lsEntries(){try{return JSON.parse(localStorage.getItem(GB_LS)||"[]");}catch{return[];}}
 function lsSave(e){const a=lsEntries();a.unshift(e);localStorage.setItem(GB_LS,JSON.stringify(a));}
-const LIKE_KEY="gb-likes-v2";
 function getEntryLikes(){try{return JSON.parse(localStorage.getItem(LIKE_KEY)||"{}");}catch{return{};}}
+async function gbFetch(){
+  if(db){
+    const snap=await db.collection("guestbook").orderBy("createdAt","desc").limit(50).get();
+    return snap.docs.map(d=>({id:d.id,...d.data()}));
+  }
+  return lsEntries();
+}
+async function gbPost(name,message){
+  if(db){ await db.collection("guestbook").add({name,message,createdAt:new Date().toISOString()}); }
+  else { lsSave({id:Date.now(),name,message,createdAt:new Date().toISOString()}); }
+}
 function renderEntry(e) {
   const li=document.createElement("li"); li.className="guestbook-entry";
   const dt=new Date(e.createdAt);
@@ -327,7 +327,7 @@ function renderEntry(e) {
 async function loadGuestbook() {
   gbList.innerHTML=`<li class="guestbook-loading">// loading...</li>`;
   try {
-    const entries = GH_CONFIG.enabled ? await ghFetch() : lsEntries();
+    const entries=await gbFetch();
     gbList.innerHTML="";
     if(!entries.length){ gbList.innerHTML=`<li class="guestbook-loading">// 첫 번째 메시지를 남겨주세요</li>`; return; }
     entries.forEach(e=>gbList.appendChild(renderEntry(e)));
@@ -340,8 +340,7 @@ gbForm?.addEventListener("submit", async e=>{
   if(!name||!msg) return;
   gbSubmit.disabled=true; gbSubmit.textContent="LOADING..."; gbStatus.textContent="";
   try {
-    if(GH_CONFIG.enabled){ await ghPost(name,msg); }
-    else { lsSave({id:Date.now(),name,message:msg,createdAt:new Date().toISOString()}); }
+    await gbPost(name,msg);
     gbForm.reset(); toast("✓  REGISTERED"); await loadGuestbook();
   } catch { gbStatus.textContent="// ERROR — 잠시 후 다시 시도해 주세요"; }
   finally { gbSubmit.disabled=false; gbSubmit.textContent="SUBMIT →"; }
