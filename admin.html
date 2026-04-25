@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>방명록 관리 — 찬혁 ♥ 주은</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .container { max-width: 720px; margin: 0 auto; }
+    h1 { font-size: 1.4rem; font-weight: 600; margin-bottom: 8px; }
+    .subtitle { font-size: 0.85rem; color: #666; margin-bottom: 32px; }
+
+    .setup-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .setup-card h2 { font-size: 0.95rem; font-weight: 600; margin-bottom: 16px; color: #333; }
+    .field { margin-bottom: 12px; }
+    label { display: block; font-size: 0.8rem; color: #555; margin-bottom: 4px; }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    input:focus { border-color: #999; }
+    .btn {
+      display: inline-block;
+      padding: 10px 24px;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+    .btn:hover { background: #333; }
+    .btn-sm {
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      background: #fff;
+      color: #c00;
+      border: 1px solid #c00;
+      cursor: pointer;
+    }
+    .btn-sm:hover { background: #fff0f0; }
+
+    .stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-box {
+      flex: 1;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-num { font-size: 2rem; font-weight: 700; }
+    .stat-label { font-size: 0.75rem; color: #888; margin-top: 4px; }
+
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .filter-btn {
+      padding: 6px 16px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      background: #fff;
+      font-size: 0.82rem;
+      cursor: pointer;
+      color: #555;
+    }
+    .filter-btn.active { background: #111; color: #fff; border-color: #111; }
+
+    .entry-list { display: flex; flex-direction: column; gap: 12px; }
+    .entry-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .entry-card.closed { opacity: 0.5; }
+    .entry-info { flex: 1; }
+    .entry-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+    .entry-msg { font-size: 0.88rem; color: #444; line-height: 1.5; margin-bottom: 8px; }
+    .entry-meta { font-size: 0.75rem; color: #999; display: flex; gap: 12px; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .badge-open { background: #e6f4ea; color: #1a7f37; }
+    .badge-closed { background: #f0f0f0; color: #888; }
+
+    .empty { text-align: center; padding: 48px; color: #aaa; font-size: 0.9rem; }
+    .error-msg { color: #c00; font-size: 0.85rem; margin-top: 8px; }
+    .loading { text-align: center; padding: 40px; color: #888; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>방명록 관리</h1>
+    <p class="subtitle">찬혁 ♥ 주은 · 2026.06.28</p>
+
+    <div class="setup-card">
+      <h2>GitHub 연결</h2>
+      <div class="field">
+        <label>Repository (예: CHYUK-ARCHI/wedding-invitation-junech)</label>
+        <input type="text" id="inp-repo" placeholder="owner/repo" />
+      </div>
+      <div class="field">
+        <label>Personal Access Token (read:repo 권한)</label>
+        <input type="password" id="inp-token" placeholder="ghp_..." />
+      </div>
+      <button class="btn" onclick="loadAll()">불러오기</button>
+      <p id="err" class="error-msg"></p>
+    </div>
+
+    <div id="stats" class="stats" style="display:none">
+      <div class="stat-box"><div class="stat-num" id="cnt-total">0</div><div class="stat-label">전체</div></div>
+      <div class="stat-box"><div class="stat-num" id="cnt-open">0</div><div class="stat-label">활성</div></div>
+      <div class="stat-box"><div class="stat-num" id="cnt-closed">0</div><div class="stat-label">숨김</div></div>
+    </div>
+
+    <div id="filter-bar" class="filter-bar" style="display:none">
+      <button class="filter-btn active" onclick="setFilter('all', this)">전체</button>
+      <button class="filter-btn" onclick="setFilter('open', this)">활성만</button>
+      <button class="filter-btn" onclick="setFilter('closed', this)">숨김만</button>
+    </div>
+
+    <div id="list" class="entry-list"></div>
+  </div>
+
+  <script>
+    const GH_API = "https://api.github.com";
+    let allEntries = [];
+    let currentFilter = "all";
+
+    async function loadAll() {
+      const repo = document.getElementById("inp-repo").value.trim();
+      const token = document.getElementById("inp-token").value.trim();
+      const err = document.getElementById("err");
+      err.textContent = "";
+
+      if (!repo) { err.textContent = "Repository를 입력해주세요."; return; }
+
+      const list = document.getElementById("list");
+      list.innerHTML = '<div class="loading">불러오는 중...</div>';
+
+      const headers = {
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      try {
+        let page = 1, results = [];
+        while (true) {
+          const res = await fetch(
+            `${GH_API}/repos/${repo}/issues?labels=${encodeURIComponent("방명록")}&state=all&per_page=100&page=${page}&sort=created&direction=desc`,
+            { headers }
+          );
+          if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+          const data = await res.json();
+          if (!data.length) break;
+          results = results.concat(data);
+          if (data.length < 100) break;
+          page++;
+        }
+
+        allEntries = results.map(i => ({
+          id: i.number,
+          name: i.title,
+          message: i.body || "",
+          createdAt: i.created_at,
+          state: i.state,
+        }));
+
+        updateStats();
+        renderList();
+        document.getElementById("stats").style.display = "flex";
+        document.getElementById("filter-bar").style.display = "flex";
+      } catch (e) {
+        list.innerHTML = "";
+        err.textContent = "불러오기 실패: " + e.message;
+      }
+    }
+
+    function updateStats() {
+      const open = allEntries.filter(e => e.state === "open").length;
+      const closed = allEntries.filter(e => e.state === "closed").length;
+      document.getElementById("cnt-total").textContent = allEntries.length;
+      document.getElementById("cnt-open").textContent = open;
+      document.getElementById("cnt-closed").textContent = closed;
+    }
+
+    function setFilter(f, btn) {
+      currentFilter = f;
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderList();
+    }
+
+    function renderList() {
+      const list = document.getElementById("list");
+      const filtered = currentFilter === "all"
+        ? allEntries
+        : allEntries.filter(e => e.state === currentFilter);
+
+      if (!filtered.length) {
+        list.innerHTML = '<div class="empty">메시지가 없습니다.</div>';
+        return;
+      }
+
+      list.innerHTML = "";
+      filtered.forEach(e => {
+        const dt = new Date(e.createdAt);
+        const ds = `${dt.getFullYear()}.${pad(dt.getMonth()+1)}.${pad(dt.getDate())} ${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+        const card = document.createElement("div");
+        card.className = "entry-card" + (e.state === "closed" ? " closed" : "");
+        card.innerHTML = `
+          <div class="entry-info">
+            <div class="entry-name">${esc(e.name)}</div>
+            <div class="entry-msg">${esc(e.message)}</div>
+            <div class="entry-meta">
+              <span>${ds}</span>
+              <span class="badge ${e.state === 'open' ? 'badge-open' : 'badge-closed'}">${e.state === 'open' ? '활성' : '숨김'}</span>
+              <span>#${e.id}</span>
+            </div>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    const pad = n => String(n).padStart(2, "0");
+    const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+    // 저장된 repo 자동 입력
+    window.addEventListener("load", () => {
+      document.getElementById("inp-repo").value = "CHYUK-ARCHI/wedding-invitation-junech";
+    });
+  </script>
+</body>
+</html>
