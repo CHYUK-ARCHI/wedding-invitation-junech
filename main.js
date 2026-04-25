@@ -222,11 +222,24 @@ function openLb(idx, srcs) {
   if (lbCnt) lbCnt.textContent = `${lbIdx+1} / ${currentSrcs.length}`;
   lb.classList.add("open");
   document.body.style.overflow = "hidden";
+  history.pushState({ lightbox: true }, "");
 }
 // gallery용 alias
 function openGalleryLb(idx) { openLb(idx, GALLERY_IMGS); }
 
-function closeLb() { lb.classList.remove("open"); document.body.style.overflow = ""; }
+function closeLb() {
+  if (!lb.classList.contains("open")) return;
+  lb.classList.remove("open");
+  document.body.style.overflow = "";
+  if (history.state?.lightbox) history.back();
+}
+
+window.addEventListener("popstate", e => {
+  if (lb.classList.contains("open")) {
+    lb.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+});
 
 function lbGo(d) {
   lbIdx = (lbIdx + d + currentSrcs.length) % currentSrcs.length;
