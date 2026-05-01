@@ -1,6 +1,6 @@
 # 설정/비밀키
 config.js
-firebase-config.js
+# firebase-config.js (배포용으로 커밋함 — Firebase 웹 키는 공개 설계)
 .env
 .env.local
 .env.*.local
