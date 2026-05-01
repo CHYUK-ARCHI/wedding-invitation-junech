@@ -18,7 +18,7 @@ const WEDDING_DATA = {
     { side: "groom", role: "신랑 어머니", name: "김현숙",  bank: "하나",     account: "127-211128-00108" },
   ],
   kakaopay: {
-    bride: "",
+    bride: "https://link.kakaopay.com/__/Ne7l8US",
     groom: "https://link.kakaopay.com/__/z0bxAoU",
   },
   kakaoMapKey: "c00b4b806976cdd0faf033f948a1756f",
