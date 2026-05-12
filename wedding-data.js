@@ -6,8 +6,8 @@ const WEDDING_DATA = {
     time: "오전 11시",
     venueName: "이라운지 서울대점",
     venueAddress: "서울 관악구 관악로 1 서울대학교 관악캠퍼스 310동(엔지니어하우스)부속건물",
-    lat: 37.4599,
-    lng: 126.9514,
+    lat: 37.4488,
+    lng: 126.9512,
   },
   accounts: [
     { side: "bride", role: "신부",       name: "김주은",  bank: "농협",  account: "1088-12-046488" },
