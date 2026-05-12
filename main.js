@@ -291,7 +291,7 @@ function initKakaoMap() {
       container.style.display="block";
       const sl = document.getElementById("map-static-link");
       if(sl) sl.style.display="none";
-      const lat=WD?.wedding?.lat??37.4589, lng=WD?.wedding?.lng??126.9525;
+      const lat=WD?.wedding?.lat??37.4487, lng=WD?.wedding?.lng??126.9511;
       const map = new kakao.maps.Map(container,{center:new kakao.maps.LatLng(lat,lng),level:3});
       const marker = new kakao.maps.Marker({position:new kakao.maps.LatLng(lat,lng)});
       marker.setMap(map);
